@@ -20,12 +20,13 @@ namespace PragueParkingProgram
             // TODO: Better headlines 
             // TODO: TICKET
             // TODO: I MAIN. PARKING TICKET EFTER 00
-            // TODO: FIXA SÅ ATT index är out i search
+            // TODO: Använd split
 
             // VG UPPGIFTERNA
-            //Parking[1] = "ABC123-C";    //----------------------------- Helps with testing
-            //Parking[2] = "AAA111-MC/AAA222-MC";
-            //Parking[3] = "APA123-C";
+            //----------------------------- Helps with testing
+            Parking[2] = "AAA111-MC/AAA222-MC";
+            Parking[3] = "AAA333-MC/AAA444-MC";
+            Parking[4] = "APA123-MC";
 
             //Parking[1] = "ABC123-MC";    //---------------------------- Helps with testing
             //Parking[2] = "AAA111-MC";
@@ -37,7 +38,7 @@ namespace PragueParkingProgram
             do
             {
                 Menu();
-            } while (Exit());
+            } while (true);
         }
         static void Menu()
         {
@@ -59,9 +60,9 @@ namespace PragueParkingProgram
 
             try
             {
-                int userInput = int.Parse(Console.ReadLine());
+                int regnummer = int.Parse(Console.ReadLine());
 
-                switch (userInput)
+                switch (regnummer)
                 {
                     case 1:
                         Park();
@@ -124,9 +125,9 @@ namespace PragueParkingProgram
 
             try
             {
-                int userInput = int.Parse(Console.ReadLine());
+                int regnummer = int.Parse(Console.ReadLine());
 
-                switch (userInput)
+                switch (regnummer)
                 {
                     case 1:
                         Console.Clear();
@@ -170,13 +171,12 @@ namespace PragueParkingProgram
             try
             {
 
-                string new_Reg = Console.ReadLine().ToUpper();
+                string new_Reg = Console.ReadLine().ToUpper(); /// TODO: GÖR TILL METOD BOY
 
-                new_Reg = new_Reg.Replace(" ", "");
+                new_Reg = new_Reg.Replace(" ", "");  /// TODO: GÖR TILL METOD BOY
 
                 if (PlateIsOk(new_Reg)) //---------------------------- Check if licence registration plate is correct format
                 {
-                    new_Reg += "-C"; // Car identifier
 
                     if (Parking.Contains(new_Reg)) //---------------------------- No duplicates
                     {
@@ -198,7 +198,7 @@ namespace PragueParkingProgram
                         {
                             if (Parking[i] == null) //---------------------------- Find null index in Parking array and parks car
                             {
-                                Parking[i] = new_Reg;
+                                Parking[i] = new_Reg + "-C"; // Car identifier
                                 Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                                 Console.WriteLine("______________________________\n");
@@ -234,19 +234,16 @@ namespace PragueParkingProgram
 
             try
             {
-                string new_Reg = Console.ReadLine().ToUpper();
+                string new_Reg = Console.ReadLine().ToUpper();  /// SAMMA HÄR
 
-                new_Reg = new_Reg.Replace(" ", "");
+                new_Reg = new_Reg.Replace(" ", ""); /// samma här
 
-                Console.Clear();
+                Console.Clear();   // in i samma metod
 
                 if (PlateIsOk(new_Reg)) //---------------------------- Check if licence registration plate is in correct format
                 {
-                    new_Reg += "-MC"; //---------------------------- Mc identifier
 
-                    int index;
-
-                    if (Search(new_Reg, out index)) //---------------------------- No duplicates
+                    if (Search(new_Reg, out int index)) //---------------------------- No duplicates
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -262,19 +259,15 @@ namespace PragueParkingProgram
                     }
                     else //---------------------------- If everything is fine so far
                     {
+
                         for (int i = 1; i < Parking.Length; i++)
                         {
-                            if (isAloneMc(i)) //---------------------------- Looking for an alone MC, if finds, then do double parking
+                            if (IsOneMc(i)) //---------------------------- Looking for an alone MC, if finds, then do double parking
                             {
-                                Parking[i] += "/" + new_Reg;   // Format is: ABC123-MC/ABC321-MC
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                Console.WriteLine("______________________________\n");
-                                ParkTimes[i + 1] = DateTime.Now;
-                                Console.WriteLine("Parked at time: " + ParkTimes[i + 1]);
-                                Console.WriteLine("Vehicle (" + new_Reg + ") is registred.\nProceed to parking space " + i + ".\n");
-                                Console.WriteLine("______________________________\n");
-                                Console.ResetColor();
+                                Parking[i] += "/" + new_Reg + "-MC";  // Format is: ABC123-MC/ABC321-MC
+                                ParkTimes[i] = DateTime.Now;
+
+                                VehicleParkedMassage(new_Reg, i);
                                 break;
                             }
                         }
@@ -284,14 +277,11 @@ namespace PragueParkingProgram
                             {
                                 if (Parking[i] == null)
                                 {
-                                    Parking[i] = new_Reg;
-                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                    Console.WriteLine("______________________________\n");
+                                    Parking[i] = new_Reg + "-MC";
                                     ParkTimes[i] = DateTime.Now;
-                                    Console.WriteLine("Parked at time: " + ParkTimes[i]);
-                                    Console.WriteLine("Vehicle (" + new_Reg + ") is registred.\nProceed to parking space " + i + ".\n");
-                                    Console.WriteLine("______________________________\n");
-                                    Console.ResetColor();
+                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+                                    VehicleParkedMassage(new_Reg, i);
                                     break;
                                 }
                             }
@@ -305,10 +295,7 @@ namespace PragueParkingProgram
             }
             catch (Exception ex) //---------------------------- Wrong format error
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(ex.Message + "\n");
-                Console.ResetColor();
+                ExError(ex.Message);
             }
         } //------------------------------------ Parking Mc in Parking array
         static void CheckOut()
@@ -321,7 +308,7 @@ namespace PragueParkingProgram
 
             try
             {
-                string old_Reg = Console.ReadLine().ToUpper();
+                string old_Reg = Console.ReadLine().ToUpper();   // samma här
 
                 int index;
 
@@ -329,7 +316,7 @@ namespace PragueParkingProgram
                 {
                     Console.Clear();
 
-                    if (isTwoMc(index)) //---------------------------- Check out with double parking
+                    if (IsTwoMc(index)) //---------------------------- Check out with double parking
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Vehicle (" + old_Reg + ") is checked out.\n");
@@ -375,10 +362,9 @@ namespace PragueParkingProgram
 
             try
             {
-                string old_Reg = Console.ReadLine().ToUpper();
-                int index;
+                string old_Reg = Console.ReadLine().ToUpper(); // samma här
 
-                if (Search(old_Reg, out index)) //---------------------------- Seaching for old_Reg in Parking array
+                if (Search(old_Reg, out int index)) //---------------------------- Seaching for old_Reg in Parking array
                 {
 
                     Console.Clear();
@@ -386,79 +372,68 @@ namespace PragueParkingProgram
                     Console.WriteLine();
                     Console.Write("Enter new parking spot: ");
 
-                    int n; bool parseSuccess = int.TryParse(Console.ReadLine(), out n);
+                    bool parseSuccess = int.TryParse(Console.ReadLine(), out int n);
 
                     if (parseSuccess)
                     {
-                        if (isTwoMc(index) && Parking[n] == null) //---------------------------- Two mc --> null
+                        if (!ParkingIndexIsFull(n)) // Sätt IsTwoMc här också
                         {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("______________________________\n");
-                            Parking[n] = old_Reg + "-MC";
-                            Parking[index] = Parking[index].Replace(old_Reg + "-MC", "");
-                            Parking[index] = Parking[index].Replace("/", "");
-                            Console.WriteLine("Vehicle (" + old_Reg + ") is moved to parking spot " + n);
-                            Console.WriteLine("______________________________\n");
-                            Console.ResetColor();
+                            string vehicleType = VehicleIdentifier(old_Reg);
+
+                            if (vehicleType == "-MC") // Ta bort och sätt den i över
+                            {
+                                if (IsOneMc(n))
+                                {
+                                    string[] vehicle = Parking[index].Split("/");
+
+                                    if (vehicle[0] == old_Reg + "-MC")
+                                    {
+                                        Parking[index] = vehicle[1];
+                                        Parking[n] = Parking[n] + "/" + vehicle[0];
+
+                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                    }
+                                    else if (vehicle[1] == old_Reg + "-MC")
+                                    {
+                                        Parking[index] = vehicle[0];
+                                        Parking[n] = Parking[n] + "/" + vehicle[1];
+
+                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                    }
+                                }
+                                else
+                                {
+                                    string[] vehicle = Parking[index].Split("/");
+
+                                    if (vehicle[0] == old_Reg + "-MC")
+                                    {
+                                        Parking[index] = vehicle[1];
+                                        Parking[n] = vehicle[0];
+
+                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                    }
+                                    else if (vehicle[1] == old_Reg + "-MC")
+                                    {
+                                        Parking[index] = vehicle[0];
+                                        Parking[n] = vehicle[1];
+
+                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                    }
+                                }
+                            }
+                            else if (vehicleType == "-C")
+                            {
+                                Parking[n] = Parking[index];
+                                Parking[index] = null;
+
+                                VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                            }
                         }
-                        else if (isAloneMc(index) && Parking[n] == null) //---------------------------- Mc --> null
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("______________________________\n");
-                            Console.WriteLine("Vehicle (" + old_Reg + ") is moved to parking spot " + n);
-                            Parking[n] = old_Reg + "-MC";
-                            Parking[index] = null;
-                            Console.WriteLine("______________________________\n");
-                            Console.ResetColor();
-                        }
-                        else if (isTwoMc(index) && isAloneMc(n)) //---------------------------- Two mc --> mc
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("______________________________\n");
-                            Parking[n] += "/" + old_Reg + "-MC";
-                            Parking[index] = Parking[index].Replace(old_Reg + "-MC", "");
-                            Parking[index] = Parking[index].Replace("/", "");
-                            Console.WriteLine("Vehicle (" + old_Reg + ") is moved to parking spot " + n);
-                            Console.WriteLine("______________________________\n");
-                            Console.ResetColor();
-                        }
-                        else if (isAloneMc(index) && isAloneMc(n)) //---------------------------- Mc --> mc
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("______________________________\n");
-                            Parking[n] += "/" + old_Reg + "-MC";
-                            Parking[index] = null;
-                            Console.WriteLine("Vehicle (" + old_Reg + ") is moved to parking spot " + n);
-                            Console.WriteLine("______________________________\n");
-                            Console.ResetColor();
-                        }
-                        else if (isCar(index) && Parking[n] == null) //---------------------------- C --> null
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkGreen;
-                            Console.WriteLine("______________________________\n");
-                            Parking[n] = old_Reg + "-C";
-                            Parking[index] = null;
-                            Console.WriteLine("Vehicle (" + old_Reg + ") is moved to parking spot " + n);
-                            Console.WriteLine("______________________________\n");
-                            Console.ResetColor();
-                        }
-                        else if (Parking[n] == Parking[index]) //---------------------------- Move to same spot error
+                        else //---------------------------- Moving to a full Parking spot
                         {
                             Console.Clear();
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("Vehicle (" + Parking[index] + ") is already parked here\n");
-                            Console.ResetColor();
-                        }
-                        else //---------------------------- Moving to non avaliable spot error
-                        {
-                            Console.Clear();
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("Cannot move to this spot\n");
+                            Console.WriteLine("Parking spot full\n");
                             Console.ResetColor();
                         }
                     }
@@ -485,22 +460,17 @@ namespace PragueParkingProgram
                 Console.WriteLine(ex.Message + "\n");
                 Console.ResetColor();
             }
-        } //-------------------------------------- Moving vehicle from index to index in Parking array
+        } //-------------------------------------- Moving vehicle from one index to another
         static void Search()
         {
-
             Console.Clear();
-
             Console.WriteLine("-Search-");
             Console.WriteLine();
             Console.Write("Enter licence plate number: ");
 
             string old_Reg = Console.ReadLine().ToUpper();
 
-            //int index = FindIndex(old_Reg);
-            int index;
-
-            if (Search(old_Reg, out index))
+            if (Search(old_Reg, out int index))
             {
                 Console.Clear();
                 Console.WriteLine("Vehicle (" + old_Reg + ") is parked at " + index + "\n");
@@ -510,19 +480,41 @@ namespace PragueParkingProgram
                 Console.Clear();
                 Console.WriteLine("Vehicle (" + old_Reg + ") is not parked here.\n");
             }
-
-
         } //------------------------------------ Looking for vehicle in Parking array. 
         static bool Search(string regnum, out int index)
         {
-            regnum.ToUpper();
-
             for (int i = 1; i < Parking.Length; i++)
             {
-                if (Parking[i] != null && Parking[i].Contains(regnum))
+                if (Parking[i] != null)
                 {
-                    index = i;
-                    return true;
+                    if (Parking[i].Contains("/"))
+                    {
+
+                        string[] vehicle = Parking[i].Split("/");
+
+                        if (vehicle[0] == regnum + "-MC")
+                        {
+                            index = i;
+                            return true;
+                        }
+                        else if (vehicle[1] == regnum + "-MC")
+                        {
+                            index = i;
+                            return true;
+                        }
+
+                    }
+                    else if (Parking[i] == regnum + "-MC")
+                    {
+                        index = i;
+                        return true;
+                    }
+                    else if (Parking[i] == regnum + "-C")
+                    {
+                        index = i;
+                        return true;
+                    }
+
                 }
             }
             index = -1;
@@ -551,7 +543,7 @@ namespace PragueParkingProgram
                     Console.Write("\t");
                     n++;
                 }
-                else if (isAloneMc(i))
+                else if (IsOneMc(i))
                 {
                     Console.Write(i + ": " + Parking[i]);
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -580,14 +572,14 @@ namespace PragueParkingProgram
             Console.Clear();
             for (int i = 1; i < Parking.Length; i++)
             {
-                if (isAloneMc(i)) // ONE MC
+                if (IsOneMc(i)) // ONE MC
                 {
                     int firstMcFound = i;
 
                     for (int y = (i + 1); y < Parking.Length; y++)
                     {
 
-                        if (isAloneMc(y)) // ONE MC
+                        if (IsOneMc(y)) // ONE MC
                         {
                             Parking[firstMcFound] += "/" + Parking[y];   // ABC123-MC/ABC321-MC
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -612,9 +604,9 @@ namespace PragueParkingProgram
             Console.WriteLine();
             Console.Write("Input digit: ");
 
-            int userInput = int.Parse(Console.ReadLine());
+            int regnummer = int.Parse(Console.ReadLine());
 
-            if (userInput == 2)
+            if (regnummer == 2)
             {
                 Console.Clear();
             }
@@ -653,7 +645,7 @@ namespace PragueParkingProgram
             Console.WriteLine("Error: Requirement 4-10 digits [A-Z / 0-9]\n");
             Console.ResetColor();
         } //------------------------------------- Plate format standard error
-        static bool isAloneMc(int index)
+        static bool IsOneMc(int index)
         {
             if (Parking[index] != null && !Parking[index].Contains("/") && Parking[index].Contains("-MC")) // ONE MC
             {
@@ -663,8 +655,8 @@ namespace PragueParkingProgram
             {
                 return false;
             }
-        }  //----------------------- Identify alone MC in Parking array index
-        static bool isTwoMc(int index)
+        } //-------------------------- Identify alone MC in Parking array index
+        static bool IsTwoMc(int index)
         {
             if (Parking[index] != null && Parking[index].Contains("/") && Parking[index].Contains("-MC"))
             {
@@ -675,7 +667,7 @@ namespace PragueParkingProgram
                 return false;
             }
         } //-------------------------- Identify two MC in Parking array index
-        static bool isCar(int index)
+        static bool IsCar(int index)
         {
             if (Parking[index].Contains("-C"))
             {
@@ -686,6 +678,18 @@ namespace PragueParkingProgram
                 return false;
             }
         } //---------------------------- Identify Car in Parking array index
+        static bool ParkingIndexIsFull(int index)
+        {
+            if (Parking[index] == null)
+            {
+                return false;
+            }
+            if (Parking[index].Contains("/") || Parking[index].Contains("-C"))
+            {
+                return true;
+            }
+            return false;
+        }
         static bool PlateIsOk(string regnum)
         {
             var hasNumber = new Regex(@"[0-9]\d{1}");
@@ -701,9 +705,50 @@ namespace PragueParkingProgram
                 return false;
             }
         } //-------------------- Check if registration plate number is valid
-        static bool Exit()
+        static string VehicleIdentifier(string regnum)
+        {
+            for (int i = 1; i < Parking.Length; i++)
+            {
+                if (Parking[i] != null && Parking[i].Contains(regnum + "-C"))
+                {
+                    return "-C";
+                }
+                else if (Parking[i] != null && Parking[i].Contains(regnum + "-MC"))
+                {
+                    return "-MC";
+                }
+            }
+            return "Error";
+        }
+        static void VehicleMovedMessage(string regnum, int index)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("______________________________\n");
+            Console.WriteLine("Vehicle (" + regnum + ") is moved to parking spot " + index);
+            Console.WriteLine("______________________________\n");
+            Console.ResetColor();
+        }
+        static void VehicleParkedMassage(string regnum, int index)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine("______________________________\n");
+            Console.WriteLine("Parked at time: " + ParkTimes[index]);
+            Console.WriteLine("Vehicle (" + regnum + ") is registred.\nProceed to parking space " + index + ".\n");
+            Console.WriteLine("______________________________\n");
+            Console.ResetColor();
+        }
+        static void ExError(string ex)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(ex + "\n");
+            Console.ResetColor();
+        }
+        static bool Exit() // DENNA GÅR ALLTID. Skapa IF grejer
         {
             return false;
-        }
+        } //-------------------------------------- returns Exit as false. Ends the program.
     }
 }
