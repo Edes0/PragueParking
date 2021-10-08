@@ -38,7 +38,7 @@ namespace PragueParkingProgram
             do
             {
                 Menu();
-            } while (true);
+            } while (Exist(1));
         }
         static void Menu()
         {
@@ -93,7 +93,7 @@ namespace PragueParkingProgram
                         break;
 
                     case 0:
-                        Exit();
+                        Exit(-1);
                         break;
 
                     default:
@@ -267,7 +267,7 @@ namespace PragueParkingProgram
                                 Parking[i] += "/" + new_Reg + "-MC";  // Format is: ABC123-MC/ABC321-MC
                                 ParkTimes[i] = DateTime.Now;
 
-                                VehicleParkedMassage(new_Reg, i);
+                                PrintVehicleParkedMassage(new_Reg, i);
                                 break;
                             }
                         }
@@ -281,7 +281,7 @@ namespace PragueParkingProgram
                                     ParkTimes[i] = DateTime.Now;
                                     Console.ForegroundColor = ConsoleColor.DarkGreen;
 
-                                    VehicleParkedMassage(new_Reg, i);
+                                    PrintVehicleParkedMassage(new_Reg, i);
                                     break;
                                 }
                             }
@@ -295,7 +295,7 @@ namespace PragueParkingProgram
             }
             catch (Exception ex) //---------------------------- Wrong format error
             {
-                ExError(ex.Message);
+                PrintExErrorMessage(ex.Message);
             }
         } //------------------------------------ Parking Mc in Parking array
         static void CheckOut()
@@ -391,14 +391,14 @@ namespace PragueParkingProgram
                                         Parking[index] = vehicle[1];
                                         Parking[n] = Parking[n] + "/" + vehicle[0];
 
-                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                        PrintVehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
                                     }
                                     else if (vehicle[1] == old_Reg + "-MC")
                                     {
                                         Parking[index] = vehicle[0];
                                         Parking[n] = Parking[n] + "/" + vehicle[1];
 
-                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                        PrintVehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
                                     }
                                 }
                                 else
@@ -410,14 +410,14 @@ namespace PragueParkingProgram
                                         Parking[index] = vehicle[1];
                                         Parking[n] = vehicle[0];
 
-                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                        PrintVehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
                                     }
                                     else if (vehicle[1] == old_Reg + "-MC")
                                     {
                                         Parking[index] = vehicle[0];
                                         Parking[n] = vehicle[1];
 
-                                        VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                        PrintVehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
                                     }
                                 }
                             }
@@ -426,7 +426,7 @@ namespace PragueParkingProgram
                                 Parking[n] = Parking[index];
                                 Parking[index] = null;
 
-                                VehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
+                                PrintVehicleMovedMessage(old_Reg, n); //---------------------------- Prints out move message
                             }
                         }
                         else //---------------------------- Moving to a full Parking spot
@@ -720,7 +720,7 @@ namespace PragueParkingProgram
             }
             return "Error";
         }
-        static void VehicleMovedMessage(string regnum, int index)
+        static void PrintVehicleMovedMessage(string regnum, int index)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -729,7 +729,7 @@ namespace PragueParkingProgram
             Console.WriteLine("______________________________\n");
             Console.ResetColor();
         }
-        static void VehicleParkedMassage(string regnum, int index)
+        static void PrintVehicleParkedMassage(string regnum, int index)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -739,16 +739,21 @@ namespace PragueParkingProgram
             Console.WriteLine("______________________________\n");
             Console.ResetColor();
         }
-        static void ExError(string ex)
+        static void PrintExErrorMessage(string ex)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(ex + "\n");
             Console.ResetColor();
         }
-        static bool Exit() // DENNA GÅR ALLTID. Skapa IF grejer
+        static bool Exit(int i) // DENNA GÅR ALLTID. Skapa IF grejer
         {
+            if (i = 1)
+	{
+                return true;
+	}
             return false;
+            
         } //-------------------------------------- returns Exit as false. Ends the program.
     }
 }
