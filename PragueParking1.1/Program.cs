@@ -11,19 +11,12 @@ namespace PragueParkingProgram
         static string[] Parking = new string[101];
         static DateTime[] ParkTimes = new DateTime[101];
 
-        static void Main() //-----Switch menu --> Park || RemoveVehicleFromParking || Move || Search || ShowAllParkings || GroupMcTogetherOptimization || NullParkingArray
+        static void Main()
         {
-            // Prague Parking1.1
             // TODO: Better headlines 
-            // TODO: TICKET
-            // TODO: I MAIN. PARKING TICKET EFTER 00
             // TODO: Använd split
-
-            // VG UPPGIFTERNA
-            //----------------------------- Helps with testing
-            Parking[2] = "AAA111-MC/AAA222-MC";
-            Parking[3] = "AAA333-MC/AAA444-MC";
-            Parking[4] = "APA123-MC";
+            // TODO: Fixa Datetime
+            // TODO: Fixa olika errormessage for exeption
 
             //Parking[1] = "ABC123-MC";    //---------------------------- Helps with testing
             //Parking[2] = "AAA111-MC";
@@ -50,9 +43,9 @@ namespace PragueParkingProgram
 
                 try
                 {
-                    int registrationNumbermer = int.Parse(Console.ReadLine());
+                    int registrationNumber = int.Parse(Console.ReadLine());
 
-                    switch (registrationNumbermer)
+                    switch (registrationNumber)
                     {
                         case 1:
                             ParkMcOrCarMenu();
@@ -86,27 +79,17 @@ namespace PragueParkingProgram
                             exit = true;
                             return;
 
-
-
                         default:
-                            Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.Clear();
-                            Console.WriteLine("Enter a valid number\n");
-                            Console.ResetColor();
+                            PrintEnterValidDigitMessage();
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine(ex.Message + "\n");
-                    Console.ResetColor();
+                    PrintExErrorMessage(ex.Message);
                 }
             }
-
-
-        }
+        } //------------------------------------------------- Main menu
         static void ParkMcOrCarMenu()
         {
             Console.Clear();
@@ -156,48 +139,39 @@ namespace PragueParkingProgram
             Console.WriteLine();
             Console.Write("Enter licence plate number: ");
 
-            try
+            GetNew_RegInput();
+
+            if (PlateIsOk(new_Reg)) //---------------------------- Check if licence registration plate is correct format
             {
 
-                string new_Reg = Console.ReadLine().ToUpper(); /// TODO: GÖR TILL METOD BOY
-
-                new_Reg = new_Reg.Replace(" ", "");  /// TODO: GÖR TILL METOD BOY
-
-                if (PlateIsOk(new_Reg)) //---------------------------- Check if licence registration plate is correct format
+                if (Parking.Contains(new_Reg)) //---------------------------- No duplicates
                 {
-
-                    if (Parking.Contains(new_Reg)) //---------------------------- No duplicates
+                    PrintVehicleIsAlreadyRegisteredMessage(new_Reg);
+                }
+                else if (!Parking.Contains(null)) //---------------------------- When parking already full
+                {
+                    PrintNoSlotAvailableMessage();
+                }
+                else
+                {
+                    for (int i = 1; i < Parking.Length; i++)
                     {
-                        PrintVehicleIsAlreadyRegisteredMessage(new_Reg);
-                    }
-                    else if (!Parking.Contains(null)) //---------------------------- When parking already full
-                    {
-                        PrintNoSlotAvailableMessage();
-                    }
-                    else
-                    {
-                        for (int i = 1; i < Parking.Length; i++)
+                        if (Parking[i] == null) //---------------------------- Find null index in Parking array and parks car
                         {
-                            if (Parking[i] == null) //---------------------------- Find null index in Parking array and parks car
-                            {
-                                Parking[i] = new_Reg + "-C"; // Car identifier
-                                ParkTimes[i] = DateTime.Now;
+                            Parking[i] = new_Reg + "-C"; // Car identifier
+                            ParkTimes[i] = DateTime.Now;
 
-                                PrintVehicleParkedMassage(new_Reg, i);
-                                break;
-                            }
+                            PrintVehicleParkedMassage(new_Reg, i);
+                            break;
                         }
                     }
                 }
-                else //---------------------------- Wrong plate format
-                {
-                    PrintRegistrationPlateFormatError();
-                }
             }
-            catch (Exception ex) //---------------------------- PrintRegistrationPlateFormatError
+            else //---------------------------- Wrong plate format
             {
-                PrintExErrorMessage(ex.Message);
+                PrintRegistrationPlateFormatError();
             }
+
         } //---------------------------------------------- Parking Car in Parking array
         static void ParkMc()
         {
@@ -571,9 +545,9 @@ namespace PragueParkingProgram
             Console.WriteLine();
             Console.Write("Input digit: ");
 
-            int registrationNumbermer = int.Parse(Console.ReadLine());
+            int registrationNumber = int.Parse(Console.ReadLine());
 
-            if (registrationNumbermer == 2)
+            if (registrationNumber == 2)
             {
                 Console.Clear();
             }
@@ -676,6 +650,13 @@ namespace PragueParkingProgram
             }
             return "PrintRegistrationPlateFormatError";
         } //------------ Getting type: Motorcycle or car
+        static string GetNew_RegInput()
+        {
+            string new_Reg = Console.ReadLine().ToUpper();
+            new_Reg = new_Reg.Replace(" ", "");
+            return new_Reg;
+
+        }
         static void PrintVehicleMovedMessage(string registrationNumber, int index)
         {
             Console.Clear();
@@ -715,7 +696,7 @@ namespace PragueParkingProgram
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(ex + "\n");
             Console.ResetColor();
-        } //------------------ Prints message
+        } //---------------------------------------------- Prints message
         static void PrintEnterValidDigitMessage()
         {
             Console.Clear();
