@@ -11,10 +11,7 @@ namespace PragueParkingProgram
         static string[] Parking = new string[101];
         static DateTime[] ParkTimes = new DateTime[101];
 
-
-
-
-        static void Main(string[] args)
+        static void Main() //-----Switch menu --> Park || RemoveVehicleFromParking || Move || Search || ShowAllParkings || GroupMcTogetherOptimization || NullParkingArray
         {
             // Prague Parking1.1
             // TODO: Better headlines 
@@ -34,85 +31,83 @@ namespace PragueParkingProgram
             //Parking[4] = "AAA222-MC";
             //Parking[5] = "AAA333-MC";
 
+            bool exit = false;
 
-            do
+            while (!exit)
             {
-                Menu();
-            } while (Exist(1));
-        }
-        static void Menu()
-        {
-            Console.WriteLine("-Prague Parking-");
-            Console.WriteLine();
-            Console.WriteLine("[1] Park vehicle");
-            Console.WriteLine("[2] Check out vehicle");
-            Console.WriteLine("[3] Move vehicle");
-            Console.WriteLine("[4] Search vehicle");
-            Console.WriteLine("[5] Parking overview");
-            Console.WriteLine("[6] Optimize");
-            Console.WriteLine("[7] Restart");
-            Console.WriteLine("[0] Exit");
+                Console.WriteLine("-Prague Parking-");
+                Console.WriteLine();
+                Console.WriteLine("[1] Park vehicle");
+                Console.WriteLine("[2] Check out vehicle");
+                Console.WriteLine("[3] Move vehicle");
+                Console.WriteLine("[4] Search vehicle");
+                Console.WriteLine("[5] Parking overview");
+                Console.WriteLine("[6] Optimize");
+                Console.WriteLine("[7] Restart");
+                Console.WriteLine("[0] Exit");
+                Console.WriteLine();
+                Console.Write("Input digit: ");
 
-            Console.WriteLine();
-            Console.Write("Input digit: ");
-
-
-
-            try
-            {
-                int regnummer = int.Parse(Console.ReadLine());
-
-                switch (regnummer)
+                try
                 {
-                    case 1:
-                        Park();
-                        break;
+                    int registrationNumbermer = int.Parse(Console.ReadLine());
 
-                    case 2:
-                        CheckOut();
-                        break;
+                    switch (registrationNumbermer)
+                    {
+                        case 1:
+                            ParkMcOrCarMenu();
+                            break;
 
-                    case 3:
-                        Move();
-                        break;
+                        case 2:
+                            RemoveVehicleFromParking();
+                            break;
 
-                    case 4:
-                        Search();
-                        break;
+                        case 3:
+                            Move();
+                            break;
 
-                    case 5:
-                        Show();
-                        break;
+                        case 4:
+                            Search();
+                            break;
 
-                    case 6:
-                        StackMc();
-                        break;
+                        case 5:
+                            ShowAllParkings();
+                            break;
 
-                    case 7:
-                        Restart();
-                        break;
+                        case 6:
+                            GroupMcTogetherOptimization();
+                            break;
 
-                    case 0:
-                        Exit(-1);
-                        break;
+                        case 7:
+                            NullParkingArray();
+                            break;
 
-                    default:
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.Clear();
-                        Console.WriteLine("Enter a valid number\n");
-                        Console.ResetColor();
-                        break;
+                        case 0:
+                            exit = true;
+                            return;
+
+
+
+                        default:
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.Clear();
+                            Console.WriteLine("Enter a valid number\n");
+                            Console.ResetColor();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine(ex.Message + "\n");
+                    Console.ResetColor();
                 }
             }
-            catch (Exception ex)
-            {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(ex.Message + "\n");
-                Console.ResetColor();
-            }
-        } //-------------------------------------- Switch menu --> Park || Checkout || Move || Search || Show || StackMc || Restart
-        static void Park()
+
+
+        }
+        static void ParkMcOrCarMenu()
         {
             Console.Clear();
             Console.WriteLine("-Park-");
@@ -125,9 +120,9 @@ namespace PragueParkingProgram
 
             try
             {
-                int regnummer = int.Parse(Console.ReadLine());
+                int userInput = int.Parse(Console.ReadLine());
 
-                switch (regnummer)
+                switch (userInput)
                 {
                     case 1:
                         Console.Clear();
@@ -141,23 +136,16 @@ namespace PragueParkingProgram
 
                     case 0:
                         Console.Clear();
-                        Menu();
                         break;
 
                     default:
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Enter a valid number\n");
-                        Console.ResetColor();
+                        PrintEnterValidDigitMessage();
                         break;
                 }
             }
             catch (Exception ex)
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(ex.Message + "\n");
-                Console.ResetColor();
+                PrintExErrorMessage(ex.Message);
             }
 
         } //-------------------------------------- Switch menu --> ParkCar || ParkMc
@@ -180,17 +168,11 @@ namespace PragueParkingProgram
 
                     if (Parking.Contains(new_Reg)) //---------------------------- No duplicates
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Vehicle (" + new_Reg + ") is already registered\n");
-                        Console.ResetColor();
+                        PrintVehicleIsAlreadyRegisteredMessage(new_Reg);
                     }
                     else if (!Parking.Contains(null)) //---------------------------- When parking already full
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("No slot available\n");
-                        Console.ResetColor();
+                        PrintNoSlotAvailableMessage();
                     }
                     else
                     {
@@ -199,14 +181,9 @@ namespace PragueParkingProgram
                             if (Parking[i] == null) //---------------------------- Find null index in Parking array and parks car
                             {
                                 Parking[i] = new_Reg + "-C"; // Car identifier
-                                Console.Clear();
-                                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                                Console.WriteLine("______________________________\n");
                                 ParkTimes[i] = DateTime.Now;
-                                Console.WriteLine("Parked at time: " + ParkTimes[i]);
-                                Console.WriteLine("Vehicle (" + Parking[i] + ") is registred.\nProceed to parking space " + i + ".");
-                                Console.WriteLine("______________________________\n");
-                                Console.ResetColor();
+
+                                PrintVehicleParkedMassage(new_Reg, i);
                                 break;
                             }
                         }
@@ -214,17 +191,14 @@ namespace PragueParkingProgram
                 }
                 else //---------------------------- Wrong plate format
                 {
-                    Error();
+                    PrintRegistrationPlateFormatError();
                 }
             }
-            catch (Exception ex) //---------------------------- Error
+            catch (Exception ex) //---------------------------- PrintRegistrationPlateFormatError
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine(ex.Message + "\n");
-                Console.ResetColor();
+                PrintExErrorMessage(ex.Message);
             }
-        } //----------------------------------- Parking Car in Parking array
+        } //---------------------------------------------- Parking Car in Parking array
         static void ParkMc()
         {
             Console.Clear();
@@ -245,24 +219,18 @@ namespace PragueParkingProgram
 
                     if (Search(new_Reg, out int index)) //---------------------------- No duplicates
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("Vehicle (" + new_Reg + ") is already registered\n");
-                        Console.ResetColor();
+                        PrintVehicleIsAlreadyRegisteredMessage(new_Reg);
                     }
                     else if (!Parking.Contains(null)) //---------------------------- When parking already full
                     {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
-                        Console.WriteLine("No slot available\n");
-                        Console.ResetColor();
+                        PrintNoSlotAvailableMessage();
                     }
                     else //---------------------------- If everything is fine so far
                     {
 
                         for (int i = 1; i < Parking.Length; i++)
                         {
-                            if (IsOneMc(i)) //---------------------------- Looking for an alone MC, if finds, then do double parking
+                            if (ParkingContainsOneMc(i)) //---------------------------- Looking for an alone MC, if finds, then do double parking
                             {
                                 Parking[i] += "/" + new_Reg + "-MC";  // Format is: ABC123-MC/ABC321-MC
                                 ParkTimes[i] = DateTime.Now;
@@ -279,7 +247,6 @@ namespace PragueParkingProgram
                                 {
                                     Parking[i] = new_Reg + "-MC";
                                     ParkTimes[i] = DateTime.Now;
-                                    Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                                     PrintVehicleParkedMassage(new_Reg, i);
                                     break;
@@ -290,15 +257,15 @@ namespace PragueParkingProgram
                 }
                 else //---------------------------- Wrong plate format
                 {
-                    Error();
+                    PrintRegistrationPlateFormatError();
                 }
             }
-            catch (Exception ex) //---------------------------- Wrong format error
+            catch (Exception ex) //---------------------------- Wrong format PrintRegistrationPlateFormatError
             {
                 PrintExErrorMessage(ex.Message);
             }
-        } //------------------------------------ Parking Mc in Parking array
-        static void CheckOut()
+        } //----------------------------------------------- Parking Mc in Parking array
+        static void RemoveVehicleFromParking()
         {
             Console.Clear();
             Console.WriteLine("-Check out-");
@@ -316,7 +283,7 @@ namespace PragueParkingProgram
                 {
                     Console.Clear();
 
-                    if (IsTwoMc(index)) //---------------------------- Check out with double parking
+                    if (ParkingContainsTwoMc(index)) //---------------------------- Check out with double parking
                     {
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Vehicle (" + old_Reg + ") is checked out.\n");
@@ -325,7 +292,7 @@ namespace PragueParkingProgram
                         Parking[index] = Parking[index].Replace("/", "");
 
                     }
-                    else //---------------------------- Checkout
+                    else //---------------------------- RemoveVehicleFromParking
                     {
                         DateTime timeNow = DateTime.Now;
                         TimeSpan timeDiff = timeNow.Subtract(ParkTimes[index]);
@@ -344,14 +311,14 @@ namespace PragueParkingProgram
                     Console.ResetColor();
                 }
             }
-            catch (Exception ex) //---------------------------- Error
+            catch (Exception ex) //---------------------------- PrintRegistrationPlateFormatError
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.Clear();
                 Console.WriteLine(ex.Message + "\n");
                 Console.ResetColor();
             }
-        } //---------------------------------- Checking out vehicle and changes value of index to null
+        } //----------------------------- Checking out vehicle and changes value of index to null
         static void Move()
         {
 
@@ -376,13 +343,13 @@ namespace PragueParkingProgram
 
                     if (parseSuccess)
                     {
-                        if (!ParkingIndexIsFull(n)) // Sätt IsTwoMc här också
+                        if (!ParkingIndexIsFull(n)) // Sätt ParkingContainsTwoMc här också
                         {
-                            string vehicleType = VehicleIdentifier(old_Reg);
+                            string vehicleType = GetVehicleType(old_Reg);
 
                             if (vehicleType == "-MC") // Ta bort och sätt den i över
                             {
-                                if (IsOneMc(n))
+                                if (ParkingContainsOneMc(n))
                                 {
                                     string[] vehicle = Parking[index].Split("/");
 
@@ -453,14 +420,14 @@ namespace PragueParkingProgram
                     Console.ResetColor();
                 }
             }
-            catch (Exception ex) //---------------------------- Error
+            catch (Exception ex) //---------------------------- PrintRegistrationPlateFormatError
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine(ex.Message + "\n");
                 Console.ResetColor();
             }
-        } //-------------------------------------- Moving vehicle from one index to another
+        } //------------------------------------------------- Moving vehicle from one index to another
         static void Search()
         {
             Console.Clear();
@@ -480,8 +447,8 @@ namespace PragueParkingProgram
                 Console.Clear();
                 Console.WriteLine("Vehicle (" + old_Reg + ") is not parked here.\n");
             }
-        } //------------------------------------ Looking for vehicle in Parking array. 
-        static bool Search(string regnum, out int index)
+        } //----------------------------------------------- Looking for vehicle in Parking array. 
+        static bool Search(string registrationNumber, out int index)
         {
             for (int i = 1; i < Parking.Length; i++)
             {
@@ -492,24 +459,24 @@ namespace PragueParkingProgram
 
                         string[] vehicle = Parking[i].Split("/");
 
-                        if (vehicle[0] == regnum + "-MC")
+                        if (vehicle[0] == registrationNumber + "-MC")
                         {
                             index = i;
                             return true;
                         }
-                        else if (vehicle[1] == regnum + "-MC")
+                        else if (vehicle[1] == registrationNumber + "-MC")
                         {
                             index = i;
                             return true;
                         }
 
                     }
-                    else if (Parking[i] == regnum + "-MC")
+                    else if (Parking[i] == registrationNumber + "-MC")
                     {
                         index = i;
                         return true;
                     }
-                    else if (Parking[i] == regnum + "-C")
+                    else if (Parking[i] == registrationNumber + "-C")
                     {
                         index = i;
                         return true;
@@ -519,8 +486,8 @@ namespace PragueParkingProgram
             }
             index = -1;
             return false;
-        } //-------- Searching for vehicle registration plate in Parking array. True if vehicle exists and outs index
-        static void Show()
+        } //------- Searching for vehicle registration plate in Parking array. True if vehicle exists and outs index
+        static void ShowAllParkings()
         {
             const int cols = 6;
             int n = 1;
@@ -543,7 +510,7 @@ namespace PragueParkingProgram
                     Console.Write("\t");
                     n++;
                 }
-                else if (IsOneMc(i))
+                else if (ParkingContainsOneMc(i))
                 {
                     Console.Write(i + ": " + Parking[i]);
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -567,19 +534,19 @@ namespace PragueParkingProgram
             Console.ReadKey();
             Console.Clear();
         } //-------------------------------------- Printing out overview of Parking
-        static void StackMc()
+        static void GroupMcTogetherOptimization()
         {
             Console.Clear();
             for (int i = 1; i < Parking.Length; i++)
             {
-                if (IsOneMc(i)) // ONE MC
+                if (ParkingContainsOneMc(i)) // ONE MC
                 {
                     int firstMcFound = i;
 
                     for (int y = (i + 1); y < Parking.Length; y++)
                     {
 
-                        if (IsOneMc(y)) // ONE MC
+                        if (ParkingContainsOneMc(y)) // ONE MC
                         {
                             Parking[firstMcFound] += "/" + Parking[y];   // ABC123-MC/ABC321-MC
                             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -593,8 +560,8 @@ namespace PragueParkingProgram
                     }
                 }
             }
-        } //----------------------------------- Stacking MCs together
-        static void Restart()
+        } //-------------------------- Stacking MCs together
+        static void NullParkingArray()
         {
             Console.Clear();
             Console.WriteLine("Are you sure?");
@@ -604,9 +571,9 @@ namespace PragueParkingProgram
             Console.WriteLine();
             Console.Write("Input digit: ");
 
-            int regnummer = int.Parse(Console.ReadLine());
+            int registrationNumbermer = int.Parse(Console.ReadLine());
 
-            if (regnummer == 2)
+            if (registrationNumbermer == 2)
             {
                 Console.Clear();
             }
@@ -619,7 +586,7 @@ namespace PragueParkingProgram
                 while (n != 2)
                 {
                     n++;
-                    foreach (char l in "Restarting")
+                    foreach (char l in "NullParkingArraying")
                     {
                         Thread.Sleep(100);
                         Console.Write(l);
@@ -637,15 +604,15 @@ namespace PragueParkingProgram
                 }
                 Console.Clear();
             }
-        } //----------------------------------- Removing all vehicles from Parking
-        static void Error()
+        } //------------------------------------- Removing all vehicles from Parking
+        static void PrintRegistrationPlateFormatError()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Clear();
-            Console.WriteLine("Error: Requirement 4-10 digits [A-Z / 0-9]\n");
+            Console.WriteLine("PrintRegistrationPlateFormatError: Requirement 4-10 digits [A-Z / 0-9]\n");
             Console.ResetColor();
-        } //------------------------------------- Plate format standard error
-        static bool IsOneMc(int index)
+        } //-------------------- Plate format standard PrintRegistrationPlateFormatError
+        static bool ParkingContainsOneMc(int index)
         {
             if (Parking[index] != null && !Parking[index].Contains("/") && Parking[index].Contains("-MC")) // ONE MC
             {
@@ -655,8 +622,8 @@ namespace PragueParkingProgram
             {
                 return false;
             }
-        } //-------------------------- Identify alone MC in Parking array index
-        static bool IsTwoMc(int index)
+        } //------------------------ Identify alone MC in Parking array index
+        static bool ParkingContainsTwoMc(int index)
         {
             if (Parking[index] != null && Parking[index].Contains("/") && Parking[index].Contains("-MC"))
             {
@@ -666,18 +633,7 @@ namespace PragueParkingProgram
             {
                 return false;
             }
-        } //-------------------------- Identify two MC in Parking array index
-        static bool IsCar(int index)
-        {
-            if (Parking[index].Contains("-C"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        } //---------------------------- Identify Car in Parking array index
+        } //------------------------ Identify two MC in Parking array index
         static bool ParkingIndexIsFull(int index)
         {
             if (Parking[index] == null)
@@ -689,14 +645,14 @@ namespace PragueParkingProgram
                 return true;
             }
             return false;
-        }
-        static bool PlateIsOk(string regnum)
+        } //-------------------------- Cannot park on full index
+        static bool PlateIsOk(string registrationNumber)
         {
             var hasNumber = new Regex(@"[0-9]\d{1}");
             var hasChar = new Regex(@"[a-zA-Z]\d{1}");
-            bool hasLength = regnum.Length >= 4 && regnum.Length <= 10;
+            bool hasLength = registrationNumber.Length >= 4 && registrationNumber.Length <= 10;
 
-            if (hasNumber.IsMatch(regnum) && hasChar.IsMatch(regnum) && hasLength)
+            if (hasNumber.IsMatch(registrationNumber) && hasChar.IsMatch(registrationNumber) && hasLength)
             {
                 return true;
             }
@@ -704,56 +660,68 @@ namespace PragueParkingProgram
             {
                 return false;
             }
-        } //-------------------- Check if registration plate number is valid
-        static string VehicleIdentifier(string regnum)
+        } //------------------- Check if registration plate number is valid
+        static string GetVehicleType(string registrationNumber)
         {
             for (int i = 1; i < Parking.Length; i++)
             {
-                if (Parking[i] != null && Parking[i].Contains(regnum + "-C"))
+                if (Parking[i] != null && Parking[i].Contains(registrationNumber + "-C"))
                 {
                     return "-C";
                 }
-                else if (Parking[i] != null && Parking[i].Contains(regnum + "-MC"))
+                else if (Parking[i] != null && Parking[i].Contains(registrationNumber + "-MC"))
                 {
                     return "-MC";
                 }
             }
-            return "Error";
-        }
-        static void PrintVehicleMovedMessage(string regnum, int index)
+            return "PrintRegistrationPlateFormatError";
+        } //------------ Getting type: Motorcycle or car
+        static void PrintVehicleMovedMessage(string registrationNumber, int index)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("______________________________\n");
-            Console.WriteLine("Vehicle (" + regnum + ") is moved to parking spot " + index);
+            Console.WriteLine("Vehicle (" + registrationNumber + ") is moved to parking spot " + index);
             Console.WriteLine("______________________________\n");
             Console.ResetColor();
-        }
-        static void PrintVehicleParkedMassage(string regnum, int index)
+        } //---------- Prints message
+        static void PrintVehicleParkedMassage(string registrationNumber, int index)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("______________________________\n");
             Console.WriteLine("Parked at time: " + ParkTimes[index]);
-            Console.WriteLine("Vehicle (" + regnum + ") is registred.\nProceed to parking space " + index + ".\n");
+            Console.WriteLine("Vehicle (" + registrationNumber + ") is registred.\nProceed to parking space " + index + ".\n");
             Console.WriteLine("______________________________\n");
             Console.ResetColor();
-        }
+        } //---------- Prints message
+        static void PrintVehicleIsAlreadyRegisteredMessage(string registrationNumber)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Vehicle (" + registrationNumber + ") is already registered\n");
+            Console.ResetColor();
+        } //--------- Prints message
+        static void PrintNoSlotAvailableMessage()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("No slot available\n");
+            Console.ResetColor();
+        } //---------------------------------------------- Prints message
         static void PrintExErrorMessage(string ex)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(ex + "\n");
             Console.ResetColor();
-        }
-        static bool Exit(int i) // DENNA GÅR ALLTID. Skapa IF grejer
+        } //------------------ Prints message
+        static void PrintEnterValidDigitMessage()
         {
-            if (i = 1)
-	{
-                return true;
-	}
-            return false;
-            
-        } //-------------------------------------- returns Exit as false. Ends the program.
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Enter a valid number\n");
+            Console.ResetColor();
+        } //------------------------------------------------ Prints message
     }
 }
