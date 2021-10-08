@@ -20,6 +20,7 @@ namespace PragueParkingProgram
             // TODO: Better headlines 
             // TODO: TICKET
             // TODO: I MAIN. PARKING TICKET EFTER 00
+            // TODO: FIXA SÅ ATT index är out i search
 
             // VG UPPGIFTERNA
             //Parking[1] = "ABC123-C";    //----------------------------- Helps with testing
@@ -32,10 +33,11 @@ namespace PragueParkingProgram
             //Parking[4] = "AAA222-MC";
             //Parking[5] = "AAA333-MC";
 
-            while (true)
+
+            do
             {
                 Menu();
-            }
+            } while (Exit());
         }
         static void Menu()
         {
@@ -48,6 +50,8 @@ namespace PragueParkingProgram
             Console.WriteLine("[5] Parking overview");
             Console.WriteLine("[6] Optimize");
             Console.WriteLine("[7] Restart");
+            Console.WriteLine("[0] Exit");
+
             Console.WriteLine();
             Console.Write("Input digit: ");
 
@@ -85,6 +89,10 @@ namespace PragueParkingProgram
 
                     case 7:
                         Restart();
+                        break;
+
+                    case 0:
+                        Exit();
                         break;
 
                     default:
@@ -236,7 +244,9 @@ namespace PragueParkingProgram
                 {
                     new_Reg += "-MC"; //---------------------------- Mc identifier
 
-                    if (Search(new_Reg)) //---------------------------- No duplicates
+                    int index;
+
+                    if (Search(new_Reg, out index)) //---------------------------- No duplicates
                     {
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -268,7 +278,7 @@ namespace PragueParkingProgram
                                 break;
                             }
                         }
-                        if (!Search(new_Reg)) //---------------------------- If no double parking, find null instead
+                        if (!Search(new_Reg, out index)) //---------------------------- If no double parking, find null instead
                         {
                             for (int i = 1; i < Parking.Length; i++)
                             {
@@ -313,11 +323,11 @@ namespace PragueParkingProgram
             {
                 string old_Reg = Console.ReadLine().ToUpper();
 
-                if (Search(old_Reg)) //---------------------------- Searching for plate in Parking array
+                int index;
+
+                if (Search(old_Reg, out index)) //---------------------------- Searching for plate in Parking array
                 {
                     Console.Clear();
-
-                    int index = FindIndex(old_Reg); //---------------------------- Finds old_Reg index in Parking array
 
                     if (isTwoMc(index)) //---------------------------- Check out with double parking
                     {
@@ -366,8 +376,9 @@ namespace PragueParkingProgram
             try
             {
                 string old_Reg = Console.ReadLine().ToUpper();
+                int index;
 
-                if (Search(old_Reg)) //---------------------------- Seaching for old_Reg in Parking array
+                if (Search(old_Reg, out index)) //---------------------------- Seaching for old_Reg in Parking array
                 {
 
                     Console.Clear();
@@ -375,7 +386,6 @@ namespace PragueParkingProgram
                     Console.WriteLine();
                     Console.Write("Enter new parking spot: ");
 
-                    int index = FindIndex(old_Reg);
                     int n; bool parseSuccess = int.TryParse(Console.ReadLine(), out n);
 
                     if (parseSuccess)
@@ -478,36 +488,46 @@ namespace PragueParkingProgram
         } //-------------------------------------- Moving vehicle from index to index in Parking array
         static void Search()
         {
+
             Console.Clear();
 
             Console.WriteLine("-Search-");
             Console.WriteLine();
             Console.Write("Enter licence plate number: ");
 
-            try
-            {
+            string old_Reg = Console.ReadLine().ToUpper();
 
-                string old_Reg = Console.ReadLine().ToUpper();
+            //int index = FindIndex(old_Reg);
+            int index;
 
-                int index = FindIndex(old_Reg);
-
-                if (Search(old_Reg))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Vehicle (" + old_Reg + ") is parked at " + index + "\n");
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Vehicle (" + old_Reg + ") is not parked here.\n");
-                }
-            }
-            catch (Exception ex)
+            if (Search(old_Reg, out index))
             {
                 Console.Clear();
-                Console.WriteLine(ex.Message + "\n");
+                Console.WriteLine("Vehicle (" + old_Reg + ") is parked at " + index + "\n");
             }
-        } //------------------------------------ Looking for vehicle in Parking array
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Vehicle (" + old_Reg + ") is not parked here.\n");
+            }
+
+
+        } //------------------------------------ Looking for vehicle in Parking array. 
+        static bool Search(string regnum, out int index)
+        {
+            regnum.ToUpper();
+
+            for (int i = 1; i < Parking.Length; i++)
+            {
+                if (Parking[i] != null && Parking[i].Contains(regnum))
+                {
+                    index = i;
+                    return true;
+                }
+            }
+            index = -1;
+            return false;
+        } //-------- Searching for vehicle registration plate in Parking array. True if vehicle exists and outs index
         static void Show()
         {
             const int cols = 6;
@@ -633,33 +653,6 @@ namespace PragueParkingProgram
             Console.WriteLine("Error: Requirement 4-10 digits [A-Z / 0-9]\n");
             Console.ResetColor();
         } //------------------------------------- Plate format standard error
-        static bool Search(string regnum)
-        {
-            regnum.ToUpper();
-
-            for (int i = 1; i < Parking.Length; i++)
-            {
-                if (Parking[i] != null && Parking[i].Contains(regnum))
-                {
-                    return true;
-                }
-            }
-            return false;
-        } //----------------------- Searching for vehicle registration plate in Parking array
-        static int FindIndex(string regnum)
-        {
-            regnum.ToUpper();
-
-            for (int i = 1; i < Parking.Length; i++)
-            {
-                if (Parking[i] != null && Parking[i].Contains(regnum))
-                {
-                    int Index = i;
-                    return Index;
-                }
-            }
-            return 0;
-        } //--------------------- Searching for index of vehicle in Parking array
         static bool isAloneMc(int index)
         {
             if (Parking[index] != null && !Parking[index].Contains("/") && Parking[index].Contains("-MC")) // ONE MC
@@ -708,6 +701,9 @@ namespace PragueParkingProgram
                 return false;
             }
         } //-------------------- Check if registration plate number is valid
+        static bool Exit()
+        {
+            return false;
+        }
     }
-
 }
