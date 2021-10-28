@@ -6,4 +6,9 @@
     <RootNamespace>PragueParking2._0</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Datafiles\" />
+    <Folder Include="Vehicles\Datafiles\" />
+  </ItemGroup>
+
 </Project>
