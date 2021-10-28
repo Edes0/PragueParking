@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PragueParking2._0.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,10 +7,12 @@ namespace PragueParking2._0.Vehicles
 {
     class Bus : Vehicle
     {
-        private int Hight;
+        private byte Hight { get; } = (byte)Hights.Bus;
+        private byte Size { get; } = (byte)Sizes.Bus;
+        private string Type { get; } = "-Bus";
 
-        private int Size;
-
-        private int Type;
+        public Bus(string aRegistrationNumber) : base(aRegistrationNumber)
+        {
+        }
     }
 }
