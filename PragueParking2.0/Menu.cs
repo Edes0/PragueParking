@@ -26,55 +26,9 @@ namespace PragueParking2._0
                 switch (userInput)
                 {
                     case "Park vehicle":
-
-                        CheckRegistrationNumber(out string RegistrationNumber);
-
-                        userInput = AnsiConsole.Prompt(new SelectionPrompt<string>().AddChoices(new[] { "Car", "Mc", "Bike", "Bus" }));
-
-                        switch (userInput)
-                        {
-                            case "Car":
-
-                                CreateVehicle("Car", RegistrationNumber, out Vehicle car);
-
-                                if (parkingHouse.ParkVehicle(car))
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot);
-                                    parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("No available spots, try to use the Optimize function");
-                                    break;
-                                }
-
-                                //case "Mc":
-                                //    CreateVehicle("Mc", RegistrationNumber, out Vehicle mc);
-                                //    break;
-
-                                //case "Bike":
-                                //    CreateVehicle("Bike", RegistrationNumber, out Vehicle bike);
-                                //    break;
-
-                                case "Bus":
-                                CreateVehicle("Bus", RegistrationNumber, out Vehicle bus);
-
-                                if (parkingHouse.ParkBigVehicle(bus))
-                                {
-                                    Console.Clear();
-                                    Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot);
-                                    parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
-                                    break;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("No available spots, try to use the Optimize function");
-                                    break;
-                                }
-                        }
+                        ParkMenu();
                         break;
+
                     case "Remove Vehicle":
                         break;
 
@@ -91,54 +45,109 @@ namespace PragueParking2._0
             }
         }
 
-        private bool CheckRegistrationNumber(out string aRegistrationNumber)
+        private void ParkMenu()
         {
-            Console.Write("Enter your registration plate number: ");
-            string RegistrationNumber = Console.ReadLine();
+            CheckRegistrationNumber(out string RegistrationNumber);
 
-            Regex regex = new Regex(@"^[[A-Z]\d-]{4,10}$");
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+              .AddChoices(new[] { "Car", "Mc", "Bike", "Bus", "Back" }));
 
-            if (regex.IsMatch(RegistrationNumber))
+            switch (userInput)
             {
-                aRegistrationNumber = RegistrationNumber;
-                return true;
+                case "Car":
+
+                    CreateVehicle("Car", RegistrationNumber, out Vehicle car);
+
+                    if (parkingHouse.ParkVehicle(car))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot);
+                        parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        break;
+                    }
+
+                //case "Mc":
+                //    CreateVehicle("Mc", RegistrationNumber, out Vehicle mc);
+                //    break;
+
+                //case "Bike":
+                //    CreateVehicle("Bike", RegistrationNumber, out Vehicle bike);
+                //    break;
+
+                case "Bus":
+                    CreateVehicle("Bus", RegistrationNumber, out Vehicle bus);
+
+                    if (parkingHouse.ParkBigVehicle(bus))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot);
+                        parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        break;
+                    }
+                case "Back":
+                    break;
+
             }
-            aRegistrationNumber = RegistrationNumber;
-            return false;
         }
-        private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
-        {
-            if (aType == "Car")
-            {
-                Car car = new Car(aRegistrationNumber);
-                aVehicle = car;
-            }
-            else if (aType == "Mc")
-            {
-                Console.WriteLine("Error: Not yet done");
-                Mc mc = new Mc(aRegistrationNumber);
-                aVehicle = mc;
-            }
-            else if (aType == "Bike")
-            {
-                Bike bike = new Bike(aRegistrationNumber);
-                aVehicle = bike;
-                Console.WriteLine("Error: Not yet done");
-            }
-            else if (aType == "Bus")
-            {
-                Bus bus = new Bus(aRegistrationNumber);
-                aVehicle = bus;
-                Console.WriteLine("Error: Not yet done");
-            }
-            else
-            {
-                Car Error = new Car("Error: Vehicle type not found");
-                aVehicle = Error;
-            }
 
+        private bool CheckRegistrationNumber(out string aRegistrationNumber)
+            {
+                Console.Write("Enter your registration plate number: ");
+                string RegistrationNumber = Console.ReadLine();
+
+                Regex regex = new Regex(@"^[[A-Z]\d-]{4,10}$");
+
+                if (regex.IsMatch(RegistrationNumber))
+                {
+                    aRegistrationNumber = RegistrationNumber;
+                    return true;
+                }
+                aRegistrationNumber = RegistrationNumber;
+                return false;
+            }
+            private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
+            {
+                if (aType == "Car")
+                {
+                    Car car = new Car(aRegistrationNumber);
+                    aVehicle = car;
+                }
+                else if (aType == "Mc")
+                {
+                    Console.WriteLine("Error: Not yet done");
+                    Mc mc = new Mc(aRegistrationNumber);
+                    aVehicle = mc;
+                }
+                else if (aType == "Bike")
+                {
+                    Bike bike = new Bike(aRegistrationNumber);
+                    aVehicle = bike;
+                    Console.WriteLine("Error: Not yet done");
+                }
+                else if (aType == "Bus")
+                {
+                    Bus bus = new Bus(aRegistrationNumber);
+                    aVehicle = bus;
+                    Console.WriteLine("Error: Not yet done");
+                }
+                else
+                {
+                    Car Error = new Car("Error: Vehicle type not found");
+                    aVehicle = Error;
+                }
+
+            }
         }
     }
-}
 
 

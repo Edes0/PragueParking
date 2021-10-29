@@ -21,7 +21,7 @@ namespace PragueParking2._0
                 parkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
             }
         }
-        public bool ParkVehicle(Vehicle aVehicle)
+        internal bool ParkVehicle(Vehicle aVehicle)
         {
             foreach (ParkingSpot parkingSpot in parkingSpotArray)
             {
@@ -32,7 +32,7 @@ namespace PragueParking2._0
             }
             return false;
         }
-        public bool ParkBigVehicle(Vehicle aVehicle)
+        internal bool ParkBigVehicle(Vehicle aVehicle)
         {
             if (CheckBusParkingAvailable(aVehicle, out ParkingSpot aParkingSpot))
             {
@@ -40,7 +40,7 @@ namespace PragueParking2._0
             }
             return false;
         }
-        public bool CheckBusParkingAvailable(Vehicle aVehicle, out ParkingSpot parkingSpot)
+        internal bool CheckBusParkingAvailable(Vehicle aVehicle, out ParkingSpot parkingSpot)
         {
             byte counter = 0;
 
@@ -67,7 +67,7 @@ namespace PragueParking2._0
             return false;
         }
 
-        private void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out decimal aCounterLimit)
+        internal void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out decimal aCounterLimit)
         {
             if (true)
             {

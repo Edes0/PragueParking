@@ -8,11 +8,11 @@ namespace PragueParking2._0
 {
     public class ParkingSpot
     {
-        public List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
-        public byte Number { get; set; }
-        public byte Size { get; } = (byte)Sizes.ParkingSpot;
-        public byte Hight { get; set; }
-        public byte AvailableSize { get; set; } = (byte)Sizes.ParkingSpot;
+        internal List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
+        internal byte Number { get; set; }
+        internal byte Size { get; } = (byte)Sizes.ParkingSpot;
+        internal byte Hight { get; set; }
+        internal byte AvailableSize { get; set; } = (byte)Sizes.ParkingSpot;
 
         internal ParkingSpot(byte aNumber, byte aHighRoof)
         {
@@ -27,7 +27,7 @@ namespace PragueParking2._0
                 Hight = (byte)Hights.ParkingLow;
             }
         }
-        public bool CheckVehicleParkingAvailable(Vehicle aVehicle, ParkingSpot aParkingSpot)
+        internal bool CheckVehicleParkingAvailable(Vehicle aVehicle, ParkingSpot aParkingSpot)
         {
             if (aParkingSpot.AvailableSize >= aVehicle.Size)
             {
@@ -38,7 +38,7 @@ namespace PragueParking2._0
             }
             return false;
         }
-        public bool CheckHight(Vehicle aVehicle, ParkingSpot aParkingSpot)
+        internal bool CheckHight(Vehicle aVehicle, ParkingSpot aParkingSpot)
         {
             if (aParkingSpot.Hight > aVehicle.Hight)
             {
@@ -46,7 +46,7 @@ namespace PragueParking2._0
             }
             return false;
         }
-        public bool CheckVehicleInParkingSpot(string aRegistrationNumber, out byte aIndex)
+        internal bool CheckVehicleInParkingSpot(string aRegistrationNumber, out byte aIndex)
         {
             foreach (Vehicle vehicle in VehicleList)
             {
