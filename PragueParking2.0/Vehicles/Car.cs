@@ -7,11 +7,12 @@ namespace PragueParking2._0.Vehicles
 {
     class Car : Vehicle
     {
-        private byte Hight { get; } = (byte)Hights.Car;
-        private byte Size { get; } = (byte)Sizes.Car;
+        internal override byte Hight { get; } = (byte)Hights.Car;
+        internal override byte Size { get; } = (byte)Sizes.Car;
         private string Type { get; } = "-C";
         public Car(string aRegistrationNumber) : base(aRegistrationNumber)
         {
+
         }
     }
 }

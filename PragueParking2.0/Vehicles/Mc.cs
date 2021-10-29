@@ -7,8 +7,8 @@ namespace PragueParking2._0.Vehicles
 {
     class Mc : Vehicle
     {
-        private byte Hight { get; } = (byte)Hights.Mc;
-        private byte Size { get; } = (byte)Sizes.Mc;
+        internal override byte Hight { get; } = (byte)Hights.Mc;
+        internal override byte Size { get; } = (byte)Sizes.Mc;
         private string Type { get; } = "-Mc";
 
         public Mc(string aRegistrationNumber) : base(aRegistrationNumber)

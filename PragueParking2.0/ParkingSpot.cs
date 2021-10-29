@@ -6,19 +6,19 @@ using System.Text;
 
 namespace PragueParking2._0
 {
-    class ParkingSpot
+    public class ParkingSpot
     {
-        public List<Vehicle> VehicleList = new List<Vehicle>();
+        public List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
         public byte Number { get; set; }
-        private byte Size { get; } = (byte)Sizes.ParkingSpot;
-        private byte Hight { get; set; }
-        public byte AvailableSize { get; set; }
+        public byte Size { get; } = (byte)Sizes.ParkingSpot;
+        public byte Hight { get; set; }
+        public byte AvailableSize { get; set; } = (byte)Sizes.ParkingSpot;
 
-        public ParkingSpot(byte aNumber)
+        internal ParkingSpot(byte aNumber, byte aHighRoof)
         {
             Number = aNumber;
 
-            if (aNumber <= 50) // TODO: Magic nr
+            if (aNumber <= aHighRoof) // TODO: Magic nr
             {
                 Hight = (byte)Hights.ParkingHigh;
             }
@@ -27,22 +27,25 @@ namespace PragueParking2._0
                 Hight = (byte)Hights.ParkingLow;
             }
         }
-        public bool CheckVehicleSize(Vehicle vehicle)
+        public bool CheckVehicleParkingAvailable(Vehicle aVehicle, ParkingSpot aParkingSpot)
         {
-            if (vehicle.Size > AvailableSize)
+            if (aParkingSpot.AvailableSize >= aVehicle.Size)
             {
-                Console.WriteLine("Not done");
-            }
-            else
-            {
-                if (AvailableSize >= vehicle.Size)
-                {
-                    return true;
-                }
+                aParkingSpot.AvailableSize -= aVehicle.Size;
+                aVehicle.Pspot = aParkingSpot.Number;
+                aParkingSpot.VehicleList.Add(aVehicle); // PROBLEM MED SIZE
+                return true;
             }
             return false;
         }
-
+        public bool CheckHight(Vehicle aVehicle, ParkingSpot aParkingSpot)
+        {
+            if (aParkingSpot.Hight > aVehicle.Hight)
+            {
+                return true;
+            }
+            return false;
+        }
         public bool CheckVehicleInParkingSpot(string aRegistrationNumber, out byte aIndex)
         {
             foreach (Vehicle vehicle in VehicleList)

@@ -4,40 +4,76 @@ using PragueParking2._0.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace PragueParking2._0
 {
     class ParkingHouse
     {
-        public byte Size { get; } = (byte)Sizes.ParkingHouse;
-        public ParkingSpot[] parkingSpotArray = new ParkingSpot[(int)Sizes.ParkingHouse];
-
+        private byte HighRoof { get; } = (byte)Sizes.ParkingHouseHighRoof;
+        private byte Size { get; } = (byte)Sizes.ParkingHouse;
+        internal ParkingSpot[] parkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
         public ParkingHouse()
         {
-            for (int i = 1; i < Size + 1; i++)
+            for (int i = 0; i < Size; i++)
             {
-                parkingSpotArray[i] = new ParkingSpot((byte)i);
+                parkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
             }
-            JsonSync();
         }
-        public void Menu()
-        {
-            Console.WriteLine("Enter registration plate");
-            Car car = new Car(Console.ReadLine());
-            GetFreeParking(car);
-            ParkingSpot.CheckVehicleSize(car); // VAD I HELA FITTAN JÄVLA HORA JÄVLA FITTKUK JÄVLA SLYNMAMMAKNULLARE
-        }
-        public byte GetFreeParking(Vehicle aVehicle)
+        public bool ParkVehicle(Vehicle aVehicle)
         {
             foreach (ParkingSpot parkingSpot in parkingSpotArray)
             {
-                if (parkingSpot.AvailableSize >= aVehicle.Size)
+                if (parkingSpot.CheckVehicleParkingAvailable(aVehicle, parkingSpot))
                 {
-                    return parkingSpot.Number;
+                    return true;
                 }
             }
-            return 0;
+            return false;
+        }
+        public bool ParkBigVehicle(Vehicle aVehicle)
+        {
+            if (CheckBusParkingAvailable(aVehicle, out ParkingSpot aParkingSpot))
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool CheckBusParkingAvailable(Vehicle aVehicle, out ParkingSpot parkingSpot)
+        {
+            byte counter = 0;
+
+            foreach (ParkingSpot aParkingSpot in parkingSpotArray)
+            {
+                if (aParkingSpot.Hight > aVehicle.Hight && aParkingSpot.AvailableSize == aParkingSpot.Size)
+                {
+                    parkingSpot = aParkingSpot;
+                    counter += 1;
+                    CounterLimitCalculator(aVehicle.Size, aParkingSpot.Size, out decimal aCounterLimit);
+
+                    if (counter == aCounterLimit)
+                    {
+                       // parkingSpotArray[parkingSpot.Number-aCounterLimit]
+                        return true;
+                    }
+                }
+                else
+                {
+                    counter = 0;
+                }
+            }
+            parkingSpot = null;
+            return false;
+        }
+
+        private void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out decimal aCounterLimit)
+        {
+            if (true)
+            {
+                aCounterLimit = aVehicleSize / aParkingSpotSize;
+                aCounterLimit = Math.Ceiling(aCounterLimit);
+            }
         }
         public void Optimize()
         {
@@ -74,11 +110,6 @@ namespace PragueParking2._0
             throw new System.NotImplementedException();
         }
 
-        public void ParkVehicle()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void MoveVehicle()
         {
             throw new System.NotImplementedException();
@@ -98,16 +129,17 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }
-        public void JsonSync()
+        public void JsonSync(ParkingSpot[] aParkingSpotArray)
         {
-            for (int i = 1; i < Size + 1; i++)
-            {
-                string parkingSpotJson = JsonConvert.SerializeObject(parkingSpotArray[i]);
-                File.WriteAllText(@"C:\Users\sjogr_v8becyz\source\repos\PragueParking\PragueParking2.0\Datafiles\Datafile.json", parkingSpotJson);
-                parkingSpotJson = File.ReadAllText(@"C:\Users\sjogr_v8becyz\source\repos\PragueParking\PragueParking2.0\Datafiles\Datafile.json");
-                ParkingSpot parkingspot = JsonConvert.DeserializeObject<ParkingSpot>(parkingSpotJson);
-                parkingSpotArray[i] = parkingspot;
-            }
+            //for (int i = 0; i < Size; i++)
+            //{
+            string parkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented);
+            Console.WriteLine(parkingSpotArrayJson);
+            //File.WriteAllText(@"../../../Datafiles/Datafile.json",parkingSpotArrayJson);
+            //parkingSpotJson = File.ReadAllText(@"../../../Datafiles/Datafile.json");
+            //ParkingSpot parkingspot = JsonConvert.DeserializeObject<ParkingSpot>(parkingSpotJson);
+            //parkingSpotArray[i] = parkingspot;
+            //}
         }
     }
 }

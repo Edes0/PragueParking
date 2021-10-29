@@ -6,12 +6,16 @@ namespace PragueParking2._0.Vehicles
 {
     public abstract class Vehicle
     {
-        public string RegNum { get; set; }
-        public DateTime ParkTime { get; } = DateTime.Now;
-        public byte Size { get; internal set; }
+        internal string RegNum { get; set; }
+        private DateTime ParkTime { get; } = DateTime.Now;
 
-        public Vehicle(string aRegistrationNumber)
+        internal abstract byte Size { get; } 
+        internal abstract byte Hight { get; }
+        internal byte Pspot { get; set; }
+
+        protected Vehicle(string aRegistrationNumber)
         {
+            RegNum = aRegistrationNumber;
         }
     }
 }

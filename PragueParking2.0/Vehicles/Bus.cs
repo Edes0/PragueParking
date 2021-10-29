@@ -7,8 +7,8 @@ namespace PragueParking2._0.Vehicles
 {
     class Bus : Vehicle
     {
-        private byte Hight { get; } = (byte)Hights.Bus;
-        private byte Size { get; } = (byte)Sizes.Bus;
+        internal override byte Hight { get; } = (byte)Hights.Bus;
+        internal override byte Size { get; } = (byte)Sizes.Bus;
         private string Type { get; } = "-Bus";
 
         public Bus(string aRegistrationNumber) : base(aRegistrationNumber)

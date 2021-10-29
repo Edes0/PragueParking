@@ -10,18 +10,13 @@ namespace PragueParkingProgram
 {
     class Program
     {
-        ParkingHouse parkingHouse = new ParkingHouse();
-        
-        static void Main()
+        static void Main(string[] args)
         {
-            bool exit = false;
+            Menu menu = new Menu();
+            menu.Start();
 
-            while (!exit)
-            {
-                ParkingHouse.Menu();
-                Console.ReadLine();
-
-            }
+            Console.WriteLine("Program ended");
+            Console.ReadKey();
         }
     }
 }

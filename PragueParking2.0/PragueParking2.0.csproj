@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Vehicles\Datafiles\**" />
+    <EmbeddedResource Remove="Vehicles\Datafiles\**" />
+    <None Remove="Vehicles\Datafiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Datafiles\" />
-    <Folder Include="Vehicles\Datafiles\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Spectre.Console" Version="0.42.0" />
   </ItemGroup>
 
 </Project>
