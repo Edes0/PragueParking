@@ -13,8 +13,10 @@ namespace PragueParkingProgram
         static void Main(string[] args)
         {
             Menu menu = new Menu();
-            menu.Start();
-
+            while (menu.Start())
+            {
+                
+            }
             Console.WriteLine("Program ended");
             Console.ReadKey();
         }

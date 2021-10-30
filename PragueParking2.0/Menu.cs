@@ -10,39 +10,33 @@ namespace PragueParking2._0
     class Menu
     {
         ParkingHouse parkingHouse = new ParkingHouse();
-        public void Start()
+        public bool Start()
         {
-            bool exit = false;
+            var table = new Table();
+            table.AddColumn("PRAGUE PARKING V2");
+            table.Expand();
+            AnsiConsole.Write(table);
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Exit Program" }));
 
-            while (!exit)
+            switch (userInput)
             {
-                var table = new Table();
-                table.AddColumn("PRAGUE PARKING V2");
-                table.Expand();
-                AnsiConsole.Write(table);
-                string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                  .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Exit Program" }));
+                case "Park vehicle":
+                    ParkMenu();
+                    return true;
+                case "Remove Vehicle":
+                    return true;
 
-                switch (userInput)
-                {
-                    case "Park vehicle":
-                        ParkMenu();
-                        break;
+                case "Move Vehicle":
+                    return true;
 
-                    case "Remove Vehicle":
-                        break;
+                case "Search Vehicle":
+                    return true;
 
-                    case "Move Vehicle":
-                        break;
-
-                    case "Search Vehicle":
-                        break;
-
-                    case "Exit":
-                        exit = true;
-                        break;
-                }
+                case "Exit":
+                    break;
             }
+            return false;
         }
 
         private void ParkMenu()
@@ -58,11 +52,10 @@ namespace PragueParking2._0
 
                     CreateVehicle("Car", RegistrationNumber, out Vehicle car);
 
-                    if (parkingHouse.ParkVehicle(car))
+                    if (parkingHouse.CheckVehicleParkingAvailable(car))
                     {
                         Console.Clear();
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot);
-                        parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
                         break;
                     }
                     else
@@ -82,11 +75,10 @@ namespace PragueParking2._0
                 case "Bus":
                     CreateVehicle("Bus", RegistrationNumber, out Vehicle bus);
 
-                    if (parkingHouse.ParkBigVehicle(bus))
+                    if (parkingHouse.CheckBigParkingAvailable(bus))
                     {
                         Console.Clear();
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot);
-                        parkingHouse.JsonSync(parkingHouse.parkingSpotArray);
                         break;
                     }
                     else
@@ -99,55 +91,54 @@ namespace PragueParking2._0
 
             }
         }
-
         private bool CheckRegistrationNumber(out string aRegistrationNumber)
+        {
+            Console.Write("Enter your registration plate number: ");
+            string RegistrationNumber = Console.ReadLine();
+
+            Regex regex = new Regex(@"^[[A-Z]\d-]{4,10}$");
+
+            if (regex.IsMatch(RegistrationNumber))
             {
-                Console.Write("Enter your registration plate number: ");
-                string RegistrationNumber = Console.ReadLine();
-
-                Regex regex = new Regex(@"^[[A-Z]\d-]{4,10}$");
-
-                if (regex.IsMatch(RegistrationNumber))
-                {
-                    aRegistrationNumber = RegistrationNumber;
-                    return true;
-                }
                 aRegistrationNumber = RegistrationNumber;
-                return false;
+                return true;
             }
-            private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
+            aRegistrationNumber = RegistrationNumber;
+            return false;
+        }
+        private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
+        {
+            if (aType == "Car")
             {
-                if (aType == "Car")
-                {
-                    Car car = new Car(aRegistrationNumber);
-                    aVehicle = car;
-                }
-                else if (aType == "Mc")
-                {
-                    Console.WriteLine("Error: Not yet done");
-                    Mc mc = new Mc(aRegistrationNumber);
-                    aVehicle = mc;
-                }
-                else if (aType == "Bike")
-                {
-                    Bike bike = new Bike(aRegistrationNumber);
-                    aVehicle = bike;
-                    Console.WriteLine("Error: Not yet done");
-                }
-                else if (aType == "Bus")
-                {
-                    Bus bus = new Bus(aRegistrationNumber);
-                    aVehicle = bus;
-                    Console.WriteLine("Error: Not yet done");
-                }
-                else
-                {
-                    Car Error = new Car("Error: Vehicle type not found");
-                    aVehicle = Error;
-                }
-
+                Car car = new Car(aRegistrationNumber);
+                aVehicle = car;
             }
+            else if (aType == "Mc")
+            {
+                Console.WriteLine("Error: Not yet done");
+                Mc mc = new Mc(aRegistrationNumber);
+                aVehicle = mc;
+            }
+            else if (aType == "Bike")
+            {
+                Bike bike = new Bike(aRegistrationNumber);
+                aVehicle = bike;
+                Console.WriteLine("Error: Not yet done");
+            }
+            else if (aType == "Bus")
+            {
+                Bus bus = new Bus(aRegistrationNumber);
+                aVehicle = bus;
+                Console.WriteLine("Error: Not yet done");
+            }
+            else
+            {
+                Car Error = new Car("Error: Vehicle type not found");
+                aVehicle = Error;
+            }
+
         }
     }
+}
 
 

@@ -17,5 +17,9 @@ namespace PragueParking2._0.Vehicles
         {
             RegNum = aRegistrationNumber;
         }
+        public override string ToString()
+        {
+            return this.RegNum;
+        }
     }
 }

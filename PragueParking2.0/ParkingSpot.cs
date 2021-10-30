@@ -27,16 +27,9 @@ namespace PragueParking2._0
                 Hight = (byte)Hights.ParkingLow;
             }
         }
-        internal bool CheckVehicleParkingAvailable(Vehicle aVehicle, ParkingSpot aParkingSpot)
+        public override string ToString()
         {
-            if (aParkingSpot.AvailableSize >= aVehicle.Size)
-            {
-                aParkingSpot.AvailableSize -= aVehicle.Size;
-                aVehicle.Pspot = aParkingSpot.Number;
-                aParkingSpot.VehicleList.Add(aVehicle); // PROBLEM MED SIZE
-                return true;
-            }
-            return false;
+            return "ParkingSpot[" + this.Number + "]";
         }
         internal bool CheckHight(Vehicle aVehicle, ParkingSpot aParkingSpot)
         {
