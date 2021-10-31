@@ -15,7 +15,7 @@ namespace PragueParkingProgram
             Menu menu = new Menu();
             while (menu.Start())
             {
-                
+
             }
             Console.WriteLine("Program ended");
             Console.ReadKey();

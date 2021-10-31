@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace PragueParking2._0
 {
@@ -138,19 +139,24 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }
+
         public void JsonSync(ParkingSpot[] aParkingSpotArray)
         {
-            string dfsfsdffdfdsffdsfsdf = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented);
             string parkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented);
             string path = @"../../../Datafiles/Datafile.json";
             File.WriteAllText(path, parkingSpotArrayJson);
 
+            parkingSpotArrayJson = File.ReadAllText(path);
 
-            //File.WriteAllText(@"../../../Datafiles/Datafile.json",parkingSpotArrayJson);
-            //parkingSpotJson = File.ReadAllText(@"../../../Datafiles/Datafile.json");
-            //ParkingSpot parkingspot = JsonConvert.DeserializeObject<ParkingSpot>(parkingSpotJson);
-            //parkingSpotArray[i] = parkingspot;
-            //}
+            List<Vehicle> data = JsonConvert.DeserializeObject<List<Vehicle>>(parkingSpotArrayJson).ToList();
+            foreach (Vehicle vehicle in data)
+            {
+                Console.WriteLine(vehicle);
+            }
+
         }
+        //parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson);
     }
 }
+
+

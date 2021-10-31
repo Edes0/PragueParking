@@ -9,7 +9,7 @@ namespace PragueParking2._0.Vehicles
     {
         internal override byte Hight { get; } = (byte)Hights.Bike;
         internal override byte Size { get; } = (byte)Sizes.Bike;
-        private string Type { get; } = "-B"; // Lägg i utrskrift
+        private string Type { get; } = "-Bike"; // Lägg i utrskrift
 
         public Bike(string aRegistrationNumber) : base(aRegistrationNumber)
         {
