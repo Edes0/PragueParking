@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using PragueParking2._0.Enums;
 using PragueParking2._0.Vehicles;
+using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +13,7 @@ using static PragueParking2._0.ParkingHouse.JsonCreationConverter<PragueParking2
 
 namespace PragueParking2._0
 {
-    class ParkingHouse
+    partial class ParkingHouse
     {
         private byte HighRoof { get; } = (byte)Sizes.ParkingHouseHighRoof;
         private byte Size { get; } = (byte)Sizes.ParkingHouse;
@@ -35,7 +35,7 @@ namespace PragueParking2._0
                     aVehicle.Pspot = aParkingSpot.Number;
                     aParkingSpot.VehicleList.Add(aVehicle);
 
-                    JsonSync(parkingSpotArray);
+                    JsonWrite(parkingSpotArray);
 
                     return true;
                 }
@@ -71,7 +71,8 @@ namespace PragueParking2._0
                         parkingSpot.AvailableSize -= parkingSpot.AvailableSize;
                         parkingSpot.VehicleList.Add(aVehicle);
 
-                        JsonSync(parkingSpotArray);
+                        JsonWrite(parkingSpotArray);
+
                         return true;
                     }
                 }
@@ -102,12 +103,6 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }
-
-        public void Exit()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void UpdateTickets()
         {
             throw new System.NotImplementedException();
@@ -142,70 +137,47 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }
-        public void JsonSync(ParkingSpot[] aParkingSpotArray)
+        internal void PrintParkingGrid()
         {
-            string parkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented);
+            var table = new Table();
+            const int cols = 6;
+            int n = 0;
+
+            foreach (ParkingSpot parkingSpot in parkingSpotArray)
+            {
+                    foreach (Vehicle vehicle in parkingSpot.VehicleList)
+                    {
+                        if (n >= cols && n % cols == 0)
+                        {
+                            Console.WriteLine();
+                            n = 0;
+                        }
+                        else
+                        {
+                            table.AddColumn(vehicle.RegNum);
+                            n++;
+                        }
+                    }
+            }
+            table.Expand();
+            AnsiConsole.Write(table);
+        }
+        internal void JsonWrite(ParkingSpot[] aParkingSpotArray)
+        {
             string path = @"../../../Datafiles/Datafile.json";
+
+            string parkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented, new VehicleConverter());
+
             File.WriteAllText(path, parkingSpotArrayJson);
+        }
+        public void JsonRead()
+        {
+            string path = @"../../../Datafiles/Datafile.json";
 
-            parkingSpotArrayJson = File.ReadAllText(path);
+            string parkingSpotArrayJson = File.ReadAllText(path);
 
-            //parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson);
             parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson, new VehicleConverter());
 
         }
-        public abstract class JsonCreationConverter<T> : JsonConverter
-        {
-            protected abstract T Create(Type objectType, JObject jObject);
-
-            public override bool CanConvert(Type objectType)
-            {
-                return typeof(T) == objectType;
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType,
-                object existingValue, JsonSerializer serializer)
-            {
-                try
-                {
-                    var jObject = JObject.Load(reader);
-                    var target = Create(objectType, jObject);
-                    serializer.Populate(jObject.CreateReader(), target);
-                    return target;
-                }
-                catch (JsonReaderException)
-                {
-                    return null;
-                }
-            }
-            public override void WriteJson(JsonWriter writer, object value,
-                JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-            public class VehicleConverter : JsonCreationConverter<Vehicle>
-            {
-                protected override Vehicle Create(Type objectType, JObject jObject)
-                {
-                    switch ((Constants.VehicleType)jObject["Type"].Value<int>())
-                    {
-                        case Constants.VehicleType.Car:
-                            return new Car();
-
-                        case Constants.VehicleType.Mc:
-                            return new Mc();
-
-                        case Constants.VehicleType.Bike:
-                            return new Bike();
-
-                        case Constants.VehicleType.Bus:
-                            return new Bus();
-                    }
-                    return null;
-                }
-            }
-        }
     }
 }
-
-

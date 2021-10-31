@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using PragueParking2._0.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,8 +21,11 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         private DateTime ParkTime { get; } = DateTime.Now;
         [JsonProperty]
-        public abstract Constants.VehicleType Type { get; }
+        public abstract VehicleType Type { get; }
 
+        protected Vehicle()
+        {
+        }
         protected Vehicle(string aRegistrationNumber)
         {
             RegNum = aRegistrationNumber;

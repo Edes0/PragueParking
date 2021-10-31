@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using PragueParking2._0.Vehicles;
 using Spectre.Console;
@@ -12,10 +10,10 @@ namespace PragueParking2._0
         ParkingHouse parkingHouse = new ParkingHouse();
         public bool Start()
         {
-            var table = new Table();
-            table.AddColumn("PRAGUE PARKING V2");
-            table.Expand();
-            AnsiConsole.Write(table);
+            parkingHouse.JsonRead();
+
+            parkingHouse.PrintParkingGrid();
+
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
               .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Exit Program" }));
 
@@ -131,6 +129,7 @@ namespace PragueParking2._0
             aRegistrationNumber = RegistrationNumber;
             return false;
         }
+
         private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
         {
             if (aType == "Car")

@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PragueParking2._0.Enums;
 using PragueParking2._0.Vehicles;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PragueParking2._0
 {
@@ -21,7 +19,10 @@ namespace PragueParking2._0
         [JsonProperty]
         internal List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
 
+        public ParkingSpot()
+        {
 
+        }
         internal ParkingSpot(byte aNumber, byte aHighRoof)
         {
             Number = aNumber;
@@ -35,6 +36,8 @@ namespace PragueParking2._0
                 Hight = (byte)Hights.ParkingLow;
             }
         }
+        
+
     public override string ToString()
         {
             return "ParkingSpot[" + this.Number + "]";
