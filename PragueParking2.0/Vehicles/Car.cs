@@ -14,6 +14,7 @@ namespace PragueParking2._0.Vehicles
         }
         internal override byte Hight { get; } = (byte)Hights.Car;
         internal override byte Size { get; } = (byte)Sizes.Car;
+        internal override string StringType { get; } = "Car";
 
         public Car()
         {

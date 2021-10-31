@@ -13,6 +13,7 @@ namespace PragueParking2._0.Vehicles
         }
         internal override byte Hight { get; } = (byte)Hights.Bus;
         internal override byte Size { get; } = (byte)Sizes.Bus;
+        internal override string StringType { get; } = "Bus";
 
         public Bus()
         {

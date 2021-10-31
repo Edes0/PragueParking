@@ -145,19 +145,32 @@ namespace PragueParking2._0
 
             foreach (ParkingSpot parkingSpot in parkingSpotArray)
             {
+                if (n >= cols && n % cols == 0)
+                {
+                    // New row
+                    n = 0;
+                }
+                else if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize == parkingSpot.Size)
+                {
+                    table.AddColumn("Empty");
+                    AnsiConsole.Write(table);
+                    n++;
+                }
+                else if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize != parkingSpot.Size)
+                {                             
+                    table.AddColumn("-");
+                    AnsiConsole.Write(table);
+                    n++;
+                }
+                else
+                {
+                    n++;
                     foreach (Vehicle vehicle in parkingSpot.VehicleList)
                     {
-                        if (n >= cols && n % cols == 0)
-                        {
-                            Console.WriteLine();
-                            n = 0;
-                        }
-                        else
-                        {
-                            table.AddColumn(vehicle.RegNum);
-                            n++;
-                        }
+                        table.AddColumn(vehicle.StringType);
+                        AnsiConsole.Write(table);
                     }
+                }
             }
             table.Expand();
             AnsiConsole.Write(table);

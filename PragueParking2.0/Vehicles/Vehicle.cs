@@ -19,9 +19,12 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         internal abstract byte Hight { get; }
         [JsonProperty]
+        internal abstract string StringType { get; }
+        [JsonProperty]
         private DateTime ParkTime { get; } = DateTime.Now;
         [JsonProperty]
         public abstract VehicleType Type { get; }
+        
 
         protected Vehicle()
         {
@@ -30,5 +33,9 @@ namespace PragueParking2._0.Vehicles
         {
             RegNum = aRegistrationNumber;
         }
+        //public override string ToString()
+        //{
+        //    return StringType;
+        //}
     }
 }
