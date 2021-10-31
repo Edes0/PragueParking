@@ -38,7 +38,6 @@ namespace PragueParking2._0
             }
             return false;
         }
-
         private void ParkMenu()
         {
             CheckRegistrationNumber(out string RegistrationNumber);
@@ -64,15 +63,40 @@ namespace PragueParking2._0
                         break;
                     }
 
-                //case "Mc":
-                //    CreateVehicle("Mc", RegistrationNumber, out Vehicle mc);
-                //    break;
+                case "Mc":
 
-                //case "Bike":
-                //    CreateVehicle("Bike", RegistrationNumber, out Vehicle bike);
-                //    break;
+                    CreateVehicle("Mc", RegistrationNumber, out Vehicle mc);
+
+                    if (parkingHouse.CheckVehicleParkingAvailable(mc))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + mc.Pspot);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        break;
+                    }
+                case "Bike":
+
+                    CreateVehicle("Bike", RegistrationNumber, out Vehicle bike);
+
+
+                    if (parkingHouse.CheckVehicleParkingAvailable(bike))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bike.Pspot);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        break;
+                    }
 
                 case "Bus":
+
                     CreateVehicle("Bus", RegistrationNumber, out Vehicle bus);
 
                     if (parkingHouse.CheckBigParkingAvailable(bus))
@@ -86,6 +110,7 @@ namespace PragueParking2._0
                         Console.WriteLine("No available spots, try to use the Optimize function");
                         break;
                     }
+
                 case "Back":
                     break;
 
@@ -115,7 +140,6 @@ namespace PragueParking2._0
             }
             else if (aType == "Mc")
             {
-                Console.WriteLine("Error: Not yet done");
                 Mc mc = new Mc(aRegistrationNumber);
                 aVehicle = mc;
             }
@@ -123,13 +147,11 @@ namespace PragueParking2._0
             {
                 Bike bike = new Bike(aRegistrationNumber);
                 aVehicle = bike;
-                Console.WriteLine("Error: Not yet done");
             }
             else if (aType == "Bus")
             {
                 Bus bus = new Bus(aRegistrationNumber);
                 aVehicle = bus;
-                Console.WriteLine("Error: Not yet done");
             }
             else
             {

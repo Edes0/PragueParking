@@ -21,11 +21,12 @@ namespace PragueParking2._0
         [JsonProperty]
         internal List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
 
+
         internal ParkingSpot(byte aNumber, byte aHighRoof)
         {
             Number = aNumber;
 
-            if (aNumber <= aHighRoof) // TODO: Magic nr
+            if (aNumber <= aHighRoof)
             {
                 Hight = (byte)Hights.ParkingHigh;
             }
@@ -34,16 +35,7 @@ namespace PragueParking2._0
                 Hight = (byte)Hights.ParkingLow;
             }
         }
-        [JsonConstructor]
-        internal ParkingSpot(byte aNumber, byte aSize, byte aHight, byte aAvailableSize, List<Vehicle> aVehicleList)
-        {
-            Number = aNumber;
-            Size = aSize;
-            Hight = aHight;
-            AvailableSize = aAvailableSize;
-            VehicleList = aVehicleList;
-        }
-        public override string ToString()
+    public override string ToString()
         {
             return "ParkingSpot[" + this.Number + "]";
         }

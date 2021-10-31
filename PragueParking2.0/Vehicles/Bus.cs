@@ -7,9 +7,13 @@ namespace PragueParking2._0.Vehicles
 {
     class Bus : Vehicle
     {
+        public override Constants.VehicleType Type
+        {
+            get { return Constants.VehicleType.Bus; }
+        }
         internal override byte Hight { get; } = (byte)Hights.Bus;
         internal override byte Size { get; } = (byte)Sizes.Bus;
-        private string Type { get; } = "-Bus";
+        //public override ClassDiscriminatorEnum Type => ClassDiscriminatorEnum.Bus;
 
         public Bus(string aRegistrationNumber) : base(aRegistrationNumber)
         {

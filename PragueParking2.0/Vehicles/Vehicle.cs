@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Text;
 namespace PragueParking2._0.Vehicles
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class Vehicle
+    public abstract partial class Vehicle
     {
         [JsonProperty]
         internal string RegNum { get; set; }
@@ -18,42 +19,12 @@ namespace PragueParking2._0.Vehicles
         internal abstract byte Hight { get; }
         [JsonProperty]
         private DateTime ParkTime { get; } = DateTime.Now;
+        [JsonProperty]
+        public abstract Constants.VehicleType Type { get; }
 
         protected Vehicle(string aRegistrationNumber)
         {
             RegNum = aRegistrationNumber;
-        }
-        // OPTIONAL: Försökt att få det att fungera
-        //[JsonConverter(typeof(Vehicle))]
-        //abstract class Base
-        //{
-        //    public int ObjType { get; set; }
-        //    public int Id { get; set; }
-        //}
-
-        //class Car : Base
-        //{
-        //    public string Foo { get; set; }
-        //}
-
-        //class Mc : Base
-        //{
-        //    public string Bar { get; set; }
-        //}
-
-        //class Bike : Base
-        //{
-        //    public string Bar { get; set; }
-        //}
-
-        //class Bus : Base
-        //{
-        //    public string Bar { get; set; }
-        //}
-
-        public override string ToString()
-        {
-            return this.RegNum;
         }
     }
 }

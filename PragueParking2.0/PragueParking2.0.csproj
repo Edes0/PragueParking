@@ -22,4 +22,6 @@
     <PackageReference Include="Spectre.Console" Version="0.42.0" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties datafiles_4datafile_1json__JsonSchema="https://docs.gradle.com/build-cache-node/schema/build-cache-node-config-schema-3.json" /></VisualStudio></ProjectExtensions>
+
 </Project>

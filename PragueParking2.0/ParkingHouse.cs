@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PragueParking2._0.Enums;
 using PragueParking2._0.Vehicles;
 using System;
@@ -7,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using static PragueParking2._0.ParkingHouse.JsonCreationConverter<PragueParking2._0.Vehicles.Vehicle>;
 
 namespace PragueParking2._0
 {
@@ -46,9 +49,11 @@ namespace PragueParking2._0
 
             foreach (ParkingSpot aParkingSpot in parkingSpotArray)
             {
+                parkingSpotCounter += 1;
+
                 if (aParkingSpot.Hight > aVehicle.Hight && aParkingSpot.AvailableSize == aParkingSpot.Size)
                 {
-                    parkingSpotCounter += 1;
+
                     parkingsInARowCounter += 1;
 
                     CounterLimitCalculator(aVehicle.Size, aParkingSpot.Size, out decimal aCounterLimit);
@@ -57,15 +62,16 @@ namespace PragueParking2._0
                     {
                         ParkingSpot parkingSpot = parkingSpotArray[parkingSpotCounter - (byte)aCounterLimit];
 
-                        for (int i = 0; i < aCounterLimit; i++)
+                        for (int i = 1; i < aCounterLimit; i++)
                         {
+
                             parkingSpotArray[parkingSpotCounter - i].AvailableSize -= parkingSpot.AvailableSize;
                         }
 
+                        parkingSpot.AvailableSize -= parkingSpot.AvailableSize;
                         parkingSpot.VehicleList.Add(aVehicle);
 
                         JsonSync(parkingSpotArray);
-
                         return true;
                     }
                 }
@@ -79,11 +85,8 @@ namespace PragueParking2._0
 
         internal void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out decimal aCounterLimit)
         {
-            if (true)
-            {
-                aCounterLimit = aVehicleSize / aParkingSpotSize;
-                aCounterLimit = Math.Ceiling(aCounterLimit);
-            }
+            aCounterLimit = aVehicleSize / aParkingSpotSize;
+            aCounterLimit = Math.Ceiling(aCounterLimit);
         }
         public void Optimize()
         {
@@ -139,7 +142,6 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }
-
         public void JsonSync(ParkingSpot[] aParkingSpotArray)
         {
             string parkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented);
@@ -148,14 +150,61 @@ namespace PragueParking2._0
 
             parkingSpotArrayJson = File.ReadAllText(path);
 
-            List<Vehicle> data = JsonConvert.DeserializeObject<List<Vehicle>>(parkingSpotArrayJson).ToList();
-            foreach (Vehicle vehicle in data)
-            {
-                Console.WriteLine(vehicle);
-            }
+            //parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson);
+            parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson, new VehicleConverter());
 
         }
-        //parkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(parkingSpotArrayJson);
+        public abstract class JsonCreationConverter<T> : JsonConverter
+        {
+            protected abstract T Create(Type objectType, JObject jObject);
+
+            public override bool CanConvert(Type objectType)
+            {
+                return typeof(T) == objectType;
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType,
+                object existingValue, JsonSerializer serializer)
+            {
+                try
+                {
+                    var jObject = JObject.Load(reader);
+                    var target = Create(objectType, jObject);
+                    serializer.Populate(jObject.CreateReader(), target);
+                    return target;
+                }
+                catch (JsonReaderException)
+                {
+                    return null;
+                }
+            }
+            public override void WriteJson(JsonWriter writer, object value,
+                JsonSerializer serializer)
+            {
+                throw new NotImplementedException();
+            }
+            public class VehicleConverter : JsonCreationConverter<Vehicle>
+            {
+                protected override Vehicle Create(Type objectType, JObject jObject)
+                {
+                    switch ((Constants.VehicleType)jObject["Type"].Value<int>())
+                    {
+                        case Constants.VehicleType.Car:
+                            return new Car();
+
+                        case Constants.VehicleType.Mc:
+                            return new Mc();
+
+                        case Constants.VehicleType.Bike:
+                            return new Bike();
+
+                        case Constants.VehicleType.Bus:
+                            return new Bus();
+                    }
+                    return null;
+                }
+            }
+        }
     }
 }
 
