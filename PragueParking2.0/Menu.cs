@@ -11,6 +11,8 @@ namespace PragueParking2._0
         ParkingHouse parkingHouse = new ParkingHouse();
         public bool Start()
         {
+            Console.SetWindowSize(160, 40);
+
             parkingHouse.JsonRead();
 
             parkingHouse.PrintParkingGrid();
@@ -23,6 +25,7 @@ namespace PragueParking2._0
                 case "Park vehicle":
                     ParkMenu();
                     return true;
+
                 case "Remove Vehicle":
                     return true;
 

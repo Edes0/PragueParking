@@ -144,8 +144,8 @@ namespace PragueParking2._0
             {
                 box.Add(
                     new Panel(GetparkingSpotInfo(parkingSpot))
-                        .Header($"{parkingSpot.Number}")
-                        .RoundedBorder().Expand());
+                        .Header($"{parkingSpot.Number +1}")
+                        .RoundedBorder());
 
             }
             // Render all cards in columns
@@ -158,15 +158,18 @@ namespace PragueParking2._0
             if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize == parkingSpot.Size)
             {
                 return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
+                          // FREE
             }
             else if (parkingSpot.VehicleList.Count == 0)
             {
                 return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
+                          // RES 
             }
             else
             {
                 var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
-                return $"[b]{vehicleType}[/]\n[maroon]{parkingSpotNumber}[/]";
+                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
+                // Vehicle.StringType
             }
         }
         internal void JsonWrite(ParkingSpot[] aParkingSpotArray)
