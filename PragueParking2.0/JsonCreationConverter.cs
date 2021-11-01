@@ -37,7 +37,6 @@ namespace PragueParking2._0
             {
                 throw new NotImplementedException();
             }
-
             public class VehicleConverter : JsonCreationConverter<Vehicle>
             {
                 protected override Vehicle Create(Type objectType, JObject jObject)

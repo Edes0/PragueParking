@@ -7,6 +7,7 @@ namespace PragueParking2._0
 {
     class Menu
     {
+
         ParkingHouse parkingHouse = new ParkingHouse();
         public bool Start()
         {

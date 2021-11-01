@@ -139,41 +139,35 @@ namespace PragueParking2._0
         }
         internal void PrintParkingGrid()
         {
-            var table = new Table();
-            const int cols = 6;
-            int n = 0;
-
+            var box = new List<Panel>();
             foreach (ParkingSpot parkingSpot in parkingSpotArray)
             {
-                if (n >= cols && n % cols == 0)
-                {
-                    // New row
-                    n = 0;
-                }
-                else if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize == parkingSpot.Size)
-                {
-                    table.AddColumn("Empty");
-                    AnsiConsole.Write(table);
-                    n++;
-                }
-                else if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize != parkingSpot.Size)
-                {                             
-                    table.AddColumn("-");
-                    AnsiConsole.Write(table);
-                    n++;
-                }
-                else
-                {
-                    n++;
-                    foreach (Vehicle vehicle in parkingSpot.VehicleList)
-                    {
-                        table.AddColumn(vehicle.StringType);
-                        AnsiConsole.Write(table);
-                    }
-                }
+                box.Add(
+                    new Panel(GetparkingSpotInfo(parkingSpot))
+                        .Header($"{parkingSpot.Number}")
+                        .RoundedBorder().Expand());
+
             }
-            table.Expand();
-            AnsiConsole.Write(table);
+            // Render all cards in columns
+            AnsiConsole.Write(new Columns(box));
+        }
+        private static string GetparkingSpotInfo(ParkingSpot parkingSpot)
+        {
+            var parkingSpotNumber = $"{parkingSpot.AvailableSize}";
+
+            if (parkingSpot.VehicleList.Count == 0 && parkingSpot.AvailableSize == parkingSpot.Size)
+            {
+                return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
+            }
+            else if (parkingSpot.VehicleList.Count == 0)
+            {
+                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
+            }
+            else
+            {
+                var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
+                return $"[b]{vehicleType}[/]\n[maroon]{parkingSpotNumber}[/]";
+            }
         }
         internal void JsonWrite(ParkingSpot[] aParkingSpotArray)
         {

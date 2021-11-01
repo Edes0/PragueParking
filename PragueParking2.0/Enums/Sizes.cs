@@ -12,6 +12,7 @@ namespace PragueParking2._0.Enums
         Bus = 16,
         ParkingSpot = 4,
         ParkingHouse = 100,
-        ParkingHouseHighRoof = 50
+        ParkingHouseHighRoof = 50,
+        TableColumns = 10,
     }
 }
