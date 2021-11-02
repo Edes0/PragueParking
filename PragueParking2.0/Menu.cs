@@ -7,18 +7,38 @@ namespace PragueParking2._0
 {
     class Menu
     {
+        /*
+        
+        Tankar.. Fixa en find metod? Vad kan jag förbättra med mina metoder. 
+        Parkinghouse letar efter parkeringplatser medans parkeringsplatserna gör det dom gör. Menyn gör också det den gör.
 
+        Kan jag samla metoder något?
+
+       Gör jag samma typ av metoder olika?
+
+
+        TODO: Gör klart alla metoder
+        TODO: Slitta ut methoder mellan ParkingHouse och ParkingSpot
+        TODO: Exception handling
+        TODO: Kommentera
+        TODO: Dela ParkingHouse 2.0 och ParkingHouse 2.1
+
+        TODO: Gör klart VG-uppgifter
+        TODO: Exception handling igen
+        TODO: Kommentera igen
+        */
         ParkingHouse parkingHouse = new ParkingHouse();
         public bool Start()
         {
             Console.SetWindowSize(160, 40);
 
+            // parkingHouse.JsonWrite(parkingHouse.parkingSpotArray);
             parkingHouse.JsonRead();
 
             parkingHouse.PrintParkingGrid();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Exit Program" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Exit Program" }));
 
             switch (userInput)
             {
@@ -27,12 +47,18 @@ namespace PragueParking2._0
                     return true;
 
                 case "Remove Vehicle":
+                    RemoveMenu();
                     return true;
 
                 case "Move Vehicle":
+                    MoveMenu();
                     return true;
 
                 case "Search Vehicle":
+                    return true;
+
+                case "Clear Parking":
+                    RemoveAllMenu();
                     return true;
 
                 case "Exit":
@@ -40,6 +66,45 @@ namespace PragueParking2._0
             }
             return false;
         }
+
+        private void MoveMenu()
+        {
+            Console.Write("Enter registration number: ");
+            string registrationNumber = Console.ReadLine();
+        }
+
+        private void RemoveAllMenu()
+        {
+            Console.WriteLine("Are you sure?\n");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+
+              .AddChoices(new[] { "Yes", "No" }));
+
+            switch (userInput)
+            {
+                case "Yes":
+                    parkingHouse.RemoveAllParkings();
+                    break;
+
+                case "No":
+                    break;
+            }
+        }
+        private void RemoveMenu()
+        {
+            CheckRegistrationNumber(out string RegistrationNumber);
+
+            if (parkingHouse.RemoveVehicle(RegistrationNumber))
+            {
+                Console.WriteLine("Your vehicle has checked out.");
+            }
+            else
+            {
+                Console.WriteLine("Vehicle with registration number (" + RegistrationNumber + ") is not parked here.");
+            }
+        }
+
         private void ParkMenu()
         {
             CheckRegistrationNumber(out string RegistrationNumber);
@@ -55,13 +120,12 @@ namespace PragueParking2._0
 
                     if (parkingHouse.CheckVehicleParkingAvailable(car))
                     {
-                        Console.Clear();
-                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot);
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        Console.WriteLine("No available spots, try to use the Optimize function.");
                         break;
                     }
 
@@ -71,13 +135,12 @@ namespace PragueParking2._0
 
                     if (parkingHouse.CheckVehicleParkingAvailable(mc))
                     {
-                        Console.Clear();
-                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + mc.Pspot);
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + mc.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        Console.WriteLine("No available spots, try to use the Optimize function.");
                         break;
                     }
                 case "Bike":
@@ -87,13 +150,12 @@ namespace PragueParking2._0
 
                     if (parkingHouse.CheckVehicleParkingAvailable(bike))
                     {
-                        Console.Clear();
-                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bike.Pspot);
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bike.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        Console.WriteLine("No available spots, try to use the Optimize function.");
                         break;
                     }
 
@@ -103,13 +165,12 @@ namespace PragueParking2._0
 
                     if (parkingHouse.CheckBigParkingAvailable(bus))
                     {
-                        Console.Clear();
-                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot);
+                        Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function");
+                        Console.WriteLine("No available spots, try to use the Optimize function.");
                         break;
                     }
 
@@ -158,7 +219,7 @@ namespace PragueParking2._0
             }
             else
             {
-                Car Error = new Car("Error: Vehicle type not found");
+                Car Error = new Car("Error: Vehicle type not found.");
                 aVehicle = Error;
             }
 
