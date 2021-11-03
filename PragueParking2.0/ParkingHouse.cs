@@ -17,7 +17,8 @@ namespace PragueParking2._0
     {
         private byte HighRoof { get; } = (byte)Sizes.ParkingHouseHighRoof;
         private byte Size { get; } = (byte)Sizes.ParkingHouse;
-        private ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
+        // SET PRIVATE WHEN DONE
+        public ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
         internal ParkingHouse()
         {
             for (int i = 0; i < Size; i++)
@@ -25,12 +26,13 @@ namespace PragueParking2._0
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
             }
         }
-        internal bool CheckVehicleParkingAvailable(Vehicle aVehicle)
+        // Checks if a small vehicle can park. Checks all parkings spots with lower roof first.
+        internal bool SmallParkingAvailable(Vehicle vehicle) // BUGGAR
         {
-            Console.Clear();
 
             byte hight = (byte)Hights.ParkingHigh;
 
+            // Parks vehicle at parkings with lower hight if possible.
             IEnumerable<ParkingSpot> parkingsWithLowerHight =
                     from parkingSpot in ParkingSpotArray
                     where parkingSpot.Hight < hight
@@ -38,46 +40,87 @@ namespace PragueParking2._0
 
             foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
             {
-                if (parkingSpot.ParkingSpotIsAvailable(parkingSpot, aVehicle))
+                if (parkingSpot.ParkingSpotAvailable(parkingSpot, vehicle))
                 {
+                    parkingSpot.AddVehicle(vehicle, parkingSpot);
+
                     JsonWrite(ParkingSpotArray);
+
                     return true;
                 }
             }
-            foreach (ParkingSpot aParkingSpot in ParkingSpotArray)
+
+            // Parks vehicle at parkings with matching available size if possible.
+            IEnumerable<ParkingSpot> parkingsWithMatchingAvailableSize =
+                    from parkingSpot in ParkingSpotArray
+                    where parkingSpot.AvailableSize < vehicle.Size
+                    select parkingSpot;
+
+            foreach (ParkingSpot parkingSpot in ParkingSpotArray)
             {
-                if (aParkingSpot.ParkingSpotIsAvailable(aParkingSpot, aVehicle))
+                if (parkingSpot.ParkingSpotAvailable(parkingSpot, vehicle))
                 {
+                    parkingSpot.AddVehicle(vehicle, parkingSpot);
+
                     JsonWrite(ParkingSpotArray);
+
                     return true;
                 }
+            }
+
+            // Parks vehicle at any parking.
+            foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+            {
+                if (parkingSpot.ParkingSpotAvailable(parkingSpot, vehicle))
+                {
+                    parkingSpot.AddVehicle(vehicle, parkingSpot);
+
+                    JsonWrite(ParkingSpotArray);
+
+                    return true;
+                }
+            }
+
+
+            return false;
+        }
+        // Checks if a big vehicle can park.
+        internal bool BigParkingAvailable(Vehicle vehicle)
+        {
+            if (ParkingsInARowCalculator(vehicle, out byte parkingSpotCounter, out decimal counterLimit, out byte parkingsInARow))
+            {
+                ParkingSpot parkingSpot = ParkingSpotArray[parkingSpotCounter - (byte)counterLimit];
+
+                parkingSpot.AddVehicle(vehicle, parkingSpot);
+
+                AddReservedSpots(parkingSpot, (byte)counterLimit, parkingSpotCounter);
+
+                JsonWrite(ParkingSpotArray);
+
+                return true;
             }
             return false;
         }
-        internal bool CheckBigParkingAvailable(Vehicle aVehicle)
+        private bool ParkingsInARowCalculator(Vehicle vehicle, out byte aParkingSpotCounter, out decimal aCounterLimit, out byte aParkingsInARow) // OUT decimal från denna???? Kvar eller ej?
         {
             byte parkingsInARowCounter = 0;
             byte parkingSpotCounter = 0;
-
-            Console.Clear();
 
             foreach (ParkingSpot aParkingSpot in ParkingSpotArray)
             {
                 parkingSpotCounter += 1;
 
-                if (aParkingSpot.BigParkingSpotIsAvailable(aParkingSpot, aVehicle))
+                if (aParkingSpot.BigParkingSpotAvailable(aParkingSpot, vehicle))
                 {
                     parkingsInARowCounter += 1;
 
-                    CounterLimitCalculator(aVehicle.Size, aParkingSpot.Size, out decimal aCounterLimit);
+                    CounterLimitCalculator(vehicle.Size, aParkingSpot.Size, out byte counterLimit);
 
-                    if (parkingsInARowCounter == aCounterLimit)
+                    if (parkingsInARowCounter == counterLimit)
                     {
-                        ParkingSpot parkingSpot = ParkingSpotArray[parkingSpotCounter - (byte)aCounterLimit];
-
-                        aParkingSpot.ReservSpotsForBigVehicle(parkingSpot, aVehicle, parkingSpotCounter, (byte)aCounterLimit, ParkingSpotArray);
-
-                        JsonWrite(ParkingSpotArray);
+                        aParkingSpotCounter = parkingSpotCounter;
+                        aCounterLimit = counterLimit;
+                        aParkingsInARow = parkingsInARowCounter;
 
                         return true;
                     }
@@ -87,97 +130,122 @@ namespace PragueParking2._0
                     parkingsInARowCounter = 0;
                 }
             }
+            aParkingSpotCounter = 0;
+            aCounterLimit = 0;
+            aParkingsInARow = 0;
             return false;
         }
-
-        internal void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out decimal aCounterLimit)
+        private void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out byte counterLimit)
         {
-            aCounterLimit = aVehicleSize / aParkingSpotSize;
+            decimal aCounterLimit = aVehicleSize / aParkingSpotSize;
             aCounterLimit = Math.Ceiling(aCounterLimit);
-        }
-        public void Optimize()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void SearchVehicle()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void UpdateTickets()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void CalculatePrice()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void Prints()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void MoveParkingSpot()
-        {
-            throw new System.NotImplementedException();
-        }
-        //public bool MoveVehicle(string aRegistrationNumber, byte aTargetParkingSpot)
-        //{// small vehicle
 
-        //    ParkingSpot targetParkingSpot = ParkingSpotArray[aTargetParkingSpot];
+            counterLimit = (byte)aCounterLimit;
+        }
+        //internal bool MoveVehiclePossible(Vehicle vehicle, byte aNewParkingSpot, ParkingSpot oldParkingSpot) // Ska fixa två parkingersplatser  
+        //{
+        //    ParkingSpot newParkingSpot = ParkingSpotArray[aNewParkingSpot];
 
-        //    foreach (ParkingSpot parkingSpot in ParkingSpotArray)
-        //    {
-        //        if (parkingSpot.CheckVehicleInParkingSpot(aRegistrationNumber, out Vehicle aVehicle);)
+        //        if (vehicle.IsSmallVehicle(vehicle))
         //        {
-        //            parkingSpot.
+        //        oldParkingSpot.RemoveVehicle(vehicle, oldParkingSpot);
+        //        newParkingSpot.AddVehicle(vehicle, newParkingSpot);
+
         //        }
-                
+        //        else if (vehicle.IsBigVehicle(vehicle))
+        //        {
+        //            byte parkingsInARowCounter = 0;
+        //            byte parkingSpotCounter = 0;
+
+        //            parkingSpotCounter += 1;
+
+        //            if (parkingSpot.BigParkingSpotAvailable(parkingSpot, vehicle))
+        //            {
+        //                parkingsInARowCounter += 1;
+
+        //                CounterLimitCalculator(vehicle.Size, parkingSpot.Size, out decimal counterLimit);
+
+        //                if (parkingsInARowCounter == counterLimit)
+        //                {
+        //                    byte reservedSpots = (byte)(vehicle.Size / parkingSpot.Size);
+
+        //                    targetParkingSpot.AddVehicle(vehicle, targetParkingSpot);
+        //                    AddReservedSpots(vehicle, targetParkingSpot);
+        //                    parkingSpot.RemoveVehicle(vehicle, parkingSpot);
+        //                    //parkingSpot.ClearReservedSpots(parkingSpot, reservedSpots, ParkingSpotArray);
+
+        //                    JsonWrite(ParkingSpotArray);
+
+        //                    return true;
+        //                }
+        //            }
+        //    }
+        //    else
         //    {
-
-        //            // big vehicle
-        //            //else if (aVehicle.Size > parkingSpot.Size && parkingSpot.AvailableSize == parkingSpot.Size)
-        //            //{
-
-        //            //}
-        //        }
+        //        Console.WriteLine("Error: Vehicle is neither big or small.");
+        //        return false;
         //    }
         //}
-        public void RemoveAllParkings()
+        internal bool VehicleExistInParkingHouse(string registrationNumber, out Vehicle aVehicle, out ParkingSpot aParkingSpot)
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
             {
-                parkingSpot.ClearParking(parkingSpot);
+                if (parkingSpot.VehicleExist(registrationNumber, out Vehicle vehicle))
+                {
+                    aParkingSpot = parkingSpot;
+                    aVehicle = vehicle;
+                    return true;
+                }
             }
-            Console.Clear();
+            aParkingSpot = null;
+            aVehicle = null;
+            return false;
+        }
+        internal void RemoveAllParkings()
+        {
+            foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+            {
+                parkingSpot.Clear(parkingSpot);
+            }
             JsonWrite(ParkingSpotArray);
         }
-        public bool RemoveVehicle(string aRegNum)
+        internal bool RemoveVehicle(string aRegNum)  // CANT REMOVE BIG VEHICLE. FIX TOMORROW :D:D:D:D:D:D
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
             {
-                if (parkingSpot.CheckVehicleInParkingSpot(aRegNum, out Vehicle aVehicle))
+                if (parkingSpot.VehicleExist(aRegNum, out Vehicle vehicle))
                 {
-                    if (parkingSpot.RemoveSmallVehicle(aVehicle, parkingSpot))
+                    if (vehicle.IsSmallVehicle(vehicle))
                     {
-                        Console.Clear();
-                        JsonWrite(ParkingSpotArray);
-
-                        return true;
+                        parkingSpot.RemoveVehicle(vehicle, parkingSpot);
                     }
-                    else
+                    else if (vehicle.IsBigVehicle(vehicle))
                     {
-                        parkingSpot.VehicleList.Remove(aVehicle);
-                        byte reservedSpots = (byte)(aVehicle.Size / parkingSpot.Size);
-
-                        parkingSpot.RemoveBigVehicle(parkingSpot, reservedSpots, ParkingSpotArray);
-
-                        Console.Clear();
-                        JsonWrite(ParkingSpotArray);
-
-                        return true;
+                        if (ParkingsInARowCalculator(vehicle, out byte parkingSpotCounter, out decimal counterLimit, out byte parkingSpotsInaRow))
+                        {
+                            parkingSpot.RemoveVehicle(vehicle, parkingSpot);
+                            ClearReservedSpots(parkingSpot, (byte)counterLimit, parkingSpotCounter);
+                        }
                     }
+                    JsonWrite(ParkingSpotArray);
+                    return true;
                 }
             }
             return false;
+        }
+        private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit, byte aParkingSpotCounter) // Parking spot.. Linq efter specifika?
+        {
+            for (int i = 1; i < aCounterLimit; i++)
+            {
+                parkingSpot.Clear(ParkingSpotArray[aParkingSpotCounter - i]);
+            }
+        }
+        private void AddReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit, byte aParkingSpotCounter)// Parking spot.. Linq efter specifika?
+        {
+            for (int i = 1; i < (aCounterLimit); i++)
+            {
+                parkingSpot.Reserve(ParkingSpotArray[aParkingSpotCounter - i]);
+            }
         }
         internal void PrintParkingGrid()
         {
@@ -188,13 +256,14 @@ namespace PragueParking2._0
                     new Panel(parkingSpot.GetparkingSpotInfo(parkingSpot))
                         .Header($"{parkingSpot.Number + 1}")
                         .RoundedBorder());
-
             }
             // Render all cards in columns
             AnsiConsole.Write(new Columns(box));
         }
         internal void JsonWrite(ParkingSpot[] aParkingSpotArray)
         {
+            Console.Clear();
+
             string path = @"../../../Datafiles/Datafile.json";
 
             string ParkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented, new VehicleConverter());
@@ -209,6 +278,26 @@ namespace PragueParking2._0
 
             ParkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
 
+        }
+        public void Optimize()
+        {
+            throw new System.NotImplementedException();
+        }// Not done
+        public void SearchVehicle()
+        {
+            throw new System.NotImplementedException();
+        }// Not done
+        public void UpdateTickets()
+        {
+            throw new System.NotImplementedException();
+        }// Not done
+        public void CalculatePrice()
+        {
+            throw new System.NotImplementedException();
+        }// Not done
+        public void Prints()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

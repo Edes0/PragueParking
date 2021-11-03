@@ -32,7 +32,8 @@ namespace PragueParking2._0
         {
             Console.SetWindowSize(160, 40);
 
-            // parkingHouse.JsonWrite(parkingHouse.parkingSpotArray);
+            //parkingHouse.JsonWrite(parkingHouse.ParkingSpotArray);
+
             parkingHouse.JsonRead();
 
             parkingHouse.PrintParkingGrid();
@@ -51,7 +52,7 @@ namespace PragueParking2._0
                     return true;
 
                 case "Move Vehicle":
-                    MoveMenu();
+                    //MoveMenu();
                     return true;
 
                 case "Search Vehicle":
@@ -66,13 +67,39 @@ namespace PragueParking2._0
             }
             return false;
         }
+        //private void MoveMenu()
+        //{
+        //    Console.Write("Enter registration number: ");
+        //    string registrationNumber = Console.ReadLine();
 
-        private void MoveMenu()
-        {
-            Console.Write("Enter registration number: ");
-            string registrationNumber = Console.ReadLine();
-        }
+        //    Console.Clear();
+        //    if (parkingHouse.VehicleExistInParkingHouse(registrationNumber, out Vehicle vehicle, out ParkingSpot parkingSpot))
+        //    {
+        //        // IN I METOD
+        //        Console.Write("Enter new parkingspot number: ");
+        //        bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newParkingSPot);
 
+        //        if (parseSuccess)
+        //        {
+        //            if (parkingHouse.MoveVehiclePossible(vehicle, newParkingSPot, parkingSpot))
+        //            {
+        //                Console.WriteLine("Your vehicle is moved to parking spot: " + newParkingSPot);
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("Parking spot is unavailable.");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Enter a valid digit.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Vehicle not parked here.");
+        //    }
+        //}
         private void RemoveAllMenu()
         {
             Console.WriteLine("Are you sure?\n");
@@ -88,9 +115,10 @@ namespace PragueParking2._0
                     break;
 
                 case "No":
+                    Console.Clear();
                     break;
             }
-        }
+        }// MER INFO
         private void RemoveMenu()
         {
             CheckRegistrationNumber(out string RegistrationNumber);
@@ -104,7 +132,6 @@ namespace PragueParking2._0
                 Console.WriteLine("Vehicle with registration number (" + RegistrationNumber + ") is not parked here.");
             }
         }
-
         private void ParkMenu()
         {
             CheckRegistrationNumber(out string RegistrationNumber);
@@ -118,14 +145,14 @@ namespace PragueParking2._0
 
                     CreateVehicle("Car", RegistrationNumber, out Vehicle car);
 
-                    if (parkingHouse.CheckVehicleParkingAvailable(car))
+                    if (parkingHouse.SmallParkingAvailable(car))
                     {
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + car.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function.");
+                        Console.WriteLine("No available spots, try to use the optimize function.");
                         break;
                     }
 
@@ -133,14 +160,14 @@ namespace PragueParking2._0
 
                     CreateVehicle("Mc", RegistrationNumber, out Vehicle mc);
 
-                    if (parkingHouse.CheckVehicleParkingAvailable(mc))
+                    if (parkingHouse.SmallParkingAvailable(mc))
                     {
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + mc.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function.");
+                        Console.WriteLine("No available spots, try to use the optimize function.");
                         break;
                     }
                 case "Bike":
@@ -148,14 +175,14 @@ namespace PragueParking2._0
                     CreateVehicle("Bike", RegistrationNumber, out Vehicle bike);
 
 
-                    if (parkingHouse.CheckVehicleParkingAvailable(bike))
+                    if (parkingHouse.SmallParkingAvailable(bike))
                     {
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bike.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function.");
+                        Console.WriteLine("No available spots, try to use the optimize function.");
                         break;
                     }
 
@@ -163,18 +190,19 @@ namespace PragueParking2._0
 
                     CreateVehicle("Bus", RegistrationNumber, out Vehicle bus);
 
-                    if (parkingHouse.CheckBigParkingAvailable(bus))
+                    if (parkingHouse.BigParkingAvailable(bus))
                     {
                         Console.WriteLine("Your " + userInput + " is parked at parkingspot: " + bus.Pspot + ".");
                         break;
                     }
                     else
                     {
-                        Console.WriteLine("No available spots, try to use the Optimize function.");
+                        Console.WriteLine("No available spots, try to use the optimize function.");
                         break;
                     }
 
                 case "Back":
+                    Console.Clear();
                     break;
 
             }
@@ -192,9 +220,8 @@ namespace PragueParking2._0
                 return true;
             }
             aRegistrationNumber = RegistrationNumber;
-            return false;
+            return false; // IN I SKAPA BIl
         }
-
         private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
         {
             if (aType == "Car")

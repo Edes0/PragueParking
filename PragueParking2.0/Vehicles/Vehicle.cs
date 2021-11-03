@@ -29,13 +29,45 @@ namespace PragueParking2._0.Vehicles
         protected Vehicle()
         {
         }
-        protected Vehicle(string aRegistrationNumber)
+        protected Vehicle(string registrationNumber)
         {
-            RegNum = aRegistrationNumber;
+            RegNum = registrationNumber;
         }
-        //public override string ToString()
-        //{
-        //    return StringType;
-        //}
+        internal bool IsSmallVehicle(Vehicle vehicle)
+        {
+            byte parkingSpotSize = (byte)Sizes.ParkingSpot;
+
+            if (vehicle.Size <= parkingSpotSize)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal bool IsBigVehicle(Vehicle vehicle)
+        {
+            byte parkingSpotSize = (byte)Sizes.ParkingSpot;
+
+            if (vehicle.Size > parkingSpotSize)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal bool IsHighVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        {
+            if (vehicle.Hight > parkingSpot.Hight)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal bool IsLowVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        {
+            if (vehicle.Hight < parkingSpot.Hight)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
