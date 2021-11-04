@@ -93,7 +93,6 @@ namespace PragueParking2._0
                     {
                         Console.WriteLine("No available spots, try to use the optimize function.");
                     }
-
                     break;
             }
         }
@@ -232,7 +231,7 @@ namespace PragueParking2._0
 
             return registrationNumber.ToUpper();
         }
-        private bool ValidateRegistrationNumber(out string aRegistrationNumber)
+        private bool ValidateRegistrationNumber(out string aRegistrationNumber) // LÄGG TILL DE ANDRA SYMBOLERNA?
         {
             Console.Write("Enter your registration plate number: ");
             string registrationNumber = Console.ReadLine();
@@ -245,8 +244,16 @@ namespace PragueParking2._0
             if (regex.IsMatch(registrationNumber) && regexLength.IsMatch(registrationNumber))
             {
                 aRegistrationNumber = registrationNumber;
+
+                if (parkingHouse.SearchVehicle(registrationNumber, out Vehicle vehicle, out ParkingSpot parkingSpot))
+                {
+                    Console.WriteLine(vehicle.StringType + " (" + vehicle.RegNum + ") already exist in parking house");
+                    return false;
+                }
                 return true;
             }
+            Console.WriteLine("Registration number requirement. Symbols: A-Z and 0-9, length: 4-10");
+
             aRegistrationNumber = null;
             return false;
         }

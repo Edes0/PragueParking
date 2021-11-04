@@ -324,10 +324,6 @@ namespace PragueParking2._0
                 }
             }
         }
-        public bool SearchVehicle()
-        {
-            throw new System.NotImplementedException();
-        }// Not done
         public void UpdateTickets()
         {
             throw new System.NotImplementedException();
