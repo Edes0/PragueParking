@@ -41,47 +41,44 @@ namespace PragueParking2._0
             return "ParkingSpot[" + this.Number + "]";
         }
 
-        internal void RemoveVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal void RemoveVehicle(Vehicle vehicle)
         {
             if (vehicle.IsSmallVehicle(vehicle))
             {
-                parkingSpot.VehicleList.Remove(vehicle);
-                parkingSpot.AvailableSize += vehicle.Size;
+                VehicleList.Remove(vehicle);
+                AvailableSize += vehicle.Size;
             }
             else if (vehicle.IsBigVehicle(vehicle))
             {
-                parkingSpot.VehicleList.Remove(vehicle);
-                parkingSpot.AvailableSize += parkingSpot.Size;
+                VehicleList.Remove(vehicle);
+                AvailableSize += Size;
             }
             else
             {
-                // Ändra detta
-                Console.WriteLine("Error: Vehicle size and parkingspot size is the same");
+                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
             }
         }
-        internal void AddVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal void AddVehicle(Vehicle vehicle) // Testade att inte specifisera parkingspot
         {
-            if (vehicle.IsBigVehicle(vehicle)) // HIGHT
+            if (vehicle.IsBigVehicle(vehicle))
             {
-                VehicleList.Add(vehicle);
-                AvailableSize -= Size;
-                vehicle.Pspot = Number;
+                vehicle.ParkBig(this);
+                vehicle.SetVehicleParkingSpot(this);
             }
             else if (vehicle.IsSmallVehicle(vehicle))
             {
-                VehicleList.Add(vehicle);
-                AvailableSize -= vehicle.Size;
-                vehicle.Pspot = Number;
+                vehicle.ParkSmall(this);
+                vehicle.SetVehicleParkingSpot(this);
             }
             else
-            { // Ändra detta
-                Console.WriteLine("Error: Vehicle size and parkingspot size is the same");
+            {
+                throw new Exception("Error: Vehicle size and parkingspot size is the same. Change vehicle size or parkingspot size");
             }
         }
-        internal void Clear(ParkingSpot parkingSpot)
+        internal void Clear()
         {
-            parkingSpot.VehicleList.Clear();
-            parkingSpot.AvailableSize = Size;
+            VehicleList.Clear();
+            AvailableSize = Size;
         }
         internal void Reserve(ParkingSpot parkingSpot)
         {
@@ -100,17 +97,25 @@ namespace PragueParking2._0
             aVehicle = null;
             return false;
         }
-        internal bool ParkingSpotAvailable(ParkingSpot aParkingSpot, Vehicle aVehicle)
+        internal bool ParkingSpotAvailable(Vehicle vehicle)
         {
-            if (aParkingSpot.AvailableSize >= aVehicle.Size)
+            if (vehicle.VehicleFitSize(this) && vehicle.VehicleFitHight(this))
             {
                 return true;
             }
             return false;
         }
-        internal bool BigParkingSpotAvailable(ParkingSpot aParkingSpot, Vehicle aVehicle)
+        internal bool BigParkingSpotAvailable(Vehicle vehicle) // TOG PORT PARKING IN.
         {
-            if (aParkingSpot.Hight > aVehicle.Hight && aParkingSpot.AvailableSize == Size)
+            if (ParkingIsFree() && Hight > vehicle.Hight)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool ParkingIsFree()
+        {
+            if (AvailableSize == Size)
             {
                 return true;
             }
@@ -125,17 +130,40 @@ namespace PragueParking2._0
                 return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
                 // FREE
             }
-            else if (VehicleList.Count == 0)
+            else if (VehicleList.Count == 0 && AvailableSize == 0)
             {
                 return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
                 // RES 
             }
+            else if (AvailableSize == 3)
+            {
+                return $"[b]{"   "}[/]\n[yellow3_1]{parkingSpotNumber}[/]";
+            }
+            else if (AvailableSize == 2)
+            {
+                return $"[b]{"   "}[/]\n[gold1]{parkingSpotNumber}[/]";
+
+            }
+            else if (AvailableSize == 1)
+            {
+                return $"[b]{"   "}[/]\n[darkorange3_1]{parkingSpotNumber}[/]";
+            }
+            else if (AvailableSize == 0)
+            {
+                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
+            }
             else
             {
-                // var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
-                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
-                // parkingSpot.VehicleList[0].StringType
+                // Code to put in vehicles in panel / Not used
+                var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
+                return $"[b]{parkingSpot.VehicleList[0].StringType}[/]\n[maroon]{parkingSpotNumber}[/]";
             }
+
         }
+        internal void MoveVehicles(ParkingSpot parkingSpot)
+        {
+            parkingSpot.VehicleList.Add(VehicleList[0]);
+        }
+
     }
 }

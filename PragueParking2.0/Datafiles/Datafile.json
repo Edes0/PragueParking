@@ -3,28 +3,38 @@
     "Number": 0,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 3,
+        "Hight": 4,
+        "Size": 16,
+        "StringType": "Bus",
+        "RegNum": "c",
+        "Pspot": 0,
+        "ParkTime": "2021-11-04T14:59:49.051762+01:00"
+      }
+    ]
   },
   {
     "Number": 1,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 2,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 3,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
@@ -353,29 +363,78 @@
     "Number": 50,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "RegNum": "a",
+        "Pspot": 50,
+        "ParkTime": "2021-11-04T14:59:49.0521962+01:00"
+      }
+    ]
   },
   {
     "Number": 51,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 1,
+    "VehicleList": [
+      {
+        "Type": 1,
+        "Hight": 1,
+        "Size": 2,
+        "StringType": "Mc",
+        "RegNum": "a",
+        "Pspot": 51,
+        "ParkTime": "2021-11-04T14:59:49.0522339+01:00"
+      },
+      {
+        "Type": 2,
+        "Hight": 1,
+        "Size": 1,
+        "StringType": "Bike",
+        "RegNum": "a",
+        "Pspot": 51,
+        "ParkTime": "2021-11-04T14:59:49.0522604+01:00"
+      }
+    ]
   },
   {
     "Number": 52,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 2,
+    "VehicleList": [
+      {
+        "Type": 1,
+        "Hight": 1,
+        "Size": 2,
+        "StringType": "Mc",
+        "RegNum": "a",
+        "Pspot": 52,
+        "ParkTime": "2021-11-04T14:59:49.0522881+01:00"
+      }
+    ]
   },
   {
     "Number": 53,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 3,
+    "VehicleList": [
+      {
+        "Type": 2,
+        "Hight": 1,
+        "Size": 1,
+        "StringType": "Bike",
+        "RegNum": "b",
+        "Pspot": 53,
+        "ParkTime": "2021-11-04T14:59:49.0523114+01:00"
+      }
+    ]
   },
   {
     "Number": 54,

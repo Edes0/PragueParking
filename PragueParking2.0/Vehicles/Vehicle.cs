@@ -24,7 +24,6 @@ namespace PragueParking2._0.Vehicles
         private DateTime ParkTime { get; } = DateTime.Now;
         [JsonProperty]
         public abstract VehicleType Type { get; }
-        
 
         protected Vehicle()
         {
@@ -68,6 +67,37 @@ namespace PragueParking2._0.Vehicles
                 return true;
             }
             return false;
+        }
+        internal void SetVehicleParkingSpot(ParkingSpot parkingSpot)
+        {
+            Pspot = parkingSpot.Number;
+        }
+        internal bool VehicleFitSize(ParkingSpot parkingSpot)
+        {
+            if (parkingSpot.AvailableSize >= Size)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        internal bool VehicleFitHight(ParkingSpot parkingSpot)
+        {
+            if (parkingSpot.Hight > Hight)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal void ParkBig(ParkingSpot parkingSpot)
+        {
+            parkingSpot.VehicleList.Add(this);
+            parkingSpot.AvailableSize -= parkingSpot.Size;
+        }
+        internal void ParkSmall(ParkingSpot parkingSpot)
+        {
+            parkingSpot.VehicleList.Add(this);
+            parkingSpot.AvailableSize -= this.Size;
         }
     }
 }
