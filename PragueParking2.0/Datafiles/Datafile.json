@@ -10,21 +10,21 @@
     "Number": 1,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {
     "Number": 2,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {
     "Number": 3,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {

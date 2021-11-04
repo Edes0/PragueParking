@@ -27,7 +27,7 @@ namespace PragueParking2._0
             }
         }
         // Checks if a small vehicle can park. Checks all parkings spots with lower roof first.
-        internal bool SmallParkingAvailable(Vehicle vehicle) // BUGGAR
+        internal bool SmallParkingAvailable(Vehicle vehicle)
         {
 
             byte hight = (byte)Hights.ParkingHigh;
@@ -101,7 +101,7 @@ namespace PragueParking2._0
             }
             return false;
         }
-        private bool ParkingsInARowCalculator(Vehicle vehicle, out byte aParkingSpotCounter, out decimal aCounterLimit, out byte aParkingsInARow) // OUT decimal från denna???? Kvar eller ej?
+        private bool ParkingsInARowCalculator(Vehicle vehicle, out byte aParkingSpotCounter, out decimal aCounterLimit, out byte aParkingsInARow)
         {
             byte parkingsInARowCounter = 0;
             byte parkingSpotCounter = 0;
@@ -209,7 +209,7 @@ namespace PragueParking2._0
             }
             JsonWrite(ParkingSpotArray);
         }
-        internal bool RemoveVehicle(string aRegNum)  // CANT REMOVE BIG VEHICLE. FIX TOMORROW :D:D:D:D:D:D
+        internal bool RemoveVehicle(string aRegNum)
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
             {
@@ -221,11 +221,11 @@ namespace PragueParking2._0
                     }
                     else if (vehicle.IsBigVehicle(vehicle))
                     {
-                        if (ParkingsInARowCalculator(vehicle, out byte parkingSpotCounter, out decimal counterLimit, out byte parkingSpotsInaRow))
-                        {
-                            parkingSpot.RemoveVehicle(vehicle, parkingSpot);
-                            ClearReservedSpots(parkingSpot, (byte)counterLimit, parkingSpotCounter);
-                        }
+                        CounterLimitCalculator(vehicle.Size, parkingSpot.Size, out byte counterLimit);
+
+                        parkingSpot.RemoveVehicle(vehicle, parkingSpot);
+
+                        ClearReservedSpots(parkingSpot, counterLimit);
                     }
                     JsonWrite(ParkingSpotArray);
                     return true;
@@ -233,16 +233,16 @@ namespace PragueParking2._0
             }
             return false;
         }
-        private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit, byte aParkingSpotCounter) // Parking spot.. Linq efter specifika?
+        private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++)
             {
-                parkingSpot.Clear(ParkingSpotArray[aParkingSpotCounter - i]);
+                parkingSpot.Clear(ParkingSpotArray[parkingSpot.Number + aCounterLimit - i]);
             }
         }
-        private void AddReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit, byte aParkingSpotCounter)// Parking spot.. Linq efter specifika?
+        private void AddReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit, byte aParkingSpotCounter)
         {
-            for (int i = 1; i < (aCounterLimit); i++)
+            for (int i = 1; i < aCounterLimit; i++)
             {
                 parkingSpot.Reserve(ParkingSpotArray[aParkingSpotCounter - i]);
             }
@@ -295,9 +295,5 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }// Not done
-        public void Prints()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

@@ -80,8 +80,8 @@ namespace PragueParking2._0
         }
         internal void Clear(ParkingSpot parkingSpot)
         {
-            VehicleList.Clear();
-            AvailableSize = Size;
+            parkingSpot.VehicleList.Clear();
+            parkingSpot.AvailableSize = Size;
         }
         internal void Reserve(ParkingSpot parkingSpot)
         {
