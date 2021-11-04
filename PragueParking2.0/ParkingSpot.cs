@@ -41,39 +41,13 @@ namespace PragueParking2._0
             return "ParkingSpot[" + this.Number + "]";
         }
 
-        internal void RemoveVehicle(Vehicle vehicle)
+        internal void RemoveVehicle(Vehicle vehicle) // Make vehicle remove it self
         {
-            if (vehicle.IsSmallVehicle(vehicle))
-            {
-                VehicleList.Remove(vehicle);
-                AvailableSize += vehicle.Size;
-            }
-            else if (vehicle.IsBigVehicle(vehicle))
-            {
-                VehicleList.Remove(vehicle);
-                AvailableSize += Size;
-            }
-            else
-            {
-                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
-            }
+                vehicle.CheckOut(this);
         }
-        internal void AddVehicle(Vehicle vehicle) // Testade att inte specifisera parkingspot
+        internal void AddVehicle(Vehicle vehicle)
         {
-            if (vehicle.IsBigVehicle(vehicle))
-            {
-                vehicle.ParkBig(this);
-                vehicle.SetVehicleParkingSpot(this);
-            }
-            else if (vehicle.IsSmallVehicle(vehicle))
-            {
-                vehicle.ParkSmall(this);
-                vehicle.SetVehicleParkingSpot(this);
-            }
-            else
-            {
-                throw new Exception("Error: Vehicle size and parkingspot size is the same. Change vehicle size or parkingspot size");
-            }
+                vehicle.Park(this);
         }
         internal void Clear()
         {
@@ -99,15 +73,11 @@ namespace PragueParking2._0
         }
         internal bool ParkingSpotAvailable(Vehicle vehicle)
         {
-            if (vehicle.VehicleFitSize(this) && vehicle.VehicleFitHight(this))
+            if (vehicle.IsSmallVehicle() && vehicle.VehicleFitSize(this) && vehicle.VehicleFitHight(this))
             {
                 return true;
             }
-            return false;
-        }
-        internal bool BigParkingSpotAvailable(Vehicle vehicle) // TOG PORT PARKING IN.
-        {
-            if (ParkingIsFree() && Hight > vehicle.Hight)
+            if (vehicle.IsBigVehicle() && ParkingIsFree() && vehicle.VehicleFitHight(this))
             {
                 return true;
             }

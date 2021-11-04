@@ -10,9 +10,9 @@
         "Hight": 4,
         "Size": 16,
         "StringType": "Bus",
-        "RegNum": "c",
+        "RegNum": "1234",
         "Pspot": 0,
-        "ParkTime": "2021-11-04T14:59:49.051762+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2685662+01:00"
       }
     ]
   },
@@ -370,9 +370,9 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "RegNum": "a",
+        "RegNum": "ABC123",
         "Pspot": 50,
-        "ParkTime": "2021-11-04T14:59:49.0521962+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2688456+01:00"
       }
     ]
   },
@@ -387,18 +387,18 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "RegNum": "a",
+        "RegNum": null,
         "Pspot": 51,
-        "ParkTime": "2021-11-04T14:59:49.0522339+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2689203+01:00"
       },
       {
         "Type": 2,
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "RegNum": "a",
+        "RegNum": null,
         "Pspot": 51,
-        "ParkTime": "2021-11-04T14:59:49.0522604+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2689853+01:00"
       }
     ]
   },
@@ -413,9 +413,9 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "RegNum": "a",
+        "RegNum": null,
         "Pspot": 52,
-        "ParkTime": "2021-11-04T14:59:49.0522881+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2691708+01:00"
       }
     ]
   },
@@ -430,9 +430,9 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "RegNum": "b",
+        "RegNum": "12345",
         "Pspot": 53,
-        "ParkTime": "2021-11-04T14:59:49.0523114+01:00"
+        "ParkTime": "2021-11-04T18:19:11.2690527+01:00"
       }
     ]
   },
