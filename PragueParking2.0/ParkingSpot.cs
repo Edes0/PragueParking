@@ -43,11 +43,11 @@ namespace PragueParking2._0
 
         internal void RemoveVehicle(Vehicle vehicle) // Make vehicle remove it self
         {
-                vehicle.CheckOut(this);
+            vehicle.CheckOut(this);
         }
         internal void AddVehicle(Vehicle vehicle)
         {
-                vehicle.Park(this);
+            vehicle.Park(this);
         }
         internal void Clear()
         {
@@ -90,6 +90,10 @@ namespace PragueParking2._0
                 return true;
             }
             return false;
+        }
+        internal static void JoinParkings3and1(object pair)
+        {
+            throw new NotImplementedException();
         }
         internal string GetparkingSpotInfo(ParkingSpot parkingSpot)
         {

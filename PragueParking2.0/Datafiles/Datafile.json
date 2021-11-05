@@ -3,18 +3,8 @@
     "Number": 0,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 3,
-        "Hight": 4,
-        "Size": 16,
-        "StringType": "Bus",
-        "RegNum": "1234",
-        "Pspot": 0,
-        "ParkTime": "2021-11-04T18:19:11.2685662+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 1,
@@ -363,78 +353,29 @@
     "Number": 50,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "RegNum": "ABC123",
-        "Pspot": 50,
-        "ParkTime": "2021-11-04T18:19:11.2688456+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 51,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 1,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "RegNum": null,
-        "Pspot": 51,
-        "ParkTime": "2021-11-04T18:19:11.2689203+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "RegNum": null,
-        "Pspot": 51,
-        "ParkTime": "2021-11-04T18:19:11.2689853+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 52,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 2,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "RegNum": null,
-        "Pspot": 52,
-        "ParkTime": "2021-11-04T18:19:11.2691708+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 53,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 3,
-    "VehicleList": [
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "RegNum": "12345",
-        "Pspot": 53,
-        "ParkTime": "2021-11-04T18:19:11.2690527+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 54,

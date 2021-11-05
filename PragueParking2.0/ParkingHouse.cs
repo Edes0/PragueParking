@@ -32,11 +32,10 @@ namespace PragueParking2._0
             {
                 byte hight = (byte)Hights.ParkingHigh;
 
-                /*
                 // Parks vehicle at parkings with matching available size if possible.   Fixa så att inte car också kommer med..
                 IEnumerable<ParkingSpot> parkingsWithMatchingAvailableSize =
                         from parkingSpot in ParkingSpotArray
-                        where parkingSpot.AvailableSize <= vehicle.Size
+                        where parkingSpot.AvailableSize == vehicle.Size && parkingSpot.VehicleList.Count() > 0
                         select parkingSpot;
 
                 foreach (ParkingSpot parkingSpot in ParkingSpotArray)
@@ -50,25 +49,24 @@ namespace PragueParking2._0
                         return true;
                     }
                 }
-                */
-
+                
                 // Parks vehicle at parkings with lower hight if possible.
                 IEnumerable<ParkingSpot> parkingsWithLowerHight =
                         from parkingSpot in ParkingSpotArray
                         where parkingSpot.Hight < hight
                         select parkingSpot;
 
-                    foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
+                foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
+                {
+                    if (parkingSpot.ParkingSpotAvailable(vehicle))
                     {
-                        if (parkingSpot.ParkingSpotAvailable(vehicle))
-                        {
-                            parkingSpot.AddVehicle(vehicle);
+                        parkingSpot.AddVehicle(vehicle);
 
-                            JsonWrite(ParkingSpotArray);
+                        JsonWrite(ParkingSpotArray);
 
-                            return true;
-                        }
+                        return true;
                     }
+                }
 
                 // Parks vehicle at any parking.
                 foreach (ParkingSpot parkingSpot in ParkingSpotArray)
@@ -243,7 +241,7 @@ namespace PragueParking2._0
             }
             JsonWrite(ParkingSpotArray);
         }
-        internal bool RemoveVehicle(string aRegNum)
+        internal bool RemoveVehicle(string aRegNum) // Buggar när tar bort större fordon. Tog bort i före counter limit, la till den igen
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
             {
@@ -259,10 +257,10 @@ namespace PragueParking2._0
                 }
             }
             return false;
-        }
+        } // BUGGING WHEN REMOVING BUS. Doesnt remove last available space
         private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
-            for (int i = 1; i < aCounterLimit; i++)
+            for (int i = 1; i < aCounterLimit; i++) // kolla här.
             {
                 ParkingSpotArray[parkingSpot.Number + aCounterLimit - i].Clear();
             }
@@ -306,22 +304,28 @@ namespace PragueParking2._0
         }
         public void Optimize() // NOT DONE
         {
-            var ParkingSpotsNeedOptimization =
-                from parkingSpot3 in ParkingSpotArray
-                where parkingSpot3.AvailableSize < 3
-                select parkingSpot3;
+            var ParkingSpotsNeedOptimization3and1 =
+            from parkingSpot3 in ParkingSpotArray
+            where parkingSpot3.AvailableSize < 3
+            from parkingSpot1 in ParkingSpotArray
+            where parkingSpot1.AvailableSize < 1
+            select new { parkingSpot3, parkingSpot1 };
 
-            var ParkingSpotToMatch =
-                from parkingSpot1 in ParkingSpotArray
-                where parkingSpot1.AvailableSize < 1
-                select parkingSpot1;
-
-            foreach (var parkingSpot1 in ParkingSpotToMatch)
+            foreach (var pair in ParkingSpotsNeedOptimization3and1)
             {
-                foreach (var parkingSpot3 in ParkingSpotsNeedOptimization)
-                {
-                    //  parkingSpot1.MoveVehicles();
-                }
+                ParkingSpot.JoinParkings3and1(pair);
+            }
+
+            var ParkingSpotsNeedOptimization2and2 =
+            from parkingSpot3 in ParkingSpotArray
+            where parkingSpot3.AvailableSize < 2
+            from parkingSpot1 in ParkingSpotArray
+            where parkingSpot1.AvailableSize < 2
+            select new { parkingSpot3, parkingSpot1 };
+
+            foreach (var pair in ParkingSpotsNeedOptimization2and2) // UNION??? NO DUPLICATES
+            {
+                ParkingSpot.JoinParkings3and1(pair);
             }
         }
         public void UpdateTickets()

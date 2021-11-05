@@ -60,7 +60,7 @@ namespace PragueParking2._0.Vehicles
             }
             else if (IsBigVehicle())
             {
-                parkingSpot.AvailableSize += parkingSpot.AvailableSize;
+                parkingSpot.AvailableSize += parkingSpot.Size;
             }
             else
             {

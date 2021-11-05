@@ -70,30 +70,34 @@ namespace PragueParking2._0
         }
         private void ParkMenu()
         {
-            ValidateRegistrationNumber(out string RegistrationNumber);
-
-            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+            if (ValidateRegistrationNumber(out string RegistrationNumber))
+            {
+                string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
               .AddChoices(new[] { "Car", "Mc", "Bike", "Bus", "Back" }));
 
-            CreateVehicle(userInput, RegistrationNumber, out Vehicle vehicle);
+                CreateVehicle(userInput, RegistrationNumber, out Vehicle vehicle);
 
-            Console.Clear();
+                switch (userInput)
+                {
+                    case "Back":
+                        break;
 
-            switch (userInput)
+                    default:
+                        if (parkingHouse.ParkVehicle(vehicle))
+                        {
+                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1));
+                        }
+                        else
+                        {
+                            Console.WriteLine("No available spots, try to use the optimize function.");
+                        }
+                        break;
+                }
+            }
+            else
             {
-                case "Back":
-                    break;
-
-                default:
-                    if (parkingHouse.ParkVehicle(vehicle))
-                    {
-                        Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1));
-                    }
-                    else
-                    {
-                        Console.WriteLine("No available spots, try to use the optimize function.");
-                    }
-                    break;
+                Console.Clear();
+                Console.WriteLine("Registration number not allowed, try again.");
             }
         }
         private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
