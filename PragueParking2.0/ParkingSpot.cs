@@ -40,14 +40,39 @@ namespace PragueParking2._0
         {
             return "ParkingSpot[" + this.Number + "]";
         }
-
-        internal void RemoveVehicle(Vehicle vehicle) // Make vehicle remove it self
-        {
-            vehicle.CheckOut(this);
-        }
         internal void AddVehicle(Vehicle vehicle)
         {
             vehicle.Park(this);
+
+            if (vehicle.IsBig())
+            {
+                AvailableSize -= Size;
+            }
+            else if (vehicle.IsSmall() || vehicle.IsTiny())
+            {
+                AvailableSize -= vehicle.Size;
+            }
+            else
+            {
+                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
+            }
+        }
+        internal void RemoveVehicle(Vehicle vehicle)
+        {
+            vehicle.CheckOut(this);
+
+            if (vehicle.IsSmall() || vehicle.IsTiny())
+            {
+                AvailableSize += vehicle.Size;
+            }
+            else if (vehicle.IsBig())
+            {
+                AvailableSize += Size;
+            }
+            else
+            {
+                throw new Exception("Error: Vehicle is neither big nor small nor tiny vehicle, change vehicle size");
+            }
         }
         internal void Clear()
         {
@@ -73,11 +98,11 @@ namespace PragueParking2._0
         }
         internal bool ParkingSpotAvailable(Vehicle vehicle)
         {
-            if (vehicle.IsSmallVehicle() && vehicle.VehicleFitSize(this) && vehicle.VehicleFitHight(this))
+            if (vehicle.IsSmall() && vehicle.FitSize(this) && vehicle.FitHight(this))
             {
                 return true;
             }
-            if (vehicle.IsBigVehicle() && ParkingIsFree() && vehicle.VehicleFitHight(this))
+            if (vehicle.IsBig() && ParkingIsFree() && vehicle.FitHight(this))
             {
                 return true;
             }
@@ -90,10 +115,6 @@ namespace PragueParking2._0
                 return true;
             }
             return false;
-        }
-        internal static void JoinParkings3and1(object pair)
-        {
-            throw new NotImplementedException();
         }
         internal string GetparkingSpotInfo(ParkingSpot parkingSpot)
         {
@@ -127,17 +148,17 @@ namespace PragueParking2._0
                 return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
             }
             else
-            {
+            { 
+                // throw new Exception ("Parking spot has invalid size.");    When code done
                 // Code to put in vehicles in panel / Not used
                 var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
-                return $"[b]{parkingSpot.VehicleList[0].StringType}[/]\n[maroon]{parkingSpotNumber}[/]";
+                return $"[b]{"Error"}[/]\n[maroon]{parkingSpotNumber}[/]";
             }
 
         }
-        internal void MoveVehicles(ParkingSpot parkingSpot)
-        {
-            parkingSpot.VehicleList.Add(VehicleList[0]);
-        }
-
+        //internal void MoveVehicles(ParkingSpot parkingSpot)
+        //{
+        //    parkingSpot.VehicleList.Add(VehicleList[0]);
+        //}
     }
 }

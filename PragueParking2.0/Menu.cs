@@ -75,6 +75,8 @@ namespace PragueParking2._0
                 string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
               .AddChoices(new[] { "Car", "Mc", "Bike", "Bus", "Back" }));
 
+                Console.Clear();
+
                 CreateVehicle(userInput, RegistrationNumber, out Vehicle vehicle);
 
                 switch (userInput)
@@ -149,15 +151,15 @@ namespace PragueParking2._0
             if (parkingHouse.SearchVehicle(AskRegistrationNumber(), out Vehicle vehicle, out ParkingSpot parkingSpot))
             {
                 Console.Write("Enter new parkingspot number: ");
-                bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newParkingSPot);
+                bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newParkingSpot);
 
                 Console.Clear();
 
                 if (parseSuccess)
                 {
-                    if (parkingHouse.MoveVehicle(vehicle, newParkingSPot, parkingSpot))
+                    if (parkingHouse.MoveVehicle(vehicle, newParkingSpot, parkingSpot))
                     {
-                        Console.WriteLine("Your vehicle is moved to parking spot: " + newParkingSPot);
+                        Console.WriteLine("Your vehicle is moved to parking spot: " + newParkingSpot);
                     }
                     else
                     {
@@ -171,7 +173,7 @@ namespace PragueParking2._0
             }
             else
             {
-                Console.WriteLine(vehicle.StringType + " (" + vehicle.RegNum + ") is not parked here.");
+                Console.WriteLine("Vehicle is not parked here.");
             }
         }
         private void SearchVehicleMenu()
@@ -184,7 +186,7 @@ namespace PragueParking2._0
             }
             else
             {
-                Console.WriteLine(vehicle.StringType + " (" + vehicle.RegNum + ") is not parked here.");
+                Console.WriteLine("Vehicle is not parked here.");
             }
         }
         private void RemoveAllMenu()

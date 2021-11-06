@@ -36,39 +36,25 @@ namespace PragueParking2._0.Vehicles
         {
             parkingSpot.VehicleList.Add(this);
             Pspot = parkingSpot.Number;
-
-            if (IsBigVehicle())
-            {
-                parkingSpot.AvailableSize -= parkingSpot.Size;
-            }
-            else if (IsSmallVehicle())
-            {
-                parkingSpot.AvailableSize -= Size;
-            }
-            else
-            {
-                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
-            }
         }
         internal void CheckOut(ParkingSpot parkingSpot)
         {
             parkingSpot.VehicleList.Remove(this);
+         }
+        internal bool IsTiny()
+        {
+            byte parkingSpotSize = (byte)Sizes.ParkingSpot;
 
-            if (IsSmallVehicle())
+            if (Size < parkingSpotSize)
             {
-                parkingSpot.AvailableSize += Size;
-            }
-            else if (IsBigVehicle())
-            {
-                parkingSpot.AvailableSize += parkingSpot.Size;
+                return true;
             }
             else
             {
-                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
+                return false;
             }
-
         }
-        internal bool IsSmallVehicle()
+        internal bool IsSmall()
         {
             byte parkingSize = (byte)Sizes.ParkingSpot;
 
@@ -78,7 +64,7 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-        internal bool IsBigVehicle()
+        internal bool IsBig()
         {
             byte parkingSpotSize = (byte)Sizes.ParkingSpot;
 
@@ -88,7 +74,7 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-        internal bool IsHighVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal bool IsHigh(Vehicle vehicle, ParkingSpot parkingSpot)
         {
             if (vehicle.Hight > parkingSpot.Hight)
             {
@@ -96,7 +82,7 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-        internal bool IsLowVehicle(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal bool IsLow (Vehicle vehicle, ParkingSpot parkingSpot)
         {
             if (vehicle.Hight < parkingSpot.Hight)
             {
@@ -104,7 +90,7 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-        internal bool VehicleFitSize(ParkingSpot parkingSpot)
+        internal bool FitSize(ParkingSpot parkingSpot)
         {
             if (parkingSpot.AvailableSize >= Size)
             {
@@ -112,7 +98,7 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-        internal bool VehicleFitHight(ParkingSpot parkingSpot)
+        internal bool FitHight(ParkingSpot parkingSpot)
         {
             if (parkingSpot.Hight > Hight)
             {
@@ -120,6 +106,5 @@ namespace PragueParking2._0.Vehicles
             }
             return false;
         }
-
     }
 }

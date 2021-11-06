@@ -10,21 +10,21 @@
     "Number": 1,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {
     "Number": 2,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {
     "Number": 3,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 0,
+    "AvailableSize": 4,
     "VehicleList": []
   },
   {
@@ -45,28 +45,38 @@
     "Number": 6,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 3,
+        "Hight": 4,
+        "Size": 16,
+        "StringType": "Bus",
+        "RegNum": "AAA111",
+        "Pspot": 6,
+        "ParkTime": "2021-11-06T17:44:10.8956879+01:00"
+      }
+    ]
   },
   {
     "Number": 7,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 8,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 9,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
