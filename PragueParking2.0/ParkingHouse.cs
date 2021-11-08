@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using static PragueParking2._0.ParkingHouse.JsonCreationConverter<PragueParking2._0.Vehicles.Vehicle>;
 
 namespace PragueParking2._0
@@ -17,14 +15,83 @@ namespace PragueParking2._0
     {
         private byte HighRoof { get; } = (byte)Sizes.ParkingHouseHighRoof;
         private byte Size { get; } = (byte)Sizes.ParkingHouse;
-        // SET PRIVATE WHEN DONE
-        public ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
+        private ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
         internal ParkingHouse()
         {
             for (int i = 0; i < Size; i++)
             {
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
             }
+        }
+        internal void AddSomeVehicles()
+        {
+            Car car5 = new Car("CAGR257123");
+            ParkingSpotArray[1].AddVehicle(car5);
+
+            Car car6 = new Car("CAFR257123");
+            ParkingSpotArray[2].AddVehicle(car6);
+
+            Car car54 = new Car("CSAR257123");
+            ParkingSpotArray[3].AddVehicle(car54);
+
+            Car car23 = new Car("CAWR257123");
+            ParkingSpotArray[4].AddVehicle(car23);
+
+            Car car75 = new Car("CAHR257123");
+            ParkingSpotArray[5].AddVehicle(car75);
+
+            Car car236 = new Car("CQAR257123");
+            ParkingSpotArray[6].AddVehicle(car236);
+
+            Car car1 = new Car("CASGR257123");
+            ParkingSpotArray[7].AddVehicle(car1);
+
+            Car car2 = new Car("CWQE257123");
+            ParkingSpotArray[8].AddVehicle(car2);
+
+            Bike bike = new Bike("BIKE153623");
+            ParkingSpotArray[51].AddVehicle(bike);
+
+            Mc mc = new Mc("MC12323");
+            ParkingSpotArray[51].AddVehicle(mc);
+
+            Bike bike1 = new Bike("BIKE4222");
+            ParkingSpotArray[52].AddVehicle(bike1);
+
+            Bike bike2 = new Bike("BIKE3563");
+            ParkingSpotArray[53].AddVehicle(bike2);
+
+            Mc mc1 = new Mc("BIKE12962");
+            ParkingSpotArray[53].AddVehicle(mc1);
+
+            Bike bike3 = new Bike("BIKE3201");
+            ParkingSpotArray[54].AddVehicle(bike3);
+
+            Bike bike4 = new Bike("BIKE1924");
+            ParkingSpotArray[55].AddVehicle(bike4);
+
+            Mc mc2 = new Mc("MC1282");
+            ParkingSpotArray[56].AddVehicle(mc1);
+
+            Mc mc3 = new Mc("MC1722");
+            ParkingSpotArray[57].AddVehicle(mc1);
+
+            Mc mc4 = new Mc("MC1622");
+            ParkingSpotArray[58].AddVehicle(mc1);
+
+            Mc mc5 = new Mc("MMC1522");
+            ParkingSpotArray[59].AddVehicle(mc1);
+
+            Mc mc6 = new Mc("mCC1242");
+            ParkingSpotArray[61].AddVehicle(mc1);
+
+            Mc mc7 = new Mc("BMCC11222");
+            ParkingSpotArray[64].AddVehicle(mc1);
+
+            Mc mc8 = new Mc("MCCKE1222");
+            ParkingSpotArray[66].AddVehicle(mc1);
+
+            JsonWrite(ParkingSpotArray);
         }
         internal bool ParkVehicle(Vehicle vehicle)
         {
@@ -161,9 +228,9 @@ namespace PragueParking2._0
 
             counterLimit = (byte)aCounterLimit;
         }
-        internal bool MoveVehicle(Vehicle vehicle, byte aNewParkingSpot, ParkingSpot oldParkingSpot)
+        internal bool MoveVehicle(Vehicle vehicle, byte aNewParkingSpot, ParkingSpot oldParkingSpot) // Could still optimize big vehicle move. Remove first then add if can't move
         {
-            ParkingSpot newParkingSpot = ParkingSpotArray[aNewParkingSpot - 1];
+            ParkingSpot newParkingSpot = ParkingSpotArray[aNewParkingSpot];
 
             if (vehicle.IsSmall() || vehicle.IsTiny())
             {
@@ -280,7 +347,7 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, ParkingSpotArrayJson);
         }
-        public void JsonRead()
+        internal void JsonRead()
         {
             string path = @"../../../Datafiles/Datafile.json";
 
@@ -289,64 +356,106 @@ namespace PragueParking2._0
             ParkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
 
         }
-        public void Optimize() // NOT DONE
+        internal void JsonConfigRead()
         {
-            var ParkingSpotsNeedOptimization3and1 =
-            from parkingSpot3 in ParkingSpotArray
-            where parkingSpot3.AvailableSize == 3
-            from parkingSpot1 in ParkingSpotArray
-            where parkingSpot1.AvailableSize == 1
-            select new
+            string path = @"../../../Datafiles/Config.json";
+
+            string configJson = File.ReadAllText(path);
+
+        }
+        public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
+        {
+            while (OptimizeSize3())
             {
-                parkingSpot3,
-                parkingSpot1,
-                vehicle0 = parkingSpot1.VehicleList[0],
-                vehicle1 = parkingSpot1.VehicleList[1]
-            };
-
-            foreach (var pair in ParkingSpotsNeedOptimization3and1)
+            }
+            while (OptimizeSize2())
             {
-                if (pair.vehicle0.Size == 1)
+            }
+            //while (OptimizeCars()) Kraschar av någon anledning.
+            //{
+            //}
+        }
+        private bool OptimizeSize3()
+        {
+            foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
+            {
+                if (parkingSpotOut.AvailableSize == 3)
                 {
-                    Vehicle vehicle = pair.vehicle0;
-                    ParkingSpot parkingSpot = pair.parkingSpot3;
+                    foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
+                    {
+                        if (parkingSpotIn.AvailableSize == 1)
+                        {
+                            Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
-                    pair.parkingSpot3.AddVehicle(vehicle);
-                    Console.WriteLine(vehicle.RegNum + "was moved to spot " + pair.parkingSpot3.Number);
-                    pair.parkingSpot1.RemoveVehicle(vehicle);
+                            MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
 
-                    JsonWrite(ParkingSpotArray);
-                }
-                else if (pair.vehicle1.Size == 1)
-                {
-                    Vehicle vehicle = pair.vehicle1;
-
-                    pair.parkingSpot3.AddVehicle(vehicle);
-                    Console.WriteLine(vehicle.RegNum + "was moved to spot " + pair.parkingSpot3.Number);
-                    pair.parkingSpot1.RemoveVehicle(vehicle);
-
-                    JsonWrite(ParkingSpotArray);
+                            return true;
+                        }
+                    }
                 }
             }
-            //    var ParkingSpotsNeedOptimization2and2 =
-            //    from parkingSpot3 in ParkingSpotArray
-            //    where parkingSpot3.AvailableSize == 2
-            //    from parkingSpot1 in ParkingSpotArray
-            //    where parkingSpot1.AvailableSize == 2
-            //    select new { parkingSpot3, parkingSpot1 };
-
-            //    foreach (var pair in ParkingSpotsNeedOptimization2and2) // UNION??? NO DUPLICATES
-            //    {
-            //        ParkingSpot.JoinParkings2and2(pair);
-            //    }
+            return false;
         }
+        private bool OptimizeSize2()
+        {
+            foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
+            {
+                if (parkingSpotOut.AvailableSize == 2)
+                {
+                    foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
+                    {
+                        if (parkingSpotIn.AvailableSize == 2 && parkingSpotIn.Number != parkingSpotOut.Number)
+                        {
+                            if (parkingSpotOut.VehicleList.Count == 1)
+                            {
+                                Vehicle vehicle = parkingSpotOut.VehicleList[0];
+
+                                MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
+                                return true;
+                            }
+                            else
+                            {
+                                Vehicle vehicle = parkingSpotOut.VehicleList[0];
+                                Vehicle vehicle1 = parkingSpotOut.VehicleList[1];
+
+                                MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
+                                MoveVehicle(vehicle1, parkingSpotIn.Number, parkingSpotOut);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        private bool OptimizeCars()
+        {
+            foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
+            {
+                if (parkingSpotOut.IsFull() && parkingSpotOut.VehicleList[0].StringType == "Car")
+                {
+                    foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
+                    {
+                        if (parkingSpotIn.IsFree() && parkingSpotIn.IsLow(HighRoof))
+                        {
+                            Vehicle vehicle = parkingSpotOut.VehicleList[0];
+
+                            MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
+
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        } // Gör så att det kraschar. Förstår inte varför denna kraschar med inte de andra optimize som i princip är samma.
         public void UpdateTickets()
         {
             throw new System.NotImplementedException();
-        }// Not done
+        }// Behövs den? Visa tickets kanske
         public void CalculatePrice()
         {
             throw new System.NotImplementedException();
-        }// Not done
+        }// Behövs den?
     }
 }

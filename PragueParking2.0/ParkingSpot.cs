@@ -23,11 +23,11 @@ namespace PragueParking2._0
         {
 
         }
-        internal ParkingSpot(byte aNumber, byte aHighRoof)
+        internal ParkingSpot(byte aNumber, byte highRoof)
         {
             Number = aNumber;
 
-            if (Number <= aHighRoof)
+            if (Number <= highRoof)
             {
                 Hight = (byte)Hights.ParkingHigh;
             }
@@ -102,15 +102,7 @@ namespace PragueParking2._0
             {
                 return true;
             }
-            if (vehicle.IsBig() && ParkingIsFree() && vehicle.FitHight(this))
-            {
-                return true;
-            }
-            return false;
-        }
-        private bool ParkingIsFree()
-        {
-            if (AvailableSize == Size)
+            if (vehicle.IsBig() && IsFree() && vehicle.FitHight(this))
             {
                 return true;
             }
@@ -156,9 +148,41 @@ namespace PragueParking2._0
             }
 
         }
-        //internal void MoveVehicles(ParkingSpot parkingSpot)
-        //{
-        //    parkingSpot.VehicleList.Add(VehicleList[0]);
-        //}
+        internal bool IsFree()
+        {
+            if (AvailableSize == Size)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal bool IsFull()
+        {
+            if (AvailableSize == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        internal bool IsHigh(byte highRoof)
+        {
+            if (Hight > highRoof)
+            {
+                return true;
+            }
+            return false;
+        }
+        internal bool IsLow(byte highRoof)
+        {
+            if (Hight < highRoof)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

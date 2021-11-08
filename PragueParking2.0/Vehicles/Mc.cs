@@ -14,7 +14,18 @@ namespace PragueParking2._0.Vehicles
         internal override byte Hight { get; } = (byte)Hights.Mc;
         internal override byte Size { get; } = (byte)Sizes.Mc;
         internal override string StringType { get; } = "Mc";
+        //internal override decimal Price
+        //{
+        //    get { return Price; }
+        //    set
+        //    {
 
+        //        TimeSpan freeTime = TimeSpan.FromMinutes((double)Prices.Free);
+        //        double span = (DateTime.Now - ParkTime - freeTime).TotalHours;
+        //        decimal priceClass = (decimal)Prices.Mc;
+        //        decimal cost = priceClass * (decimal)span;
+        //    }
+        //}
         public Mc()
         {
         }

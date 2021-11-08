@@ -17,6 +17,11 @@ namespace PragueParking2._0
         TODO: Gör klart VG-uppgifter
         TODO: Exception handling igen
         TODO: Kommentera igen
+
+
+        EXTRA
+        TODO: Optimera move bus
+        TODO: Fixa en output promt
         */
         ParkingHouse parkingHouse = new ParkingHouse();
         public bool Start()
@@ -25,7 +30,7 @@ namespace PragueParking2._0
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Exit Program" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Add Vehicles for test", "Exit Program" }));
 
             switch (userInput)
             {
@@ -53,6 +58,11 @@ namespace PragueParking2._0
                     OptimizeMenu();
                     return true;
 
+                case "Add Vehicles for test":
+                    parkingHouse.AddSomeVehicles();
+                    Console.Clear();
+                    return true;
+
                 case "Exit":
                     break;
             }
@@ -62,6 +72,9 @@ namespace PragueParking2._0
         {
             Console.SetWindowSize(160, 40);
 
+            parkingHouse.XMLRead();
+
+            // For debugging.
             //parkingHouse.JsonWrite(parkingHouse.ParkingSpotArray);
 
             parkingHouse.JsonRead();
@@ -75,22 +88,23 @@ namespace PragueParking2._0
                 string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
               .AddChoices(new[] { "Car", "Mc", "Bike", "Bus", "Back" }));
 
-                Console.Clear();
-
                 CreateVehicle(userInput, RegistrationNumber, out Vehicle vehicle);
 
                 switch (userInput)
                 {
                     case "Back":
+                        Console.Clear();
                         break;
 
                     default:
                         if (parkingHouse.ParkVehicle(vehicle))
                         {
+                            Console.Clear();
                             Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1));
                         }
                         else
                         {
+                            Console.Clear();
                             Console.WriteLine("No available spots, try to use the optimize function.");
                         }
                         break;
@@ -157,35 +171,40 @@ namespace PragueParking2._0
 
                 if (parseSuccess)
                 {
-                    if (parkingHouse.MoveVehicle(vehicle, newParkingSpot, parkingSpot))
+                    if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot))
                     {
+                        Console.Clear();
                         Console.WriteLine("Your vehicle is moved to parking spot: " + newParkingSpot);
                     }
                     else
                     {
+                        Console.Clear();
                         Console.WriteLine("Parking spot is unavailable.");
                     }
                 }
                 else
                 {
+                    Console.Clear();
                     Console.WriteLine("Enter a valid digit.");
                 }
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Vehicle is not parked here.");
             }
         }
         private void SearchVehicleMenu()
         {
-            Console.Clear();
 
             if (parkingHouse.SearchVehicle(AskRegistrationNumber(), out Vehicle vehicle, out ParkingSpot parkingSpot))
             {
+                Console.Clear();
                 Console.WriteLine(vehicle.StringType + " (" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1) + ".");
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Vehicle is not parked here.");
             }
         }

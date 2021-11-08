@@ -21,9 +21,11 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         internal abstract string StringType { get; }
         [JsonProperty]
-        private DateTime ParkTime { get; } = DateTime.Now;
+        protected DateTime ParkTime { get; } = DateTime.Now;
         [JsonProperty]
         public abstract VehicleType Type { get; }
+        //[JsonProperty]
+        //internal abstract decimal Price { get; set; }
 
         protected Vehicle()
         {
@@ -105,6 +107,10 @@ namespace PragueParking2._0.Vehicles
                 return true;
             }
             return false;
+        }
+        internal void TicketInfo()
+        {
+
         }
     }
 }
