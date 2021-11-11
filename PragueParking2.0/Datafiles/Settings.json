@@ -1,0 +1,16 @@
+{
+  "SizeBike": 1,
+  "SizeMc": 2,
+  "SizeCar": 4,
+  "SizeBus": 16,
+  "SizeParkingSpot": 4,
+  "SizeParkingHouse": 100,
+  "SizeParkingHouseHighRoof": 49,
+  "SizeTableColumns": 10,
+  "HightBike": 1,
+  "HightMc": 1,
+  "HightCar": 2,
+  "HightBus": 4,
+  "HightParkingLow": 3,
+  "HIghtParkingHigh": 5
+}

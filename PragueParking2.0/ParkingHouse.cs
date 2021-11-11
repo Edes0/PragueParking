@@ -13,7 +13,7 @@ namespace PragueParking2._0
 {
     partial class ParkingHouse
     {
-        private byte HighRoof { get; } = (byte)Sizes.ParkingHouseHighRoof;
+        internal byte HighRoof { get; }
         private byte Size { get; } = (byte)Sizes.ParkingHouse;
         private ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
         internal ParkingHouse()
@@ -91,7 +91,7 @@ namespace PragueParking2._0
             Mc mc8 = new Mc("MCCKE1222");
             ParkingSpotArray[66].AddVehicle(mc1);
 
-            JsonWrite(ParkingSpotArray);
+            JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool ParkVehicle(Vehicle vehicle)
         {
@@ -109,7 +109,7 @@ namespace PragueParking2._0
                 {
                     parkingSpot.AddVehicle(vehicle);
 
-                    JsonWrite(ParkingSpotArray);
+                    JsonDatafilWrite(ParkingSpotArray);
 
                     return true;
                 }
@@ -128,7 +128,7 @@ namespace PragueParking2._0
                     {
                         parkingSpot.AddVehicle(vehicle);
 
-                        JsonWrite(ParkingSpotArray);
+                        JsonDatafilWrite(ParkingSpotArray);
 
                         return true;
                     }
@@ -140,7 +140,7 @@ namespace PragueParking2._0
                     {
                         parkingSpot.AddVehicle(vehicle);
 
-                        JsonWrite(ParkingSpotArray);
+                        JsonDatafilWrite(ParkingSpotArray);
 
                         return true;
                     }
@@ -156,7 +156,7 @@ namespace PragueParking2._0
 
                     AddReservedSpots(parkingSpot, counterLimit);
 
-                    JsonWrite(ParkingSpotArray);
+                    JsonDatafilWrite(ParkingSpotArray);
 
                     return true;
                 }
@@ -239,7 +239,7 @@ namespace PragueParking2._0
                     oldParkingSpot.RemoveVehicle(vehicle);
                     newParkingSpot.AddVehicle(vehicle);
 
-                    JsonWrite(ParkingSpotArray);
+                    JsonDatafilWrite(ParkingSpotArray);
 
                     return true;
                 }
@@ -258,7 +258,7 @@ namespace PragueParking2._0
                     newParkingSpot.AddVehicle(vehicle);
                     AddReservedSpots(newParkingSpot, counterLimit);
 
-                    JsonWrite(ParkingSpotArray);
+                    JsonDatafilWrite(ParkingSpotArray);
 
                     return true;
                 }
@@ -293,7 +293,7 @@ namespace PragueParking2._0
             {
                 parkingSpot.Clear();
             }
-            JsonWrite(ParkingSpotArray);
+            JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool RemoveVehicle(string aRegNum)
         {
@@ -306,7 +306,7 @@ namespace PragueParking2._0
                     CounterLimitCalculator(vehicle.Size, parkingSpot.Size, out byte counterLimit);
                     ClearReservedSpots(parkingSpot, counterLimit);
 
-                    JsonWrite(ParkingSpotArray);
+                    JsonDatafilWrite(ParkingSpotArray);
                     return true;
                 }
             }
@@ -339,15 +339,7 @@ namespace PragueParking2._0
             // Render all cards in columns
             AnsiConsole.Write(new Columns(box));
         }
-        internal void JsonWrite(ParkingSpot[] aParkingSpotArray)
-        {
-            string path = @"../../../Datafiles/Datafile.json";
-
-            string ParkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented, new VehicleConverter());
-
-            File.WriteAllText(path, ParkingSpotArrayJson);
-        }
-        internal void JsonRead()
+        internal void JsonDatafilRead()
         {
             string path = @"../../../Datafiles/Datafile.json";
 
@@ -356,12 +348,29 @@ namespace PragueParking2._0
             ParkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
 
         }
-        internal void JsonConfigRead()
+        internal void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
         {
-            string path = @"../../../Datafiles/Config.json";
+            string path = @"../../../Datafiles/Datafile.json";
 
-            string configJson = File.ReadAllText(path);
+            string ParkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented, new VehicleConverter());
 
+            File.WriteAllText(path, ParkingSpotArrayJson);
+        }
+        internal void JsonSettingsRead()
+        {
+            string path = @"../../../Datafiles/Settings.json";
+
+            string SettingsJson = File.ReadAllText(path);
+
+            Settings settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
+        }
+        internal void JsonSettingsWrite(Settings settings)
+        {
+            string path = @"../../../Datafiles/Settings.json";
+
+            string settingsJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
+
+            File.WriteAllText(path, settingsJson);
         }
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
         {

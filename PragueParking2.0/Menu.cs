@@ -23,7 +23,9 @@ namespace PragueParking2._0
         TODO: Optimera move bus
         TODO: Fixa en output promt
         */
+        Settings settings = new Settings();
         ParkingHouse parkingHouse = new ParkingHouse();
+
         public bool Start()
         {
 
@@ -72,12 +74,14 @@ namespace PragueParking2._0
         {
             Console.SetWindowSize(160, 40);
 
-            parkingHouse.XMLRead();
-
             // For debugging.
             //parkingHouse.JsonWrite(parkingHouse.ParkingSpotArray);
 
-            parkingHouse.JsonRead();
+            //parkingHouse.JsonSettingsWrite(settings);
+
+            parkingHouse.JsonSettingsRead();
+
+            parkingHouse.JsonDatafilRead();
 
             parkingHouse.PrintParkingGrid();
         }
@@ -281,6 +285,10 @@ namespace PragueParking2._0
 
             aRegistrationNumber = null;
             return false;
+        }
+        private void SetSettings()
+        {
+            parkingHouse.HighRoof = settings.SizeParkingHouseHighRoof;
         }
     }
 }
