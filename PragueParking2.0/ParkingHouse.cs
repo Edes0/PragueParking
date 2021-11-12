@@ -13,11 +13,13 @@ namespace PragueParking2._0
 {
     partial class ParkingHouse
     {
-        internal byte HighRoof { get; }
-        private byte Size { get; } = (byte)Sizes.ParkingHouse;
-        private ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[(int)Sizes.ParkingHouse];
+        internal byte HighRoof { get; set; } = Settings.SizeParkingHouseHighRoof;
+        private byte Size { get; set; } = Settings.SizeParkingHouse;
+        ParkingSpot[] ParkingSpotArray { get; set; }
         internal ParkingHouse()
         {
+            ParkingSpot[] ParkingSpotArray = new ParkingSpot[Size];
+
             for (int i = 0; i < Size; i++)
             {
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
@@ -94,9 +96,7 @@ namespace PragueParking2._0
             JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool ParkVehicle(Vehicle vehicle)
-        {
-            byte hight = (byte)Hights.ParkingHigh;
-
+        {        
             if (vehicle.IsTiny())
             {
                 // Parks vehicle at parkings with matching available size if possible.   Fixa så att inte car också kommer med..
@@ -119,7 +119,7 @@ namespace PragueParking2._0
                 // Parks vehicle at parkings with lower hight if possible.
                 IEnumerable<ParkingSpot> parkingsWithLowerHight =
                         from parkingSpot in ParkingSpotArray
-                        where parkingSpot.Hight < hight
+                        where parkingSpot.Hight < Settings.HightParkingHigh
                         select parkingSpot;
 
                 foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
@@ -134,11 +134,11 @@ namespace PragueParking2._0
                     }
                 }
                 // Parks vehicle at any parking.
-                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+                foreach (ParkingSpot anyParkingSpot in ParkingSpotArray)
                 {
-                    if (parkingSpot.ParkingSpotAvailable(vehicle))
+                    if (anyParkingSpot.ParkingSpotAvailable(vehicle))
                     {
-                        parkingSpot.AddVehicle(vehicle);
+                        anyParkingSpot.AddVehicle(vehicle);
 
                         JsonDatafilWrite(ParkingSpotArray);
 
@@ -356,13 +356,13 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, ParkingSpotArrayJson);
         }
-        internal void JsonSettingsRead()
+        internal void JsonSettingsRead(Settings settings)
         {
             string path = @"../../../Datafiles/Settings.json";
 
             string SettingsJson = File.ReadAllText(path);
 
-            Settings settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
+            settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
         }
         internal void JsonSettingsWrite(Settings settings)
         {
@@ -466,5 +466,6 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }// Behövs den?
+
     }
 }

@@ -45,7 +45,7 @@ namespace PragueParking2._0.Vehicles
          }
         internal bool IsTiny()
         {
-            byte parkingSpotSize = (byte)Sizes.ParkingSpot;
+            byte parkingSpotSize = Settings.SizeParkingSpot;
 
             if (Size < parkingSpotSize)
             {
@@ -58,9 +58,9 @@ namespace PragueParking2._0.Vehicles
         }
         internal bool IsSmall()
         {
-            byte parkingSize = (byte)Sizes.ParkingSpot;
+            byte parkingSpotSize = Settings.SizeParkingSpot;
 
-            if (Size <= parkingSize)
+            if (Size <= parkingSpotSize)
             {
                 return true;
             }
@@ -68,7 +68,7 @@ namespace PragueParking2._0.Vehicles
         }
         internal bool IsBig()
         {
-            byte parkingSpotSize = (byte)Sizes.ParkingSpot;
+            byte parkingSpotSize = Settings.SizeParkingSpot;
 
             if (Size > parkingSpotSize)
             {

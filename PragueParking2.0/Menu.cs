@@ -79,7 +79,7 @@ namespace PragueParking2._0
 
             //parkingHouse.JsonSettingsWrite(settings);
 
-            parkingHouse.JsonSettingsRead();
+            parkingHouse.JsonSettingsRead(settings);
 
             parkingHouse.JsonDatafilRead();
 
@@ -285,10 +285,6 @@ namespace PragueParking2._0
 
             aRegistrationNumber = null;
             return false;
-        }
-        private void SetSettings()
-        {
-            parkingHouse.HighRoof = settings.SizeParkingHouseHighRoof;
         }
     }
 }

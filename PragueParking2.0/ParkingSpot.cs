@@ -12,11 +12,11 @@ namespace PragueParking2._0
         [JsonProperty]
         internal byte Number { get; set; }
         [JsonProperty]
-        internal byte Size { get; set; } = (byte)Sizes.ParkingSpot;
+        internal byte Size { get; set; } = Settings.SizeParkingSpot;
         [JsonProperty]
         internal byte Hight { get; set; }
         [JsonProperty]
-        internal byte AvailableSize { get; set; } = (byte)Sizes.ParkingSpot;
+        internal byte AvailableSize { get; set; } = Settings.SizeParkingSpot;
         [JsonProperty]
         internal List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
         public ParkingSpot()
@@ -29,11 +29,11 @@ namespace PragueParking2._0
 
             if (Number <= highRoof)
             {
-                Hight = (byte)Hights.ParkingHigh;
+                Hight = Settings.HightParkingHigh;
             }
             else
             {
-                Hight = (byte)Hights.ParkingLow;
+                Hight = Settings.HightParkingLow;
             }
         }
         public override string ToString()

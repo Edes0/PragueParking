@@ -3,14 +3,14 @@
   <Class Name="PragueParking2._0.Vehicles.Bike">
     <Position X="2.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
       <FileName>Vehicles\Bike.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PragueParking2._0.Vehicles.Mc">
     <Position X="4.25" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
       <FileName>Vehicles\Mc.cs</FileName>
       <NewMemberFileName>Vehicles\Car.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -18,14 +18,14 @@
   <Class Name="PragueParking2._0.Vehicles.Car">
     <Position X="6" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
       <FileName>Vehicles\Car.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PragueParking2._0.Vehicles.Bus">
     <Position X="7.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
       <FileName>Vehicles\Bus.cs</FileName>
       <NewMemberFileName>Vehicles\Car.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -33,30 +33,30 @@
   <Class Name="PragueParking2._0.ParkingSpot">
     <Position X="9.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <HashCode>CAAEDAAAAAAAgAAEAEAYAAAAAAAAAACIAgEiAABAACA=</HashCode>
       <FileName>ParkingSpot.cs</FileName>
       <NewMemberFileName>ParkingHouse.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PragueParking2._0.ParkingHouse">
     <Position X="13.25" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="PragueParking2._0.ParkingHouse.JsonCreationConverter&lt;T&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>JsonCreationConverter.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAEAAAEAQAAgAAABABAAgAAAAAAAAIAIAYAAAAEAAA=</HashCode>
-      <FileName>ParkingHouse.cs</FileName>
+      <HashCode>AAAUAAAEAQFIgCAADAACAgQAAAQAAAIMAAYAEAgAAgI=</HashCode>
+      <FileName>JsonCreationConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="PragueParking2._0.Enums.Sizes">
+  <Enum Name="PragueParking2._0.Enums.Prices">
     <Position X="2.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAQAAAAAQAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAAQ=</HashCode>
-      <FileName>Enums\Sizes.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
-  <Enum Name="PragueParking2._0.Enums.Hights">
-    <Position X="1" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgIAQAAAAAQAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>Enums\Hights.cs</FileName>
+      <HashCode>AAIAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY=</HashCode>
+      <FileName>Enums\Prices.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
