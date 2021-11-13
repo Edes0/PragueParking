@@ -166,17 +166,19 @@ namespace PragueParking2._0
                 return false;
             }
         }
-        internal bool IsHigh(byte highRoof)
+        internal bool IsHigh()
         {
-            if (Hight > highRoof)
+
+
+            if (Hight >= Settings.HightParkingHigh)
             {
                 return true;
             }
             return false;
         }
-        internal bool IsLow(byte highRoof)
+        internal bool IsLow()
         {
-            if (Hight < highRoof)
+            if (Hight <= Settings.HightParkingLow)
             {
                 return true;
             }

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="PragueParking2._0.Vehicles.Bike" Collapsed="true">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <FileName>Vehicles\Bike.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Vehicles.Bus" Collapsed="true">
+    <Position X="10.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <FileName>Vehicles\Bus.cs</FileName>
+      <NewMemberFileName>Vehicles\Car.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Vehicles.Car" Collapsed="true">
+    <Position X="12.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <FileName>Vehicles\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Vehicles.Mc" Collapsed="true">
+    <Position X="6" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAgAAAAAAQAAAAAAAAAAAAAQAAAAAAACA=</HashCode>
+      <FileName>Vehicles\Mc.cs</FileName>
+      <NewMemberFileName>Vehicles\Car.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Vehicles.Vehicle" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAABAgAAQAAhAQAAgAQAAAAAAAAAAAAAQEAEQAAACA=</HashCode>
+      <FileName>Vehicles\Vehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.ParkingHouse" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAEAQFIgCAADAACAgQAAAQAAAAMCAYAEAAAAgI=</HashCode>
+      <FileName>JsonCreationConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Menu" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MgQAAAAAACAAAAAIQAAQABAAACCCAAAAEAAAQhAAAAA=</HashCode>
+      <FileName>Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.ParkingSpot" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAEDAAAAAAAgAAEAEAYAAAAAAAAAACIAgEiAABAACA=</HashCode>
+      <FileName>ParkingSpot.cs</FileName>
+      <NewMemberFileName>ParkingHouse.cs</NewMemberFileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParking2._0.Settings" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEEQAAAQAgEAAiIAAAAAAgAAAFQAAIAARAEAgAgEAEA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PragueParkingProgram.Program" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="PragueParking2._0.Enums.VehicleType" Collapsed="true">
+    <Position X="15.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Enums\VehicleType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

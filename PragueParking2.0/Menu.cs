@@ -32,7 +32,7 @@ namespace PragueParking2._0
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Add some vehicles", "Settings", "Exit Program" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Update", "Settings", "Exit Program", "X" }));
 
             switch (userInput)
             {
@@ -60,9 +60,9 @@ namespace PragueParking2._0
                     OptimizeMenu();
                     return true;
 
-                case "Add some vehicles":
-                    parkingHouse.AddSomeVehicles();
+                case "Update":
                     Console.Clear();
+                    parkingHouse.Update();
                     return true;
 
                 case "Settings":
@@ -72,10 +72,14 @@ namespace PragueParking2._0
 
                 case "Exit":
                     break;
+
+                case "X":
+                    parkingHouse.AddSomeVehicles();
+                    Console.Clear();
+                    return true;
             }
             return false;
         }
-
         private void Chores()
         {
             Console.SetWindowSize(160, 40);
@@ -297,15 +301,19 @@ namespace PragueParking2._0
             Console.WriteLine("Settings");
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-     .AddChoices(new[] { "Vehicle", "Parking Spot", "Parking House", "Back" }));
+     .AddChoices(new[] { "Vehicles", "Parking spot", "Parking house", "Back" }));
 
             switch (userInput)
             {
-                case "Vehicle":
+                case "Vehicles":
                     VehicleSettings();
                     break;
 
-                case "Parking House":
+                case "Parking spot":
+                    VehicleSettings();
+                    break;
+
+                case "Parking house":
                     ParkingHouseSettings();
                     break;
 
@@ -314,56 +322,83 @@ namespace PragueParking2._0
 
             }
         }
-
         private void VehicleSettings()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Vehicles");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+     .AddChoices(new[] { "Car", "Mc", "Bike", "Bus", "Back" }));
+
+            switch (userInput)
+            {
+                case "Car":
+                    CarSettings();
+                    break;
+
+                case "Mc":
+                    McSettings();
+                    break;
+
+                case "Bike":
+                    BikeSettings();
+                    break;
+
+                case "Bus":
+                    BusSettings();
+                    break;
+
+                case "Back":
+                    break;
+            }
         }
         private void ParkingHouseSettings()
         {
             Console.WriteLine("Parking House");
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-     .AddChoices(new[] { "Size", "Parking Spot", "Parking House", "Back" }));
+     .AddChoices(new[] { "Size", "High roof", "Back" }));
 
             switch (userInput)
             {
                 case "Size":
 
                     Console.WriteLine("Current size: " + Settings.SizeParkingHouse);
-                    Console.Write("Enter new size: ");
+                    Console.Write("Enter new size (cannot be lower than current): ");
+                    Console.Clear();
+                    Settings.JsonSettingsWrite(settings);
+                    Console.WriteLine("New size confirmed");
+                    parkingHouse.ChangeSettingSize();
+                    break;
 
-                    bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
-
-                    if (parseSuccess && newSize >= parkingHouse.CheckFreeParkings())
-                    {
-                        Console.Clear();
-                        Settings.JsonSettingsWrite(settings);
-                        Console.WriteLine("New size confirmed");
-                        break;
-                    }
-                    else if (parseSuccess && newSize < parkingHouse.CheckFreeParkings())
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Remove more vehicles to lower size");
-                        break;
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Invalid value");
-                        break;
-                    }
-
-                case "Parking House":
-                    ParkingHouseSettings();
-                    return;
+                case "High roof":
+                    parkingHouse.ChangeSettingHighRoof();
+                    break;
 
                 case "Back":
                     break;
             }
+
+        }
+
+        private void BusSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BikeSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void McSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CarSettings()
+        {
+            throw new NotImplementedException();
         }
     }
 }
-
 

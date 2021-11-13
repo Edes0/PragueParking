@@ -25,76 +25,6 @@ namespace PragueParking2._0
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
             }
         }
-        internal void AddSomeVehicles()
-        {
-            Car car5 = new Car("CAGR257123");
-            ParkingSpotArray[1].AddVehicle(car5);
-
-            Car car6 = new Car("CAFR257123");
-            ParkingSpotArray[2].AddVehicle(car6);
-
-            Car car54 = new Car("CSAR257123");
-            ParkingSpotArray[3].AddVehicle(car54);
-
-            Car car23 = new Car("CAWR257123");
-            ParkingSpotArray[4].AddVehicle(car23);
-
-            Car car75 = new Car("CAHR257123");
-            ParkingSpotArray[5].AddVehicle(car75);
-
-            Car car236 = new Car("CQAR257123");
-            ParkingSpotArray[6].AddVehicle(car236);
-
-            Car car1 = new Car("CASGR257123");
-            ParkingSpotArray[7].AddVehicle(car1);
-
-            Car car2 = new Car("CWQE257123");
-            ParkingSpotArray[8].AddVehicle(car2);
-
-            Bike bike = new Bike("BIKE153623");
-            ParkingSpotArray[51].AddVehicle(bike);
-
-            Mc mc = new Mc("MC12323");
-            ParkingSpotArray[51].AddVehicle(mc);
-
-            Bike bike1 = new Bike("BIKE4222");
-            ParkingSpotArray[52].AddVehicle(bike1);
-
-            Bike bike2 = new Bike("BIKE3563");
-            ParkingSpotArray[53].AddVehicle(bike2);
-
-            Mc mc1 = new Mc("BIKE12962");
-            ParkingSpotArray[53].AddVehicle(mc1);
-
-            Bike bike3 = new Bike("BIKE3201");
-            ParkingSpotArray[54].AddVehicle(bike3);
-
-            Bike bike4 = new Bike("BIKE1924");
-            ParkingSpotArray[55].AddVehicle(bike4);
-
-            Mc mc2 = new Mc("MC1282");
-            ParkingSpotArray[56].AddVehicle(mc1);
-
-            Mc mc3 = new Mc("MC1722");
-            ParkingSpotArray[57].AddVehicle(mc1);
-
-            Mc mc4 = new Mc("MC1622");
-            ParkingSpotArray[58].AddVehicle(mc1);
-
-            Mc mc5 = new Mc("MMC1522");
-            ParkingSpotArray[59].AddVehicle(mc1);
-
-            Mc mc6 = new Mc("mCC1242");
-            ParkingSpotArray[61].AddVehicle(mc1);
-
-            Mc mc7 = new Mc("BMCC11222");
-            ParkingSpotArray[64].AddVehicle(mc1);
-
-            Mc mc8 = new Mc("MCCKE1222");
-            ParkingSpotArray[66].AddVehicle(mc1);
-
-            JsonDatafilWrite(ParkingSpotArray);
-        }
         internal bool ParkVehicle(Vehicle vehicle)
         {
             if (vehicle.IsTiny())
@@ -312,15 +242,6 @@ namespace PragueParking2._0
             }
             return false;
         }
-        internal int CheckFreeParkings()
-        {
-            var freeParkings =
-                   from parkingSpot in ParkingSpotArray
-                   where parkingSpot.IsFree()
-                   select parkingSpot;
-
-            return freeParkings.Count();
-        }
         private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++) // kolla här.
@@ -365,6 +286,41 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, ParkingSpotArrayJson);
         }
+
+        internal bool ChangeSettingSize()
+        { // EDIT
+
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
+
+            if (parseSuccess && newSize >= Settings.SizeParkingHouse)
+            {
+
+                return true;
+            }
+            else if (parseSuccess && newSize < Settings.SizeParkingHouse)
+            {
+                Console.Clear();
+                Console.WriteLine("Value cannot be lower than current");
+                return false;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid value");
+                return false;
+            }
+        }
+
+        internal void ChangeSettingHighRoof()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Update()
+        {
+            JsonDatafilWrite(ParkingSpotArray);
+        }
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
         {
             while (OptimizeSize3())
@@ -373,9 +329,9 @@ namespace PragueParking2._0
             while (OptimizeSize2())
             {
             }
-            //while (OptimizeCars()) Kraschar av någon anledning.
-            //{
-            //}
+            while (OptimizeCars())
+            {
+            }
         }
         private bool OptimizeSize3()
         {
@@ -389,6 +345,7 @@ namespace PragueParking2._0
                         {
                             Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
+                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + "-->" + parkingSpotIn.Number);
                             MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
 
                             return true;
@@ -412,6 +369,8 @@ namespace PragueParking2._0
                             {
                                 Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
+                                Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
+
                                 MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
                                 return true;
                             }
@@ -419,6 +378,9 @@ namespace PragueParking2._0
                             {
                                 Vehicle vehicle = parkingSpotOut.VehicleList[0];
                                 Vehicle vehicle1 = parkingSpotOut.VehicleList[1];
+
+                                Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
+                                Console.WriteLine(vehicle1.StringType + "(" + vehicle1.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
 
                                 MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
                                 MoveVehicle(vehicle1, parkingSpotIn.Number, parkingSpotOut);
@@ -434,13 +396,15 @@ namespace PragueParking2._0
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
             {
-                if (parkingSpotOut.IsFull() && parkingSpotOut.VehicleList[0].StringType == "Car")
+                if (parkingSpotOut.IsFull() && parkingSpotOut.IsHigh() && parkingSpotOut.VehicleList[0].IsSmall())
                 {
                     foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
                     {
-                        if (parkingSpotIn.IsFree() && parkingSpotIn.IsLow(HighRoof))
+                        if (parkingSpotIn.IsFree() && parkingSpotIn.IsLow())
                         {
                             Vehicle vehicle = parkingSpotOut.VehicleList[0];
+
+                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
 
                             MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
 
@@ -455,10 +419,192 @@ namespace PragueParking2._0
         {
             throw new System.NotImplementedException();
         }// Behövs den? Visa tickets kanske
-        public void CalculatePrice()
+        internal void AddSomeVehicles()
         {
-            throw new System.NotImplementedException();
-        }// Behövs den?
+            Mc mc = new Mc("TEST0");
+            ParkingSpotArray[50].AddVehicle(mc);
 
+            Mc mc1 = new Mc("TEST1");
+            ParkingSpotArray[51].AddVehicle(mc1);
+
+            Mc mc2 = new Mc("TEST2");
+            ParkingSpotArray[52].AddVehicle(mc2);
+
+            Mc mc3 = new Mc("TEST3");
+            ParkingSpotArray[53].AddVehicle(mc3);
+
+            Mc mc4 = new Mc("TEST4");
+            ParkingSpotArray[54].AddVehicle(mc4);
+
+            Mc mc5 = new Mc("TEST5");
+            ParkingSpotArray[55].AddVehicle(mc5);
+
+            Mc mc6 = new Mc("TEST6");
+            ParkingSpotArray[56].AddVehicle(mc6);
+
+            Mc mc7 = new Mc("TEST7");
+            ParkingSpotArray[57].AddVehicle(mc7);
+
+            Mc mc8 = new Mc("TEST8");
+            ParkingSpotArray[58].AddVehicle(mc8);
+
+            Mc mc9 = new Mc("TEST9");
+            ParkingSpotArray[59].AddVehicle(mc9);
+
+            Bike bik0 = new Bike("TEST01");
+            ParkingSpotArray[50].AddVehicle(bik0);
+
+            Bike bik1 = new Bike("TEST01");
+            ParkingSpotArray[51].AddVehicle(bik1);
+
+            Bike bik2 = new Bike("TEST02");
+            ParkingSpotArray[52].AddVehicle(bik2);
+
+            Bike bik3 = new Bike("TEST03");
+            ParkingSpotArray[53].AddVehicle(bik3);
+
+            Bike bik4 = new Bike("TEST04");
+            ParkingSpotArray[54].AddVehicle(bik4);
+
+            Bike bik5 = new Bike("TEST05");
+            ParkingSpotArray[55].AddVehicle(bik5);
+
+            Bike bik6 = new Bike("TEST06");
+            ParkingSpotArray[56].AddVehicle(bik6);
+
+            Bike bik7 = new Bike("TEST07");
+            ParkingSpotArray[57].AddVehicle(bik7);
+
+            Bike bik8 = new Bike("TEST08");
+            ParkingSpotArray[58].AddVehicle(bik8);
+
+            Bike bik9 = new Bike("TEST09");
+            ParkingSpotArray[59].AddVehicle(bik9);
+
+            Bike bik01 = new Bike("TEST0");
+            ParkingSpotArray[60].AddVehicle(bik01);
+
+            Bike bik02 = new Bike("TEST1");
+            ParkingSpotArray[61].AddVehicle(bik02);
+
+            Bike bik03 = new Bike("TEST2");
+            ParkingSpotArray[62].AddVehicle(bik03);
+
+            Bike bik04 = new Bike("TEST3");
+            ParkingSpotArray[63].AddVehicle(bik04);
+
+            Bike bik05 = new Bike("TEST4");
+            ParkingSpotArray[64].AddVehicle(bik05);
+
+            Bike bik06 = new Bike("TEST5");
+            ParkingSpotArray[65].AddVehicle(bik06);
+
+            Bike bik07 = new Bike("TEST6");
+            ParkingSpotArray[66].AddVehicle(bik07);
+
+            Bike bik08 = new Bike("TEST7");
+            ParkingSpotArray[67].AddVehicle(bik08);
+
+            Bike bik09 = new Bike("TEST8");
+            ParkingSpotArray[68].AddVehicle(bik09);
+
+            Bike bik10 = new Bike("TEST9");
+            ParkingSpotArray[69].AddVehicle(bik10);
+
+            Mc mc20 = new Mc("TEST0");
+            ParkingSpotArray[70].AddVehicle(mc20);
+
+            Mc mc21 = new Mc("TEST1");
+            ParkingSpotArray[71].AddVehicle(mc21);
+
+            Mc mc22 = new Mc("TEST2");
+            ParkingSpotArray[72].AddVehicle(mc22);
+
+            Mc mc23 = new Mc("TEST3");
+            ParkingSpotArray[73].AddVehicle(mc23);
+
+            Mc mc24 = new Mc("TEST4");
+            ParkingSpotArray[74].AddVehicle(mc24);
+
+            Mc mc25 = new Mc("TEST5");
+            ParkingSpotArray[75].AddVehicle(mc25);
+
+            Mc mc26 = new Mc("TEST6");
+            ParkingSpotArray[76].AddVehicle(mc26);
+
+            Mc mc27 = new Mc("TEST7");
+            ParkingSpotArray[77].AddVehicle(mc27);
+
+            Mc mc28 = new Mc("TEST8");
+            ParkingSpotArray[78].AddVehicle(mc28);
+
+            Mc mc29 = new Mc("TEST9");
+            ParkingSpotArray[79].AddVehicle(mc29);
+
+            Mc mc30 = new Mc("TEST0");
+            ParkingSpotArray[80].AddVehicle(mc30);
+
+            Mc mc31 = new Mc("TEST1");
+            ParkingSpotArray[81].AddVehicle(mc31);
+
+            Mc mc32 = new Mc("TEST2");
+            ParkingSpotArray[82].AddVehicle(mc32);
+
+            Mc mc33 = new Mc("TEST3");
+            ParkingSpotArray[83].AddVehicle(mc33);
+
+            Mc mc34 = new Mc("TEST4");
+            ParkingSpotArray[84].AddVehicle(mc34);
+
+            Mc mc35 = new Mc("TEST5");
+            ParkingSpotArray[85].AddVehicle(mc35);
+
+            Mc mc36 = new Mc("TEST6");
+            ParkingSpotArray[86].AddVehicle(mc36);
+
+            Mc mc37 = new Mc("TEST7");
+            ParkingSpotArray[87].AddVehicle(mc37);
+
+            Mc mc38 = new Mc("TEST8");
+            ParkingSpotArray[88].AddVehicle(mc38);
+
+            Mc mc39 = new Mc("TEST9");
+            ParkingSpotArray[89].AddVehicle(mc39);
+
+            Car car = new Car("TEST9");
+            ParkingSpotArray[1].AddVehicle(car);
+
+            Car car1 = new Car("TEST9");
+            ParkingSpotArray[2].AddVehicle(car1);
+
+            Car car2 = new Car("TEST9");
+            ParkingSpotArray[3].AddVehicle(car2);
+
+            Car car3 = new Car("TEST9");
+            ParkingSpotArray[4].AddVehicle(car3);
+
+            Car car4 = new Car("TEST9");
+            ParkingSpotArray[5].AddVehicle(car4);
+
+            Car car5 = new Car("TEST9");
+            ParkingSpotArray[6].AddVehicle(car5);
+
+            Car car6 = new Car("TEST9");
+            ParkingSpotArray[7].AddVehicle(car6);
+
+            Car car7 = new Car("TEST9");
+            ParkingSpotArray[8].AddVehicle(car7);
+
+            Car car8 = new Car("TEST9");
+            ParkingSpotArray[9].AddVehicle(car8);
+
+            Car car9 = new Car("TEST9");
+            ParkingSpotArray[10].AddVehicle(car9);
+
+            Car car19 = new Car("TEST9");
+            ParkingSpotArray[0].AddVehicle(car19);
+
+            JsonDatafilWrite(ParkingSpotArray);
+        }
     }
 }

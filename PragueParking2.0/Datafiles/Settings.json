@@ -1,21 +1,38 @@
 {
-  "SizeBike": 1,
-  "SizeMc": 2,
-  "SizeCar": 4,
-  "SizeBus": 16,
-  "SizeParkingSpot": 4,
-  "SizeParkingHouse": 100,
-  "SizeParkingHouseHighRoof": 49,
-  "SizeTableColumns": 10,
-  "HightBike": 1,
-  "HightMc": 1,
-  "HightCar": 2,
-  "HightBus": 4,
-  "HightParkingLow": 3,
-  "HightParkingHigh": 5,
-  "PriceCar": 20,
-  "PriceMc": 10,
-  "PriceBike": 5,
-  "PriceBus": 80,
-  "PriceFree": 10.0
+    /*
+   Sizes
+    Dont change sizes while vehicles are parked in the parking.
+    Possible to change size but need to press update in client after edit.
+    */
+    "SizeBike": 1,
+    "SizeMc": 2,
+    "SizeCar": 4,
+    "SizeBus": 16,
+    "SizeParkingSpot": 4,
+    "SizeParkingHouse": 100,
+    "SizeParkingHouseHighRoof": 49,
+    "SizeTableColumns": 10,
+
+    /*
+   Hights
+    Dont change hights while vehicles are parked in the parking.
+    Vehicles should not have the same hight as ParkingLow or ParkingHigh.
+    Possible to change size but need to press update in client after edit.
+    */
+    "HightBike": 1,
+    "HightMc": 1,
+    "HightCar": 2,
+    "HightBus": 4,
+    "HightParkingLow": 3,
+    "HightParkingHigh": 5,
+
+    /* 
+    Prices
+    Possible to change price but need to press update in client after edit.
+    */
+    "PriceCar": 20, // CZK
+    "PriceMc": 10, // CZK
+    "PriceBike": 5, // CZK
+    "PriceBus": 80, // CZK
+    "PriceFree": 10.0 // minutes
 }
