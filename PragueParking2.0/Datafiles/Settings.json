@@ -12,5 +12,10 @@
   "HightCar": 2,
   "HightBus": 4,
   "HightParkingLow": 3,
-  "HightParkingHigh": 5
+  "HightParkingHigh": 5,
+  "PriceCar": 20,
+  "PriceMc": 10,
+  "PriceBike": 5,
+  "PriceBus": 80,
+  "PriceFree": 10.0
 }

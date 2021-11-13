@@ -21,17 +21,18 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         internal abstract string StringType { get; }
         [JsonProperty]
-        protected DateTime ParkTime { get; } = DateTime.Now;
+        protected DateTime ArriveTime { get; set; }
+        [JsonProperty]
+        internal abstract decimal Price { get; }
         [JsonProperty]
         public abstract VehicleType Type { get; }
-        //[JsonProperty]
-        //internal abstract decimal Price { get; set; }
 
         protected Vehicle()
         {
         }
         protected Vehicle(string registrationNumber)
         {
+            ArriveTime = DateTime.Now;
             RegNum = registrationNumber;
         }
         internal void Park(ParkingSpot parkingSpot)

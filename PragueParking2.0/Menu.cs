@@ -32,7 +32,7 @@ namespace PragueParking2._0
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Add Vehicles for test", "Exit Program" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Add some vehicles", "Settings", "Exit Program" }));
 
             switch (userInput)
             {
@@ -60,8 +60,13 @@ namespace PragueParking2._0
                     OptimizeMenu();
                     return true;
 
-                case "Add Vehicles for test":
+                case "Add some vehicles":
                     parkingHouse.AddSomeVehicles();
+                    Console.Clear();
+                    return true;
+
+                case "Settings":
+                    SettingsMenu();
                     Console.Clear();
                     return true;
 
@@ -70,6 +75,7 @@ namespace PragueParking2._0
             }
             return false;
         }
+
         private void Chores()
         {
             Console.SetWindowSize(160, 40);
@@ -79,7 +85,7 @@ namespace PragueParking2._0
 
             //parkingHouse.JsonSettingsWrite(settings);
 
-            parkingHouse.JsonSettingsRead(settings);
+            Settings.JsonSettingsRead(settings);
 
             parkingHouse.JsonDatafilRead();
 
@@ -260,7 +266,7 @@ namespace PragueParking2._0
 
             return registrationNumber.ToUpper();
         }
-        private bool ValidateRegistrationNumber(out string aRegistrationNumber) // LÄGG TILL DE ANDRA SYMBOLERNA?
+        private bool ValidateRegistrationNumber(out string aRegistrationNumber)
         {
             Console.Write("Enter your registration plate number: ");
             string registrationNumber = Console.ReadLine();
@@ -285,6 +291,77 @@ namespace PragueParking2._0
 
             aRegistrationNumber = null;
             return false;
+        }
+        private void SettingsMenu()
+        {
+            Console.WriteLine("Settings");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+     .AddChoices(new[] { "Vehicle", "Parking Spot", "Parking House", "Back" }));
+
+            switch (userInput)
+            {
+                case "Vehicle":
+                    VehicleSettings();
+                    break;
+
+                case "Parking House":
+                    ParkingHouseSettings();
+                    break;
+
+                case "Back":
+                    break;
+
+            }
+        }
+
+        private void VehicleSettings()
+        {
+            throw new NotImplementedException();
+        }
+        private void ParkingHouseSettings()
+        {
+            Console.WriteLine("Parking House");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+     .AddChoices(new[] { "Size", "Parking Spot", "Parking House", "Back" }));
+
+            switch (userInput)
+            {
+                case "Size":
+
+                    Console.WriteLine("Current size: " + Settings.SizeParkingHouse);
+                    Console.Write("Enter new size: ");
+
+                    bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
+
+                    if (parseSuccess && newSize >= parkingHouse.CheckFreeParkings())
+                    {
+                        Console.Clear();
+                        Settings.JsonSettingsWrite(settings);
+                        Console.WriteLine("New size confirmed");
+                        break;
+                    }
+                    else if (parseSuccess && newSize < parkingHouse.CheckFreeParkings())
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Remove more vehicles to lower size");
+                        break;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Invalid value");
+                        break;
+                    }
+
+                case "Parking House":
+                    ParkingHouseSettings();
+                    return;
+
+                case "Back":
+                    break;
+            }
         }
     }
 }

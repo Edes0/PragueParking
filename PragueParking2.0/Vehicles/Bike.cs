@@ -14,18 +14,23 @@ namespace PragueParking2._0.Vehicles
         internal override byte Hight { get; } = Settings.HightBike;
         internal override byte Size { get; } = Settings.SizeBike;
         internal override string StringType { get; } = "Bike";
-        //internal override decimal Price
-        //{
-        //    get { return Price; }
-        //    set
-        //    {
+        internal override decimal Price
+        {
+            get
+            {
+                TimeSpan freeTime = TimeSpan.FromMinutes(Settings.PriceFree);
+                double span = (DateTime.Now - ArriveTime - freeTime).TotalHours;
+                decimal priceClass = Settings.PriceBike;
+                decimal cost = priceClass * (decimal)span;
 
-        //        TimeSpan freeTime = TimeSpan.FromMinutes((double)Prices.Free);
-        //        double span = (DateTime.Now - ParkTime - freeTime).TotalHours;
-        //        decimal priceClass = (decimal)Prices.Bike;
-        //        decimal cost = priceClass * (decimal)span;
-        //    }
-        //}
+                if (cost < 0)
+                {
+                    return 0;
+                }
+                return cost;
+            }
+        }
+
         public Bike()
         {
         }

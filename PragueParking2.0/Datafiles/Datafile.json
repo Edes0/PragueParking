@@ -3,28 +3,39 @@
     "Number": 0,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 3,
+        "Hight": 4,
+        "Size": 16,
+        "StringType": "Bus",
+        "Price": 140.42942130666640,
+        "RegNum": "US1233",
+        "Pspot": 0,
+        "ArriveTime": "2021-11-13T00:24:40.2677207+01:00"
+      }
+    ]
   },
   {
     "Number": 1,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 2,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 3,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
@@ -353,50 +364,127 @@
     "Number": 50,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 35.18295265222220,
+        "RegNum": "ABC123",
+        "Pspot": 50,
+        "ArriveTime": "2021-11-13T00:24:26.6639304+01:00"
+      }
+    ]
   },
   {
     "Number": 51,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 35.15635168888880,
+        "RegNum": "ABB221",
+        "Pspot": 51,
+        "ArriveTime": "2021-11-13T00:24:31.4525424+01:00"
+      }
+    ]
   },
   {
     "Number": 52,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 30.12923628333340,
+        "RegNum": "ASS123",
+        "Pspot": 52,
+        "ArriveTime": "2021-11-13T00:39:36.3333266+01:00"
+      }
+    ]
   },
   {
     "Number": 53,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 30.07708680888880,
+        "RegNum": "AFF123",
+        "Pspot": 53,
+        "ArriveTime": "2021-11-13T00:39:45.7202397+01:00"
+      }
+    ]
   },
   {
     "Number": 54,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 11.717013692777780,
+        "RegNum": "ASSSS123",
+        "Pspot": 54,
+        "ArriveTime": "2021-11-13T01:34:50.533408+01:00"
+      }
+    ]
   },
   {
     "Number": 55,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 9.939572678888880,
+        "RegNum": "AAA2346",
+        "Pspot": 55,
+        "ArriveTime": "2021-11-13T01:40:10.4727977+01:00"
+      }
+    ]
   },
   {
     "Number": 56,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 0.0,
+        "RegNum": "SND234",
+        "Pspot": 56,
+        "ArriveTime": "2021-11-13T02:19:59.5850365+01:00"
+      }
+    ]
   },
   {
     "Number": 57,
@@ -696,7 +784,18 @@
     "Number": 99,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 0,
+        "Hight": 2,
+        "Size": 4,
+        "StringType": "Car",
+        "Price": 11.690672251111120,
+        "RegNum": "A1234",
+        "Pspot": 99,
+        "ArriveTime": "2021-11-13T01:34:55.2749951+01:00"
+      }
+    ]
   }
 ]

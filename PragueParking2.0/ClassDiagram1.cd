@@ -52,12 +52,5 @@
       <FileName>JsonCreationConverter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="PragueParking2._0.Enums.Prices">
-    <Position X="2.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY=</HashCode>
-      <FileName>Enums\Prices.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

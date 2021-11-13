@@ -15,10 +15,10 @@ namespace PragueParking2._0
     {
         internal byte HighRoof { get; set; } = Settings.SizeParkingHouseHighRoof;
         private byte Size { get; set; } = Settings.SizeParkingHouse;
-        ParkingSpot[] ParkingSpotArray { get; set; }
+        ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[Settings.SizeParkingHouse];
         internal ParkingHouse()
         {
-            ParkingSpot[] ParkingSpotArray = new ParkingSpot[Size];
+           // ParkingSpot[] ParkingSpotArray = new ParkingSpot[Size];
 
             for (int i = 0; i < Size; i++)
             {
@@ -96,7 +96,7 @@ namespace PragueParking2._0
             JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool ParkVehicle(Vehicle vehicle)
-        {        
+        {
             if (vehicle.IsTiny())
             {
                 // Parks vehicle at parkings with matching available size if possible.   Fixa så att inte car också kommer med..
@@ -312,6 +312,15 @@ namespace PragueParking2._0
             }
             return false;
         }
+        internal int CheckFreeParkings()
+        {
+            var freeParkings =
+                   from parkingSpot in ParkingSpotArray
+                   where parkingSpot.IsFree()
+                   select parkingSpot;
+
+            return freeParkings.Count();
+        }
         private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++) // kolla här.
@@ -355,22 +364,6 @@ namespace PragueParking2._0
             string ParkingSpotArrayJson = JsonConvert.SerializeObject(aParkingSpotArray, Formatting.Indented, new VehicleConverter());
 
             File.WriteAllText(path, ParkingSpotArrayJson);
-        }
-        internal void JsonSettingsRead(Settings settings)
-        {
-            string path = @"../../../Datafiles/Settings.json";
-
-            string SettingsJson = File.ReadAllText(path);
-
-            settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
-        }
-        internal void JsonSettingsWrite(Settings settings)
-        {
-            string path = @"../../../Datafiles/Settings.json";
-
-            string settingsJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
-
-            File.WriteAllText(path, settingsJson);
         }
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
         {

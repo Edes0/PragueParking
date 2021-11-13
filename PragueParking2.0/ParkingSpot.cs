@@ -146,7 +146,6 @@ namespace PragueParking2._0
                 var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
                 return $"[b]{"Error"}[/]\n[maroon]{parkingSpotNumber}[/]";
             }
-
         }
         internal bool IsFree()
         {
