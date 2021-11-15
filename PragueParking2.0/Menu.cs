@@ -9,20 +9,13 @@ namespace PragueParking2._0
     class Menu
     {
         /*
-        
-        TODO: Gör klart alla metoder
         TODO: Exception handling
         TODO: Kommentera
-        TODO: Dela ParkingHouse 2.0 och ParkingHouse 2.1
-
-        TODO: Gör klart VG-uppgifter
-        TODO: Exception handling igen
-        TODO: Kommentera igen
-
 
         EXTRA
         TODO: Optimera move bus
         TODO: Fixa en output promt
+        TODO: Gör en ticket tabell
         */
         Settings settings = new Settings();
         ParkingHouse parkingHouse = new ParkingHouse();
