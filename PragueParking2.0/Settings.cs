@@ -25,7 +25,6 @@ namespace PragueParking2._0
         public static byte SizeParkingHouseHighRoof { get; set; }
         [JsonProperty]
         public static byte SizeTableColumns { get; set; }
-
         [JsonProperty]
         public static byte HightBike { get; set; }
         [JsonProperty]
@@ -38,7 +37,6 @@ namespace PragueParking2._0
         public static byte HightParkingLow { get; set; }
         [JsonProperty]
         public static byte HightParkingHigh { get; set; }
-
         [JsonProperty]
         public static byte PriceCar { get; set; }
         [JsonProperty]
@@ -69,6 +67,16 @@ namespace PragueParking2._0
             string settingsJson = JsonConvert.SerializeObject(settings, Formatting.Indented);
 
             File.WriteAllText(path, settingsJson);
+        }
+
+        internal static void ChangeParkingHouseSize(byte newSize)
+        {
+            Settings.SizeParkingHouse = newSize;
+        }
+
+        internal static void ChangeParkingHouseHighRoof(byte newValue)
+        {
+            throw new NotImplementedException();
         }
     }
 }

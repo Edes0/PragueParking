@@ -21,16 +21,11 @@ namespace PragueParking2._0.Vehicles
                 TimeSpan freeTime = TimeSpan.FromMinutes(Settings.PriceFree);
                 double span = (DateTime.Now - ArriveTime - freeTime).TotalHours;
                 decimal priceClass = Settings.PriceBus;
-                decimal cost = priceClass * (decimal)span;
 
-                if (cost < 0)
-                {
-                    return 0;
-                }
-                return cost;
+                if (span <= 0) return 0;
+                return priceClass * (decimal)span;
             }
         }
-
         public Bus()
         {
         }

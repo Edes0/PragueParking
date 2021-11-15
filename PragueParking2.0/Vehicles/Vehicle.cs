@@ -21,7 +21,7 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         internal abstract string StringType { get; }
         [JsonProperty]
-        protected DateTime ArriveTime { get; set; }
+        internal DateTime ArriveTime { get; set; }
         [JsonProperty]
         internal abstract decimal Price { get; }
         [JsonProperty]
@@ -43,70 +43,46 @@ namespace PragueParking2._0.Vehicles
         internal void CheckOut(ParkingSpot parkingSpot)
         {
             parkingSpot.VehicleList.Remove(this);
-         }
+        }
         internal bool IsTiny()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
 
-            if (Size < parkingSpotSize)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (Size < parkingSpotSize) return true;
+            return false;
         }
         internal bool IsSmall()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
 
-            if (Size <= parkingSpotSize)
-            {
-                return true;
-            }
+            if (Size <= parkingSpotSize) return true;
             return false;
         }
         internal bool IsBig()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
 
-            if (Size > parkingSpotSize)
-            {
-                return true;
-            }
+            if (Size > parkingSpotSize) return true;
             return false;
         }
         internal bool IsHigh(Vehicle vehicle, ParkingSpot parkingSpot)
         {
-            if (vehicle.Hight > parkingSpot.Hight)
-            {
-                return true;
-            }
+            if (vehicle.Hight > parkingSpot.Hight) return true;
             return false;
         }
-        internal bool IsLow (Vehicle vehicle, ParkingSpot parkingSpot)
+        internal bool IsLow(Vehicle vehicle, ParkingSpot parkingSpot)
         {
-            if (vehicle.Hight < parkingSpot.Hight)
-            {
-                return true;
-            }
+            if (vehicle.Hight < parkingSpot.Hight) return true;
             return false;
         }
         internal bool FitSize(ParkingSpot parkingSpot)
         {
-            if (parkingSpot.AvailableSize >= Size)
-            {
-                return true;
-            }
+            if (parkingSpot.AvailableSize >= Size) return true;
             return false;
         }
         internal bool FitHight(ParkingSpot parkingSpot)
         {
-            if (parkingSpot.Hight > Hight)
-            {
-                return true;
-            }
+            if (parkingSpot.Hight > Hight) return true;
             return false;
         }
         internal void TicketInfo()

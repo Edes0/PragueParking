@@ -1,7 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using PragueParking2._0.Vehicles;
+﻿using PragueParking2._0.Vehicles;
 using Spectre.Console;
+using System;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace PragueParking2._0
 {
@@ -32,7 +33,7 @@ namespace PragueParking2._0
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Update", "Settings", "Exit Program", "X" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Print tickets", "Update", "Settings", "Exit Program", "X" }));
 
             switch (userInput)
             {
@@ -70,6 +71,11 @@ namespace PragueParking2._0
                     Console.Clear();
                     return true;
 
+                case "Print tickets":
+                    Console.Clear();
+                    parkingHouse.GetTickets();
+                    return true;
+
                 case "Exit":
                     break;
 
@@ -88,6 +94,8 @@ namespace PragueParking2._0
             //parkingHouse.JsonWrite(parkingHouse.ParkingSpotArray);
 
             //parkingHouse.JsonSettingsWrite(settings);
+
+            CultureInfo.CurrentCulture = new CultureInfo("cs-CZ");
 
             Settings.JsonSettingsRead(settings);
 
@@ -114,7 +122,7 @@ namespace PragueParking2._0
                         if (parkingHouse.ParkVehicle(vehicle))
                         {
                             Console.Clear();
-                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1));
+                            Console.WriteLine($"{vehicle.StringType} ({vehicle.RegNum}) is parked at parkingspot: {vehicle.Pspot + 1}");
                         }
                         else
                         {
@@ -183,7 +191,7 @@ namespace PragueParking2._0
 
                 Console.Clear();
 
-                if (parseSuccess)
+                if (parseSuccess && newParkingSpot < 0 && newParkingSpot > Settings.SizeParkingHouse)
                 {
                     if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot))
                     {
@@ -310,7 +318,7 @@ namespace PragueParking2._0
                     break;
 
                 case "Parking spot":
-                    VehicleSettings();
+                    ParkingSpotSettings();
                     break;
 
                 case "Parking house":
@@ -321,6 +329,71 @@ namespace PragueParking2._0
                     break;
 
             }
+        }
+        private void ParkingSpotSettings()
+        {
+            throw new NotImplementedException();
+        }
+        private void ParkingHouseSettings()
+        {
+            Console.WriteLine("Parking House");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+     .AddChoices(new[] { "Size", "High roof", "Back" }));
+
+            switch (userInput)
+            {
+                case "Size":
+                    ParkingHouseSizeSettingsMenu();
+                    break;
+
+                case "High roof":
+                    ParkingHouseHighRoofSettingsMenu();
+                    break;
+
+                case "Back":
+                    break;
+            }
+        }
+        private void ParkingHouseHighRoofSettingsMenu()
+        {
+            byte highRoof = Settings.SizeParkingHouse;
+
+            Console.Write($"Current value: {highRoof}\n" +
+                "Enter new value: ");
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newValue);
+
+            Console.Clear();
+
+            if (parseSuccess)
+            {
+                Settings.ChangeParkingHouseHighRoof(newValue);
+                Settings.JsonSettingsWrite(settings);
+                Console.WriteLine("New value confirmed");
+                return;
+            }
+            Console.WriteLine($"{newValue} is not a valid value, try again");
+        }
+        private void ParkingHouseSizeSettingsMenu()
+        {
+            byte size = Settings.SizeParkingHouse;
+
+            Console.Write($"Current size: {size}\n" +
+                "Enter new size(cannot be lower than current: ");
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
+
+            Console.Clear();
+
+            if (parseSuccess && newSize > size)
+            {
+                Settings.ChangeParkingHouseSize(newSize);
+                Settings.JsonSettingsWrite(settings);
+                Console.WriteLine("New size confirmed");
+                return;
+            }
+            Console.WriteLine($"{newSize} is not a valid value, try again");
         }
         private void VehicleSettings()
         {
@@ -351,50 +424,18 @@ namespace PragueParking2._0
                     break;
             }
         }
-        private void ParkingHouseSettings()
-        {
-            Console.WriteLine("Parking House");
-
-            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-     .AddChoices(new[] { "Size", "High roof", "Back" }));
-
-            switch (userInput)
-            {
-                case "Size":
-
-                    Console.WriteLine("Current size: " + Settings.SizeParkingHouse);
-                    Console.Write("Enter new size (cannot be lower than current): ");
-                    Console.Clear();
-                    Settings.JsonSettingsWrite(settings);
-                    Console.WriteLine("New size confirmed");
-                    parkingHouse.ChangeSettingSize();
-                    break;
-
-                case "High roof":
-                    parkingHouse.ChangeSettingHighRoof();
-                    break;
-
-                case "Back":
-                    break;
-            }
-
-        }
-
         private void BusSettings()
         {
             throw new NotImplementedException();
         }
-
         private void BikeSettings()
         {
             throw new NotImplementedException();
         }
-
         private void McSettings()
         {
             throw new NotImplementedException();
         }
-
         private void CarSettings()
         {
             throw new NotImplementedException();

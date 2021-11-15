@@ -27,52 +27,26 @@ namespace PragueParking2._0
         {
             Number = aNumber;
 
-            if (Number <= highRoof)
-            {
-                Hight = Settings.HightParkingHigh;
-            }
-            else
-            {
-                Hight = Settings.HightParkingLow;
-            }
+            if (Number <= highRoof) Hight = Settings.HightParkingHigh;
+            else Hight = Settings.HightParkingLow;
         }
         public override string ToString()
         {
-            return "ParkingSpot[" + this.Number + "]";
+            return $"ParkingSpot[{Number}]";
         }
         internal void AddVehicle(Vehicle vehicle)
         {
             vehicle.Park(this);
 
-            if (vehicle.IsBig())
-            {
-                AvailableSize -= Size;
-            }
-            else if (vehicle.IsSmall() || vehicle.IsTiny())
-            {
-                AvailableSize -= vehicle.Size;
-            }
-            else
-            {
-                throw new Exception("Error: Vehicle is neither big or small vehicle, change vehicle size");
-            }
+            if (vehicle.IsBig()) AvailableSize -= Size;
+            if (vehicle.IsSmall() || vehicle.IsTiny()) AvailableSize -= vehicle.Size;
         }
         internal void RemoveVehicle(Vehicle vehicle)
         {
             vehicle.CheckOut(this);
 
-            if (vehicle.IsSmall() || vehicle.IsTiny())
-            {
-                AvailableSize += vehicle.Size;
-            }
-            else if (vehicle.IsBig())
-            {
-                AvailableSize += Size;
-            }
-            else
-            {
-                throw new Exception("Error: Vehicle is neither big nor small nor tiny vehicle, change vehicle size");
-            }
+            if (vehicle.IsSmall() || vehicle.IsTiny()) AvailableSize += vehicle.Size;
+            if (vehicle.IsBig()) AvailableSize += Size;
         }
         internal void Clear()
         {
@@ -98,92 +72,51 @@ namespace PragueParking2._0
         }
         internal bool ParkingSpotAvailable(Vehicle vehicle)
         {
-            if (vehicle.IsSmall() && vehicle.FitSize(this) && vehicle.FitHight(this))
-            {
-                return true;
-            }
-            if (vehicle.IsBig() && IsFree() && vehicle.FitHight(this))
-            {
-                return true;
-            }
+            if (vehicle.IsSmall() && vehicle.FitSize(this) && vehicle.FitHight(this)) return true;
+            if (vehicle.IsBig() && IsFree() && vehicle.FitHight(this)) return true;
             return false;
         }
         internal string GetparkingSpotInfo(ParkingSpot parkingSpot)
         {
             var parkingSpotNumber = $"{parkingSpot.AvailableSize}";
 
-            if (VehicleList.Count == 0 && AvailableSize == Size)
-            {
-                return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
-                // FREE
-            }
-            else if (VehicleList.Count == 0 && AvailableSize == 0)
-            {
-                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
-                // RES 
-            }
-            else if (AvailableSize == 3)
-            {
-                return $"[b]{"   "}[/]\n[yellow3_1]{parkingSpotNumber}[/]";
-            }
-            else if (AvailableSize == 2)
-            {
-                return $"[b]{"   "}[/]\n[gold1]{parkingSpotNumber}[/]";
+            if (parkingSpot.IsFree()) return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
+            if (AvailableSize == 3) return $"[b]{"   "}[/]\n[yellow3_1]{parkingSpotNumber}[/]";
+            if (AvailableSize == 2) return $"[b]{"   "}[/]\n[gold1]{parkingSpotNumber}[/]";
+            if (AvailableSize == 1) return $"[b]{"   "}[/]\n[darkorange3_1]{parkingSpotNumber}[/]";
+            if (parkingSpot.IsFull()) return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
 
-            }
-            else if (AvailableSize == 1)
-            {
-                return $"[b]{"   "}[/]\n[darkorange3_1]{parkingSpotNumber}[/]";
-            }
-            else if (AvailableSize == 0)
-            {
-                return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
-            }
-            else
-            { 
-                // throw new Exception ("Parking spot has invalid size.");    When code done
-                // Code to put in vehicles in panel / Not used
-                var vehicleType = $"{parkingSpot.VehicleList[0].StringType}";
-                return $"[b]{"Error"}[/]\n[maroon]{parkingSpotNumber}[/]";
-            }
+            throw new Exception("Parking spot has invalid size. Implement new size above");
+
+            //if (VehicleList.Count == 0 && parkingSpot.IsFull()) return $"[b]{"RES "}[/]\n[maroon]{parkingSpotNumber}[/]"; // If you want to show reserved spots
         }
         internal bool IsFree()
         {
-            if (AvailableSize == Size)
-            {
-                return true;
-            }
+            if (AvailableSize == Size) return true;
             return false;
         }
         internal bool IsFull()
         {
-            if (AvailableSize == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (AvailableSize == 0) return true;
+            return false;
         }
         internal bool IsHigh()
         {
-
-
-            if (Hight >= Settings.HightParkingHigh)
-            {
-                return true;
-            }
+            if (Hight >= Settings.HightParkingHigh) return true;
             return false;
         }
         internal bool IsLow()
         {
-            if (Hight <= Settings.HightParkingLow)
-            {
-                return true;
-            }
+            if (Hight <= Settings.HightParkingLow) return true;
             return false;
         }
-
+        internal string GetTicketInfo()
+        {
+            foreach (Vehicle vehicle in VehicleList)
+            {
+                return $"{vehicle.StringType} ({vehicle.RegNum}) arrived: {vehicle.ArriveTime:dd/MMM/yyyy HH:mm} with total price: {vehicle.Price:C2}";
+            }
+            return "----";
+        }
     }
 }

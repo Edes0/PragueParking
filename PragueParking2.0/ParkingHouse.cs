@@ -18,12 +18,8 @@ namespace PragueParking2._0
         ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[Settings.SizeParkingHouse];
         internal ParkingHouse()
         {
-           // ParkingSpot[] ParkingSpotArray = new ParkingSpot[Size];
-
             for (int i = 0; i < Size; i++)
-            {
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
-            }
         }
         internal bool ParkVehicle(Vehicle vehicle)
         {
@@ -90,11 +86,6 @@ namespace PragueParking2._0
 
                     return true;
                 }
-                return false;
-            }
-            else
-            {
-                throw new Exception("Vehicle is neither big nor small, change vehicle size or parking size");
             }
             return false;
         }
@@ -137,7 +128,7 @@ namespace PragueParking2._0
 
             for (int i = newParkingSpot.Number; i < newParkingSpot.Number + counterLimit; i++)
             {
-                if (ParkingSpotArray[i].ParkingSpotAvailable(vehicle)) // (newParkingSpot.Number >= vehicle.Pspot && vehicle.Pspot !< vehicle.Pspot + counterLimit +1)
+                if (ParkingSpotArray[i].ParkingSpotAvailable(vehicle))
                 {
                     parkingsInARowCounter += 1;
 
@@ -173,11 +164,7 @@ namespace PragueParking2._0
 
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
-
+                return false;
             }
             else if (vehicle.IsBig())
             {
@@ -185,6 +172,7 @@ namespace PragueParking2._0
                 {
                     oldParkingSpot.RemoveVehicle(vehicle);
                     ClearReservedSpots(oldParkingSpot, counterLimit);
+
                     newParkingSpot.AddVehicle(vehicle);
                     AddReservedSpots(newParkingSpot, counterLimit);
 
@@ -192,15 +180,8 @@ namespace PragueParking2._0
 
                     return true;
                 }
-                else
-                {
-                    return false;
-                }
             }
-            else
-            {
-                throw new Exception("Vehicle is neither big, small nor tiny, change vehicle size or parking size");
-            }
+            return false;
         }
         internal bool SearchVehicle(string registrationNumber, out Vehicle aVehicle, out ParkingSpot aParkingSpot)
         {
@@ -219,10 +200,7 @@ namespace PragueParking2._0
         }
         internal void RemoveAllParkings()
         {
-            foreach (ParkingSpot parkingSpot in ParkingSpotArray)
-            {
-                parkingSpot.Clear();
-            }
+            foreach (ParkingSpot parkingSpot in ParkingSpotArray) parkingSpot.Clear();
             JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool RemoveVehicle(string aRegNum)
@@ -244,17 +222,13 @@ namespace PragueParking2._0
         }
         private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
-            for (int i = 1; i < aCounterLimit; i++) // kolla här.
-            {
+            for (int i = 1; i < aCounterLimit; i++)
                 ParkingSpotArray[parkingSpot.Number + aCounterLimit - i].Clear();
-            }
         }
         private void AddReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++)
-            {
                 parkingSpot.Reserve(ParkingSpotArray[parkingSpot.Number + i]);
-            }
         }
         internal void PrintParkingGrid()
         {
@@ -286,139 +260,103 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, ParkingSpotArrayJson);
         }
-
-        internal bool ChangeSettingSize()
-        { // EDIT
-
-
-            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
-
-            if (parseSuccess && newSize >= Settings.SizeParkingHouse)
-            {
-
-                return true;
-            }
-            else if (parseSuccess && newSize < Settings.SizeParkingHouse)
-            {
-                Console.Clear();
-                Console.WriteLine("Value cannot be lower than current");
-                return false;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("Invalid value");
-                return false;
-            }
-        }
-
-        internal void ChangeSettingHighRoof()
-        {
-            throw new NotImplementedException();
-        }
-
         internal void Update()
         {
             JsonDatafilWrite(ParkingSpotArray);
         }
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
         {
-            while (OptimizeSize3())
-            {
-            }
-            while (OptimizeSize2())
-            {
-            }
-            while (OptimizeCars())
-            {
-            }
+            while (OptimizeSize3(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
+            while (OptimizeSize2(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
+            while (OptimizeCars(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
         }
-        private bool OptimizeSize3()
+        private bool OptimizeSize3(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
-            {
+
                 if (parkingSpotOut.AvailableSize == 3)
-                {
+
                     foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
-                    {
+
                         if (parkingSpotIn.AvailableSize == 1)
                         {
                             Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
-                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + "-->" + parkingSpotIn.Number);
                             MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
+
+                            printVehicleMoved = $"{vehicle.StringType} ({vehicle.RegNum}) moved: {parkingSpotOut.Number} -- > {parkingSpotIn.Number}";
 
                             return true;
                         }
-                    }
-                }
-            }
+            printVehicleMoved = null;
             return false;
         }
-        private bool OptimizeSize2()
+        private bool OptimizeSize2(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
-            {
+
                 if (parkingSpotOut.AvailableSize == 2)
-                {
+
                     foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
-                    {
+
                         if (parkingSpotIn.AvailableSize == 2 && parkingSpotIn.Number != parkingSpotOut.Number)
                         {
                             if (parkingSpotOut.VehicleList.Count == 1)
                             {
                                 Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
-                                Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
-
                                 MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
+
+                                printVehicleMoved = $"{vehicle.StringType} ({vehicle.RegNum}) moved: {parkingSpotOut.Number} -- > {parkingSpotIn.Number}";
+
                                 return true;
                             }
-                            else
-                            {
-                                Vehicle vehicle = parkingSpotOut.VehicleList[0];
-                                Vehicle vehicle1 = parkingSpotOut.VehicleList[1];
 
-                                Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
-                                Console.WriteLine(vehicle1.StringType + "(" + vehicle1.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
+                            Vehicle vehicle1 = parkingSpotOut.VehicleList[0];
+                            Vehicle vehicle2 = parkingSpotOut.VehicleList[1];
 
-                                MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
-                                MoveVehicle(vehicle1, parkingSpotIn.Number, parkingSpotOut);
-                                return true;
-                            }
+                            MoveVehicle(vehicle2, parkingSpotIn.Number, parkingSpotOut);
+                            MoveVehicle(vehicle1, parkingSpotIn.Number, parkingSpotOut);
+
+                            printVehicleMoved = $"{vehicle1.StringType} ({vehicle1.RegNum}) moved: {parkingSpotOut.Number} -- > {parkingSpotIn.Number}" +
+                                $"{vehicle1.StringType} ({vehicle1.RegNum}) moved: {parkingSpotOut.Number} -- > {parkingSpotIn.Number}";
+
+                            return true;
                         }
-                    }
-                }
-            }
+            printVehicleMoved = null;
             return false;
         }
-        private bool OptimizeCars()
+        private bool OptimizeCars(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
             {
                 if (parkingSpotOut.IsFull() && parkingSpotOut.IsHigh() && parkingSpotOut.VehicleList[0].IsSmall())
-                {
+
                     foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
-                    {
+
                         if (parkingSpotIn.IsFree() && parkingSpotIn.IsLow())
                         {
                             Vehicle vehicle = parkingSpotOut.VehicleList[0];
 
-                            Console.WriteLine(vehicle.StringType + "(" + vehicle.RegNum + ") moved: " + parkingSpotOut.Number + " --> " + parkingSpotIn.Number);
-
                             MoveVehicle(vehicle, parkingSpotIn.Number, parkingSpotOut);
 
+                            printVehicleMoved = $"{vehicle.StringType} ({vehicle.RegNum}) moved: {parkingSpotOut.Number} -- > {parkingSpotIn.Number}";
                             return true;
                         }
-                    }
-                }
             }
+            printVehicleMoved = null;
             return false;
-        } // Gör så att det kraschar. Förstår inte varför denna kraschar med inte de andra optimize som i princip är samma.
-        public void UpdateTickets()
+        }
+        public void GetTickets()
         {
-            throw new System.NotImplementedException();
-        }// Behövs den? Visa tickets kanske
+            var notFreeParkingSpots =
+                from parkingSpot in ParkingSpotArray
+                where !parkingSpot.IsFree()
+                select parkingSpot;
+
+            foreach (ParkingSpot parkingSpot in notFreeParkingSpots)
+                Console.WriteLine(parkingSpot.GetTicketInfo());
+        }
         internal void AddSomeVehicles()
         {
             Mc mc = new Mc("TEST0");
