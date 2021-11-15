@@ -50,15 +50,16 @@ namespace PragueParking2._0
 
         public Settings()
         {
-
         }
-        internal static void JsonSettingsRead(Settings settings)
+        internal static Settings JsonSettingsRead()
         {
             string path = @"../../../Datafiles/Settings.json";
 
             string SettingsJson = File.ReadAllText(path);
 
-            settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
+            Settings settings = JsonConvert.DeserializeObject<Settings>(SettingsJson);
+
+            return settings;
         }
         internal static void JsonSettingsWrite(Settings settings)
         {

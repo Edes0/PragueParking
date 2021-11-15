@@ -17,7 +17,7 @@ namespace PragueParking2._0
         TODO: Fixa en output promt
         TODO: Gör en ticket tabell
         */
-        Settings settings = new Settings();
+        Settings settings = Settings.JsonSettingsRead();
         ParkingHouse parkingHouse = new ParkingHouse();
 
         public bool Start()
@@ -50,7 +50,7 @@ namespace PragueParking2._0
                     RemoveAllMenu();
                     return true;
 
-                case "Optimize":
+                case "Optimize all":
                     OptimizeMenu();
                     return true;
 
@@ -83,18 +83,11 @@ namespace PragueParking2._0
         {
             Console.SetWindowSize(160, 40);
 
-            // For debugging.
-            //parkingHouse.JsonWrite(parkingHouse.ParkingSpotArray);
+            settings = Settings.JsonSettingsRead();
 
-            //parkingHouse.JsonSettingsWrite(settings);
+            parkingHouse.Chores();
 
             CultureInfo.CurrentCulture = new CultureInfo("cs-CZ");
-
-            Settings.JsonSettingsRead(settings);
-
-            parkingHouse.JsonDatafilRead();
-
-            parkingHouse.PrintParkingGrid();
         }
         private void ParkMenu()
         {

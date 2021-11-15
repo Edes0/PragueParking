@@ -15,11 +15,19 @@ namespace PragueParking2._0
     {
         internal byte HighRoof { get; set; } = Settings.SizeParkingHouseHighRoof;
         private byte Size { get; set; } = Settings.SizeParkingHouse;
-        ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[Settings.SizeParkingHouse];
+        private ParkingSpot[] ParkingSpotArray { get; set; } = new ParkingSpot[Settings.SizeParkingHouse];
         internal ParkingHouse()
         {
             for (int i = 0; i < Size; i++)
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
+        }
+        internal void Chores()
+        {
+            if (ParkingSpotArray == null) JsonDatafilWrite(ParkingSpotArray);
+
+            JsonDatafilRead();
+
+            PrintParkingGrid();
         }
         internal bool ParkVehicle(Vehicle vehicle)
         {
@@ -241,18 +249,19 @@ namespace PragueParking2._0
                         .RoundedBorder());
             }
             // Render all cards in columns
-            AnsiConsole.Write(new Columns(box));
+            AnsiConsole.Write(new Columns(box));   // HÄR BLIR DET FEL
         }
-        internal void JsonDatafilRead()
+        private void JsonDatafilRead()
         {
             string path = @"../../../Datafiles/Datafile.json";
 
             string ParkingSpotArrayJson = File.ReadAllText(path);
 
-            ParkingSpotArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
+            ParkingSpot[] tempArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
 
+            ParkingSpotArray.Union(tempArray);
         }
-        internal void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
+        private void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
         {
             string path = @"../../../Datafiles/Datafile.json";
 
@@ -347,7 +356,7 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        public void GetTickets()
+        internal void GetTickets()
         {
             var notFreeParkingSpots =
                 from parkingSpot in ParkingSpotArray
