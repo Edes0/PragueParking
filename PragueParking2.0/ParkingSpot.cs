@@ -114,7 +114,7 @@ namespace PragueParking2._0
         {
             foreach (Vehicle vehicle in VehicleList)
             {
-                return $"{vehicle.StringType} ({vehicle.RegNum}) arrived: {vehicle.ArriveTime:dd/MMM/yyyy HH:mm} with total price: {vehicle.Price:C2}";
+                return $"{vehicle.StringType} ({vehicle.RegNum}) arrived: {vehicle.ArriveTime:dd/MMM/yyyy HH:mm} with total price: {vehicle.Price:0.00} CZK";
             }
             return "----";
         }

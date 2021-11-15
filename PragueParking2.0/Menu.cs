@@ -23,6 +23,7 @@ namespace PragueParking2._0
         public bool Start()
         {
 
+
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
@@ -61,7 +62,6 @@ namespace PragueParking2._0
 
                 case "Settings":
                     SettingsMenu();
-                    Console.Clear();
                     return true;
 
                 case "Print tickets":
@@ -86,8 +86,6 @@ namespace PragueParking2._0
             settings = Settings.JsonSettingsRead();
 
             parkingHouse.Chores();
-
-            CultureInfo.CurrentCulture = new CultureInfo("cs-CZ");
         }
         private void ParkMenu()
         {
@@ -330,56 +328,53 @@ namespace PragueParking2._0
             switch (userInput)
             {
                 case "Size":
-                    ParkingHouseSizeSettingsMenu();
+                    Console.WriteLine(ParkingHouseSizeSettingsMenu());
                     break;
 
                 case "High roof":
-                    ParkingHouseHighRoofSettingsMenu();
+                    Console.WriteLine(ParkingHouseHighRoofSettingsMenu());
                     break;
 
                 case "Back":
                     break;
             }
         }
-        private void ParkingHouseHighRoofSettingsMenu()
+        private string ParkingHouseHighRoofSettingsMenu()
         {
             byte highRoof = Settings.SizeParkingHouse;
 
-            Console.Write($"Current value: {highRoof}\n" +
-                "Enter new value: ");
+            Console.WriteLine($"Current size: {highRoof}");
+            Console.Write("Enter new value: ");
 
             bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newValue);
 
             Console.Clear();
 
-            if (parseSuccess)
-            {
+            if (!parseSuccess) return $"{newValue} is not a valid value, try again";
+
                 Settings.ChangeParkingHouseHighRoof(newValue);
                 Settings.JsonSettingsWrite(settings);
-                Console.WriteLine("New value confirmed");
-                return;
-            }
-            Console.WriteLine($"{newValue} is not a valid value, try again");
+                return "New value confirmed";
         }
-        private void ParkingHouseSizeSettingsMenu()
+        private string ParkingHouseSizeSettingsMenu()
         {
             byte size = Settings.SizeParkingHouse;
 
-            Console.Write($"Current size: {size}\n" +
-                "Enter new size(cannot be lower than current: ");
+            Console.WriteLine($"Current size: {size}");
+            Console.Write("Enter new size: ");
 
             bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
 
             Console.Clear();
 
-            if (parseSuccess && newSize > size)
-            {
-                Settings.ChangeParkingHouseSize(newSize);
-                Settings.JsonSettingsWrite(settings);
-                Console.WriteLine("New size confirmed");
-                return;
-            }
-            Console.WriteLine($"{newSize} is not a valid value, try again");
+            if (!parseSuccess) return $"{newSize} is not a valid value, try again";
+            if (newSize < size)
+                if (!parkingHouse.PossibleToShrink(newSize)) return "Vehicle in the way";
+
+            Settings.ChangeParkingHouseSize(newSize);
+            Settings.JsonSettingsWrite(settings);
+
+            return "New size confirmed, restart program";
         }
         private void VehicleSettings()
         {

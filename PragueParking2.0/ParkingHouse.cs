@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using PragueParking2._0.Enums;
 using PragueParking2._0.Vehicles;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -259,7 +260,13 @@ namespace PragueParking2._0
 
             ParkingSpot[] tempArray = JsonConvert.DeserializeObject<ParkingSpot[]>(ParkingSpotArrayJson, new VehicleConverter());
 
-            ParkingSpotArray.Union(tempArray);
+            if (tempArray.Length >= ParkingSpotArray.Length)
+                for (int i = 0; i < ParkingSpotArray.Length; i++)
+                    ParkingSpotArray[i] = tempArray[i];
+
+            if (tempArray.Length < ParkingSpotArray.Length)
+                for (int i = 0; i < tempArray.Length; i++)
+                    ParkingSpotArray[i] = tempArray[i];
         }
         private void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
         {
@@ -335,6 +342,12 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
+        internal bool PossibleToShrink(byte newSize)
+        {
+            for (int i = newSize; i < ParkingSpotArray.Length; i++)
+                if (!ParkingSpotArray[i].IsFree()) return false;
+            return true;
+        }
         private bool OptimizeCars(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
@@ -358,13 +371,39 @@ namespace PragueParking2._0
         }
         internal void GetTickets()
         {
+            AnsiConsole.Write(PrintTicketList());
+            //var notFreeParkingSpots =
+            //    from parkingSpot in ParkingSpotArray
+            //    where !parkingSpot.IsFree()
+            //    select parkingSpot;
+
+            //foreach (ParkingSpot parkingSpot in notFreeParkingSpots)
+            //    Console.WriteLine(parkingSpot.GetTicketInfo());
+        }
+        internal Table PrintTicketList()
+        {
+            return new Table()
+                .Centered()
+                .Border(TableBorder.DoubleEdge)
+                .Title("[yellow]Ticket List[/]")
+                .AddColumn(new TableColumn("Type"))
+                .AddColumn(new TableColumn("Registration number"))
+                .AddColumn(new TableColumn("Arrive time"))
+                .AddColumn(new TableColumn("Price"))
+                .AddRow(Rows());
+        }
+
+        private string Rows()
+        {
             var notFreeParkingSpots =
-                from parkingSpot in ParkingSpotArray
-                where !parkingSpot.IsFree()
-                select parkingSpot;
+        from parkingSpot in ParkingSpotArray
+        where !parkingSpot.IsFree()
+        select parkingSpot;
 
             foreach (ParkingSpot parkingSpot in notFreeParkingSpots)
-                Console.WriteLine(parkingSpot.GetTicketInfo());
+                return parkingSpot.GetTicketInfo();
+
+            return "";
         }
         internal void AddSomeVehicles()
         {
