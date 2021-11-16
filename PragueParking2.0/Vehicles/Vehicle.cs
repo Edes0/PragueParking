@@ -65,14 +65,14 @@ namespace PragueParking2._0.Vehicles
             if (Size > parkingSpotSize) return true;
             return false;
         }
-        internal bool IsHigh(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal bool IsHigh()
         {
-            if (vehicle.Hight > parkingSpot.Hight) return true;
+            if (Hight > Settings.HightParkingLow) return true;
             return false;
         }
-        internal bool IsLow(Vehicle vehicle, ParkingSpot parkingSpot)
+        internal bool IsLow()
         {
-            if (vehicle.Hight < parkingSpot.Hight) return true;
+            if (Hight < Settings.HightParkingLow) return true;
             return false;
         }
         internal bool FitSize(ParkingSpot parkingSpot)
@@ -89,7 +89,6 @@ namespace PragueParking2._0.Vehicles
         {
             return $"{Pspot+1}, {StringType}, {RegNum}, {ArriveTime:dd/MMM/yyyy HH:mm}, {Price:0.00} CZK";
         }
-
         internal decimal GetPrice()
         {
             return Price;

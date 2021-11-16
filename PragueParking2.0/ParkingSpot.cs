@@ -79,15 +79,15 @@ namespace PragueParking2._0
         }
         internal string GetparkingSpotInfo(ParkingSpot parkingSpot)
         {
-            var parkingSpotNumber = $"{parkingSpot.AvailableSize}";
+            var availableSize = $"{parkingSpot.AvailableSize}";
 
-            if (parkingSpot.IsFree()) return $"[b]{"   "}[/]\n[darkgreen]{parkingSpotNumber}[/]";
-            if (AvailableSize == 3) return $"[b]{"   "}[/]\n[yellow3_1]{parkingSpotNumber}[/]";
-            if (AvailableSize == 2) return $"[b]{"   "}[/]\n[gold1]{parkingSpotNumber}[/]";
-            if (AvailableSize == 1) return $"[b]{"   "}[/]\n[darkorange3_1]{parkingSpotNumber}[/]";
-            if (parkingSpot.IsFull()) return $"[b]{"   "}[/]\n[maroon]{parkingSpotNumber}[/]";
+            if (parkingSpot.IsFree() || AvailableSize >= 4) return $"[b]{"   "}[/]\n[darkgreen]{availableSize}[/]";
+            if (AvailableSize == 3) return $"[b]{"   "}[/]\n[yellow3_1]{availableSize}[/]";
+            if (AvailableSize == 2) return $"[b]{"   "}[/]\n[gold1]{availableSize}[/]";
+            if (AvailableSize == 1) return $"[b]{"   "}[/]\n[darkorange3_1]{availableSize}[/]";
+            if (parkingSpot.IsFull()) return $"[b]{"   "}[/]\n[maroon]{availableSize}[/]";
 
-            throw new Exception("Parking spot has invalid size. Implement new size above");
+            throw new Exception("Error: Parking spot has invalid size");
 
             //if (VehicleList.Count == 0 && parkingSpot.IsFull()) return $"[b]{"RES "}[/]\n[maroon]{parkingSpotNumber}[/]"; // If you want to show reserved spots
         }
@@ -131,6 +131,17 @@ namespace PragueParking2._0
                 totalPrice += vehicle.GetPrice();
             }
             return totalPrice;
+        }
+        internal bool HaveHighVehicle()
+        {
+            foreach (Vehicle vehicle in VehicleList)
+                if (vehicle.IsHigh()) return true;
+            return false;
+        }
+        internal bool PossibleToShrink(byte newSize)
+        {
+            if (newSize < Size - AvailableSize) return false;
+            return true;
         }
     }
 }

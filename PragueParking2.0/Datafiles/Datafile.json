@@ -11,9 +11,9 @@
         "Size": 16,
         "StringType": "Bus",
         "Price": 0.0,
-        "RegNum": "ASSBUSS123",
+        "RegNum": "ABC123",
         "Pspot": 0,
-        "ArriveTime": "2021-11-16T13:57:46.5664486+01:00"
+        "ArriveTime": "2021-11-16T17:11:46.4381436+01:00"
       }
     ]
   },
@@ -364,653 +364,169 @@
     "Number": 50,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591895994440,
-        "RegNum": "TEST0",
-        "Pspot": 50,
-        "ArriveTime": "2021-11-15T15:13:13.2945145+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795965454165,
-        "RegNum": "TEST01",
-        "Pspot": 50,
-        "ArriveTime": "2021-11-15T15:13:13.2952117+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795975172220,
-        "RegNum": "TEST0",
-        "Pspot": 50,
-        "ArriveTime": "2021-11-15T15:13:13.2952583+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 51,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591955058330,
-        "RegNum": "TEST1",
-        "Pspot": 51,
-        "ArriveTime": "2021-11-15T15:13:13.2951253+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795976034720,
-        "RegNum": "TEST01",
-        "Pspot": 51,
-        "ArriveTime": "2021-11-15T15:13:13.295253+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795976052780,
-        "RegNum": "TEST1",
-        "Pspot": 51,
-        "ArriveTime": "2021-11-15T15:13:13.295259+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 52,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591955991670,
-        "RegNum": "TEST2",
-        "Pspot": 52,
-        "ArriveTime": "2021-11-15T15:13:13.2951304+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795976365280,
-        "RegNum": "TEST02",
-        "Pspot": 52,
-        "ArriveTime": "2021-11-15T15:13:13.2952548+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795976433335,
-        "RegNum": "TEST2",
-        "Pspot": 52,
-        "ArriveTime": "2021-11-15T15:13:13.2952595+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 53,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591956741670,
-        "RegNum": "TEST3",
-        "Pspot": 53,
-        "ArriveTime": "2021-11-15T15:13:13.2951311+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977077780,
-        "RegNum": "TEST03",
-        "Pspot": 53,
-        "ArriveTime": "2021-11-15T15:13:13.2952552+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977111110,
-        "RegNum": "TEST3",
-        "Pspot": 53,
-        "ArriveTime": "2021-11-15T15:13:13.2952602+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 54,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591958108330,
-        "RegNum": "TEST4",
-        "Pspot": 54,
-        "ArriveTime": "2021-11-15T15:13:13.2951317+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977425,
-        "RegNum": "TEST04",
-        "Pspot": 54,
-        "ArriveTime": "2021-11-15T15:13:13.2952557+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977445835,
-        "RegNum": "TEST4",
-        "Pspot": 54,
-        "ArriveTime": "2021-11-15T15:13:13.2952607+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 55,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591958755560,
-        "RegNum": "TEST5",
-        "Pspot": 55,
-        "ArriveTime": "2021-11-15T15:13:13.2951322+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977748610,
-        "RegNum": "TEST05",
-        "Pspot": 55,
-        "ArriveTime": "2021-11-15T15:13:13.2952561+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795977768055,
-        "RegNum": "TEST5",
-        "Pspot": 55,
-        "ArriveTime": "2021-11-15T15:13:13.2952612+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 56,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591959397220,
-        "RegNum": "TEST6",
-        "Pspot": 56,
-        "ArriveTime": "2021-11-15T15:13:13.2951328+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978070835,
-        "RegNum": "TEST06",
-        "Pspot": 56,
-        "ArriveTime": "2021-11-15T15:13:13.2952565+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978173610,
-        "RegNum": "TEST6",
-        "Pspot": 56,
-        "ArriveTime": "2021-11-15T15:13:13.2952617+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 57,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591960216670,
-        "RegNum": "TEST7",
-        "Pspot": 57,
-        "ArriveTime": "2021-11-15T15:13:13.2951335+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978484720,
-        "RegNum": "TEST07",
-        "Pspot": 57,
-        "ArriveTime": "2021-11-15T15:13:13.295257+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978641665,
-        "RegNum": "TEST7",
-        "Pspot": 57,
-        "ArriveTime": "2021-11-15T15:13:13.2952622+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 58,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591961147220,
-        "RegNum": "TEST8",
-        "Pspot": 58,
-        "ArriveTime": "2021-11-15T15:13:13.2951339+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978952780,
-        "RegNum": "TEST08",
-        "Pspot": 58,
-        "ArriveTime": "2021-11-15T15:13:13.2952574+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795978973610,
-        "RegNum": "TEST8",
-        "Pspot": 58,
-        "ArriveTime": "2021-11-15T15:13:13.2952626+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 59,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7591961808330,
-        "RegNum": "TEST9",
-        "Pspot": 59,
-        "ArriveTime": "2021-11-15T15:13:13.2951345+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.87959792875,
-        "RegNum": "TEST09",
-        "Pspot": 59,
-        "ArriveTime": "2021-11-15T15:13:13.2952579+01:00"
-      },
-      {
-        "Type": 2,
-        "Hight": 1,
-        "Size": 1,
-        "StringType": "Bike",
-        "Price": 112.8795979309720,
-        "RegNum": "TEST9",
-        "Pspot": 59,
-        "ArriveTime": "2021-11-15T15:13:13.2952631+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 60,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5183986405560,
-        "RegNum": "TEST9",
-        "Pspot": 60,
-        "ArriveTime": "2021-11-15T15:13:13.2953987+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 61,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.518403700,
-        "RegNum": "TEST9",
-        "Pspot": 61,
-        "ArriveTime": "2021-11-15T15:13:13.295351+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 62,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184035594440,
-        "RegNum": "TEST9",
-        "Pspot": 62,
-        "ArriveTime": "2021-11-15T15:13:13.2953929+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 63,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184036138880,
-        "RegNum": "TEST9",
-        "Pspot": 63,
-        "ArriveTime": "2021-11-15T15:13:13.2953948+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 64,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184036905560,
-        "RegNum": "TEST9",
-        "Pspot": 64,
-        "ArriveTime": "2021-11-15T15:13:13.2953953+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 65,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184037500,
-        "RegNum": "TEST9",
-        "Pspot": 65,
-        "ArriveTime": "2021-11-15T15:13:13.2953958+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 66,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184038077780,
-        "RegNum": "TEST9",
-        "Pspot": 66,
-        "ArriveTime": "2021-11-15T15:13:13.2953963+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 67,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184038683340,
-        "RegNum": "TEST9",
-        "Pspot": 67,
-        "ArriveTime": "2021-11-15T15:13:13.2953967+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 68,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.51840392500,
-        "RegNum": "TEST9",
-        "Pspot": 68,
-        "ArriveTime": "2021-11-15T15:13:13.2953972+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 69,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.5184039827780,
-        "RegNum": "TEST9",
-        "Pspot": 69,
-        "ArriveTime": "2021-11-15T15:13:13.2953976+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 70,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 451.518404040,
-        "RegNum": "TEST9",
-        "Pspot": 70,
-        "ArriveTime": "2021-11-15T15:13:13.2953981+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 71,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592024263890,
-        "RegNum": "TEST1",
-        "Pspot": 71,
-        "ArriveTime": "2021-11-15T15:13:13.2952643+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592024486110,
-        "RegNum": "TEST0",
-        "Pspot": 71,
-        "ArriveTime": "2021-11-15T15:13:13.2952637+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 72,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 0,
-        "Hight": 2,
-        "Size": 4,
-        "StringType": "Car",
-        "Price": 447.2565752794440,
-        "RegNum": "AAA1111",
-        "Pspot": 72,
-        "ArriveTime": "2021-11-15T15:26:00.4246056+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 73,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592025038890,
-        "RegNum": "TEST3",
-        "Pspot": 73,
-        "ArriveTime": "2021-11-15T15:13:13.2952652+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592025236110,
-        "RegNum": "TEST2",
-        "Pspot": 73,
-        "ArriveTime": "2021-11-15T15:13:13.2952648+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 74,
@@ -1023,29 +539,8 @@
     "Number": 75,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592025594440,
-        "RegNum": "TEST5",
-        "Pspot": 75,
-        "ArriveTime": "2021-11-15T15:13:13.2952664+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592025836110,
-        "RegNum": "TEST4",
-        "Pspot": 75,
-        "ArriveTime": "2021-11-15T15:13:13.2952657+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 76,
@@ -1058,29 +553,8 @@
     "Number": 77,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592026188890,
-        "RegNum": "TEST7",
-        "Pspot": 77,
-        "ArriveTime": "2021-11-15T15:13:13.2952673+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592026388890,
-        "RegNum": "TEST6",
-        "Pspot": 77,
-        "ArriveTime": "2021-11-15T15:13:13.2952668+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 78,
@@ -1093,29 +567,8 @@
     "Number": 79,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592026752780,
-        "RegNum": "TEST9",
-        "Pspot": 79,
-        "ArriveTime": "2021-11-15T15:13:13.2952684+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592026958330,
-        "RegNum": "TEST8",
-        "Pspot": 79,
-        "ArriveTime": "2021-11-15T15:13:13.2952677+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 80,
@@ -1128,29 +581,8 @@
     "Number": 81,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592027313890,
-        "RegNum": "TEST1",
-        "Pspot": 81,
-        "ArriveTime": "2021-11-15T15:13:13.2952693+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592027508330,
-        "RegNum": "TEST0",
-        "Pspot": 81,
-        "ArriveTime": "2021-11-15T15:13:13.2952689+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 82,
@@ -1163,29 +595,8 @@
     "Number": 83,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592027866670,
-        "RegNum": "TEST3",
-        "Pspot": 83,
-        "ArriveTime": "2021-11-15T15:13:13.2952702+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592028061110,
-        "RegNum": "TEST2",
-        "Pspot": 83,
-        "ArriveTime": "2021-11-15T15:13:13.2952698+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 84,
@@ -1198,29 +609,8 @@
     "Number": 85,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592028488890,
-        "RegNum": "TEST5",
-        "Pspot": 85,
-        "ArriveTime": "2021-11-15T15:13:13.2952711+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592028688890,
-        "RegNum": "TEST4",
-        "Pspot": 85,
-        "ArriveTime": "2021-11-15T15:13:13.2952707+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 86,
@@ -1233,29 +623,8 @@
     "Number": 87,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592029047220,
-        "RegNum": "TEST7",
-        "Pspot": 87,
-        "ArriveTime": "2021-11-15T15:13:13.2952721+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592029372220,
-        "RegNum": "TEST6",
-        "Pspot": 87,
-        "ArriveTime": "2021-11-15T15:13:13.2952715+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 88,
@@ -1268,29 +637,8 @@
     "Number": 89,
     "Size": 4,
     "Hight": 3,
-    "AvailableSize": 0,
-    "VehicleList": [
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.7592029972220,
-        "RegNum": "TEST9",
-        "Pspot": 89,
-        "ArriveTime": "2021-11-15T15:13:13.2952729+01:00"
-      },
-      {
-        "Type": 1,
-        "Hight": 1,
-        "Size": 2,
-        "StringType": "Mc",
-        "Price": 225.75920301750,
-        "RegNum": "TEST8",
-        "Pspot": 89,
-        "ArriveTime": "2021-11-15T15:13:13.2952725+01:00"
-      }
-    ]
+    "AvailableSize": 4,
+    "VehicleList": []
   },
   {
     "Number": 90,

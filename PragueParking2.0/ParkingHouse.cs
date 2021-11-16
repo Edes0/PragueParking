@@ -27,6 +27,7 @@ namespace PragueParking2._0
             if (ParkingSpotArray == null) JsonDatafilWrite(ParkingSpotArray);
 
             JsonDatafilRead();
+            JsonDatafilWrite(ParkingSpotArray);
         }
         internal bool ParkVehicle(Vehicle vehicle)
         {
@@ -261,7 +262,11 @@ namespace PragueParking2._0
 
             if (tempArray.Length >= ParkingSpotArray.Length)
                 for (int i = 0; i < ParkingSpotArray.Length; i++)
+                {
+                    if (ParkingSpotArray[i].Hight < tempArray[i].Hight) tempArray[i].Hight = Settings.HightParkingLow;
+                    if (ParkingSpotArray[i].Hight > tempArray[i].Hight) tempArray[i].Hight = Settings.HightParkingHigh;
                     ParkingSpotArray[i] = tempArray[i];
+                }
 
             if (tempArray.Length < ParkingSpotArray.Length)
                 for (int i = 0; i < tempArray.Length; i++)
@@ -277,6 +282,7 @@ namespace PragueParking2._0
         }
         internal void Update()
         {
+            Settings.JsonSettingsRead();
             JsonDatafilWrite(ParkingSpotArray);
         }
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
@@ -341,10 +347,17 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        internal bool PossibleToShrink(byte newSize)
+        internal bool PossibleToShrinkSize(byte newSize)
         {
             for (int i = newSize; i < ParkingSpotArray.Length; i++)
                 if (!ParkingSpotArray[i].IsFree()) return false;
+            return true;
+        }
+        internal bool PossibleToLowerHighRoof(byte newValue, byte highRoof)
+        {
+            for (int i = newValue; i < ParkingSpotArray.Length; i++)
+                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+                    if (ParkingSpotArray[i].HaveHighVehicle() || ParkingSpotArray[i].IsReserved()) return false;
             return true;
         }
         private bool OptimizeCars(out string printVehicleMoved)
@@ -593,6 +606,12 @@ namespace PragueParking2._0
             ParkingSpotArray[0].AddVehicle(car19);
 
             JsonDatafilWrite(ParkingSpotArray);
+        }
+        internal bool PossibleToShrinkParkingSpotSize(byte newSize)
+        {
+            foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+                if (!parkingSpot.PossibleToShrink(newSize)) return false;
+                return true;
         }
     }
 }

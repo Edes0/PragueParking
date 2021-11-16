@@ -47,7 +47,6 @@ namespace PragueParking2._0
         public static byte PriceBus { get; set; }
         [JsonProperty]
         public static double PriceFree { get; set; }
-
         public Settings()
         {
         }
@@ -69,15 +68,17 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, settingsJson);
         }
-
+        internal static void ChangeParkingSpotSize(byte newSize)
+        {
+            SizeParkingSpot = newSize;
+        }
         internal static void ChangeParkingHouseSize(byte newSize)
         {
-            Settings.SizeParkingHouse = newSize;
+            SizeParkingHouse = newSize;
         }
-
         internal static void ChangeParkingHouseHighRoof(byte newValue)
         {
-            throw new NotImplementedException();
+            SizeParkingHouseHighRoof = newValue;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace PragueParking2._0
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .PageSize(11)
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Show Tickets", "Update", "Settings", "Exit Program", "X" }));
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize all", "Show Tickets", "Update", "Settings", "Exit Program", "X" }));
 
             switch (userInput)
             {
@@ -86,6 +86,7 @@ namespace PragueParking2._0
             Console.SetWindowSize(160, 42);
 
             settings = Settings.JsonSettingsRead();
+            Settings.JsonSettingsRead();
 
             parkingHouse.Chores();
 
@@ -314,11 +315,62 @@ namespace PragueParking2._0
                     break;
 
                 case "Back":
-                    break;
+                    Console.Clear();
+                    return;
 
             }
         }
         private void ParkingSpotSettings()
+        {
+            Console.WriteLine("Parking Spot");
+
+            string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
+     .AddChoices(new[] { "Size", "Hight", "Available size", "Back" }));
+
+            switch (userInput)
+            {
+                case "Size":
+                    Console.WriteLine(ParkingSpotSizeSettingsMenu());
+                    break;
+
+                case "High roof":
+                    Console.WriteLine(ParkingSpotHighRoofSettingsMenu());
+                    break;     
+                
+                case "Available size":
+                    Console.WriteLine(ParkingSpotAvailableSizeSettingsMenu());
+                    break;
+
+                case "Back":
+                    Console.Clear();
+                    return;
+            }
+        }
+        private string ParkingSpotSizeSettingsMenu()
+        {
+            byte size = Settings.SizeParkingSpot;
+
+            Console.WriteLine($"Current size: {size}");
+            Console.Write("Enter new size: ");
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newSize);
+
+            Console.Clear();
+
+            if (!parseSuccess) return $"{newSize} is not a valid value, try again";
+            if (newSize < size)
+                if (!parkingHouse.PossibleToShrinkParkingSpotSize(newSize)) return "Vehicle in the way";
+
+            Settings.ChangeParkingSpotSize(newSize);
+            Settings.JsonSettingsWrite(settings);
+
+            return "New size confirmed";
+        }
+        private string ParkingSpotHighRoofSettingsMenu()
+        {
+            throw new NotImplementedException();
+        }
+        private string ParkingSpotAvailableSizeSettingsMenu()
         {
             throw new NotImplementedException();
         }
@@ -340,25 +392,9 @@ namespace PragueParking2._0
                     break;
 
                 case "Back":
-                    break;
+                    Console.Clear();
+                    return;
             }
-        }
-        private string ParkingHouseHighRoofSettingsMenu()
-        {
-            byte highRoof = Settings.SizeParkingHouse;
-
-            Console.WriteLine($"Current size: {highRoof}");
-            Console.Write("Enter new value: ");
-
-            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newValue);
-
-            Console.Clear();
-
-            if (!parseSuccess) return $"{newValue} is not a valid value, try again";
-
-                Settings.ChangeParkingHouseHighRoof(newValue);
-                Settings.JsonSettingsWrite(settings);
-                return "New value confirmed";
         }
         private string ParkingHouseSizeSettingsMenu()
         {
@@ -373,12 +409,32 @@ namespace PragueParking2._0
 
             if (!parseSuccess) return $"{newSize} is not a valid value, try again";
             if (newSize < size)
-                if (!parkingHouse.PossibleToShrink(newSize)) return "Vehicle in the way";
+                if (!parkingHouse.PossibleToShrinkSize(newSize)) return "Vehicle in the way";
 
             Settings.ChangeParkingHouseSize(newSize);
             Settings.JsonSettingsWrite(settings);
 
             return "New size confirmed, restart program";
+        }
+        private string ParkingHouseHighRoofSettingsMenu()
+        {
+            byte highRoof = Settings.SizeParkingHouseHighRoof;
+
+            Console.WriteLine($"Current size: {highRoof}");
+            Console.Write("Enter new value: ");
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newValue);
+
+            Console.Clear();
+
+            if (!parseSuccess) return $"{newValue} is not a valid value, try again";
+            if ((newValue < highRoof))
+                if (!parkingHouse.PossibleToLowerHighRoof(newValue, highRoof)) return "High vehicle in the way";
+
+                Settings.ChangeParkingHouseHighRoof(newValue);
+                Settings.JsonSettingsWrite(settings);
+
+                return "New value confirmed";
         }
         private void VehicleSettings()
         {
