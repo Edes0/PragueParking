@@ -85,9 +85,14 @@ namespace PragueParking2._0.Vehicles
             if (parkingSpot.Hight > Hight) return true;
             return false;
         }
-        internal void TicketInfo()
+        internal string GetVehicleInfo()
         {
+            return $"{Pspot+1}, {StringType}, {RegNum}, {ArriveTime:dd/MMM/yyyy HH:mm}, {Price:0.00} CZK";
+        }
 
+        internal decimal GetPrice()
+        {
+            return Price;
         }
     }
 }

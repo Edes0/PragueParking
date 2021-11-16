@@ -22,12 +22,11 @@ namespace PragueParking2._0
 
         public bool Start()
         {
-
-
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Print tickets", "Update", "Settings", "Exit Program", "X" }));
+                .PageSize(11)
+              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize", "Show Tickets", "Update", "Settings", "Exit Program", "X" }));
 
             switch (userInput)
             {
@@ -55,6 +54,14 @@ namespace PragueParking2._0
                     OptimizeMenu();
                     return true;
 
+                case "Show Tickets":
+                    Console.Clear();
+                    ShowTicketList();
+                    Console.WriteLine("To continue, press any key...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    return true;
+
                 case "Update":
                     Console.Clear();
                     parkingHouse.Update();
@@ -62,11 +69,6 @@ namespace PragueParking2._0
 
                 case "Settings":
                     SettingsMenu();
-                    return true;
-
-                case "Print tickets":
-                    Console.Clear();
-                    parkingHouse.GetTickets();
                     return true;
 
                 case "Exit":
@@ -81,11 +83,13 @@ namespace PragueParking2._0
         }
         private void Chores()
         {
-            Console.SetWindowSize(160, 40);
+            Console.SetWindowSize(160, 42);
 
             settings = Settings.JsonSettingsRead();
 
             parkingHouse.Chores();
+
+            ShowParkingGrid();
         }
         private void ParkMenu()
         {
@@ -420,6 +424,14 @@ namespace PragueParking2._0
         private void CarSettings()
         {
             throw new NotImplementedException();
+        }
+        private void ShowTicketList()
+        {
+            AnsiConsole.Write(parkingHouse.GetTicketList());
+        }
+        private void ShowParkingGrid()
+        {
+            AnsiConsole.Write(new Columns(parkingHouse.GetParkingGrid()));
         }
     }
 }

@@ -3,6 +3,7 @@ using PragueParking2._0.Enums;
 using PragueParking2._0.Vehicles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PragueParking2._0
 {
@@ -95,6 +96,11 @@ namespace PragueParking2._0
             if (AvailableSize == Size) return true;
             return false;
         }
+        internal bool IsReserved()
+        {
+                if (AvailableSize == 0 && VehicleList.Count() == 0) return true;
+                return false;
+        }
         internal bool IsFull()
         {
             if (AvailableSize == 0) return true;
@@ -113,10 +119,18 @@ namespace PragueParking2._0
         internal string GetTicketInfo()
         {
             foreach (Vehicle vehicle in VehicleList)
-            {
-                return $"{vehicle.StringType} ({vehicle.RegNum}) arrived: {vehicle.ArriveTime:dd/MMM/yyyy HH:mm} with total price: {vehicle.Price:0.00} CZK";
-            }
+                return vehicle.GetVehicleInfo();
             return "----";
+        }
+        internal decimal GetVehiclePrices()
+        {
+            decimal totalPrice = 0;
+
+            foreach (Vehicle vehicle in VehicleList)
+            {
+                totalPrice += vehicle.GetPrice();
+            }
+            return totalPrice;
         }
     }
 }

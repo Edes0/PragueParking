@@ -3,28 +3,39 @@
     "Number": 0,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
-    "VehicleList": []
+    "AvailableSize": 0,
+    "VehicleList": [
+      {
+        "Type": 3,
+        "Hight": 4,
+        "Size": 16,
+        "StringType": "Bus",
+        "Price": 0.0,
+        "RegNum": "ASSBUSS123",
+        "Pspot": 0,
+        "ArriveTime": "2021-11-16T13:57:46.5664486+01:00"
+      }
+    ]
   },
   {
     "Number": 1,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 2,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
     "Number": 3,
     "Size": 4,
     "Hight": 5,
-    "AvailableSize": 4,
+    "AvailableSize": 0,
     "VehicleList": []
   },
   {
@@ -360,7 +371,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01512195888890,
+        "Price": 225.7591895994440,
         "RegNum": "TEST0",
         "Pspot": 50,
         "ArriveTime": "2021-11-15T15:13:13.2945145+01:00"
@@ -370,7 +381,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756620416665,
+        "Price": 112.8795965454165,
         "RegNum": "TEST01",
         "Pspot": 50,
         "ArriveTime": "2021-11-15T15:13:13.2952117+01:00"
@@ -380,7 +391,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756682791665,
+        "Price": 112.8795975172220,
         "RegNum": "TEST0",
         "Pspot": 50,
         "ArriveTime": "2021-11-15T15:13:13.2952583+01:00"
@@ -398,7 +409,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513407555560,
+        "Price": 225.7591955058330,
         "RegNum": "TEST1",
         "Pspot": 51,
         "ArriveTime": "2021-11-15T15:13:13.2951253+01:00"
@@ -408,7 +419,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756687027780,
+        "Price": 112.8795976034720,
         "RegNum": "TEST01",
         "Pspot": 51,
         "ArriveTime": "2021-11-15T15:13:13.295253+01:00"
@@ -418,7 +429,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756687055555,
+        "Price": 112.8795976052780,
         "RegNum": "TEST1",
         "Pspot": 51,
         "ArriveTime": "2021-11-15T15:13:13.295259+01:00"
@@ -436,7 +447,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513412666670,
+        "Price": 225.7591955991670,
         "RegNum": "TEST2",
         "Pspot": 52,
         "ArriveTime": "2021-11-15T15:13:13.2951304+01:00"
@@ -446,7 +457,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756689916665,
+        "Price": 112.8795976365280,
         "RegNum": "TEST02",
         "Pspot": 52,
         "ArriveTime": "2021-11-15T15:13:13.2952548+01:00"
@@ -456,7 +467,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756690111110,
+        "Price": 112.8795976433335,
         "RegNum": "TEST2",
         "Pspot": 52,
         "ArriveTime": "2021-11-15T15:13:13.2952595+01:00"
@@ -474,7 +485,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513419083330,
+        "Price": 225.7591956741670,
         "RegNum": "TEST3",
         "Pspot": 53,
         "ArriveTime": "2021-11-15T15:13:13.2951311+01:00"
@@ -484,7 +495,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756693166665,
+        "Price": 112.8795977077780,
         "RegNum": "TEST03",
         "Pspot": 53,
         "ArriveTime": "2021-11-15T15:13:13.2952552+01:00"
@@ -494,7 +505,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756693305555,
+        "Price": 112.8795977111110,
         "RegNum": "TEST3",
         "Pspot": 53,
         "ArriveTime": "2021-11-15T15:13:13.2952602+01:00"
@@ -512,7 +523,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513425055560,
+        "Price": 225.7591958108330,
         "RegNum": "TEST4",
         "Pspot": 54,
         "ArriveTime": "2021-11-15T15:13:13.2951317+01:00"
@@ -522,7 +533,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756696180555,
+        "Price": 112.8795977425,
         "RegNum": "TEST04",
         "Pspot": 54,
         "ArriveTime": "2021-11-15T15:13:13.2952557+01:00"
@@ -532,7 +543,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756696319445,
+        "Price": 112.8795977445835,
         "RegNum": "TEST4",
         "Pspot": 54,
         "ArriveTime": "2021-11-15T15:13:13.2952607+01:00"
@@ -550,7 +561,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513431083330,
+        "Price": 225.7591958755560,
         "RegNum": "TEST5",
         "Pspot": 55,
         "ArriveTime": "2021-11-15T15:13:13.2951322+01:00"
@@ -560,7 +571,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756699180555,
+        "Price": 112.8795977748610,
         "RegNum": "TEST05",
         "Pspot": 55,
         "ArriveTime": "2021-11-15T15:13:13.2952561+01:00"
@@ -570,7 +581,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756699305555,
+        "Price": 112.8795977768055,
         "RegNum": "TEST5",
         "Pspot": 55,
         "ArriveTime": "2021-11-15T15:13:13.2952612+01:00"
@@ -588,7 +599,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.015134370,
+        "Price": 225.7591959397220,
         "RegNum": "TEST6",
         "Pspot": 56,
         "ArriveTime": "2021-11-15T15:13:13.2951328+01:00"
@@ -598,7 +609,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756702180555,
+        "Price": 112.8795978070835,
         "RegNum": "TEST06",
         "Pspot": 56,
         "ArriveTime": "2021-11-15T15:13:13.2952565+01:00"
@@ -608,7 +619,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756702291665,
+        "Price": 112.8795978173610,
         "RegNum": "TEST6",
         "Pspot": 56,
         "ArriveTime": "2021-11-15T15:13:13.2952617+01:00"
@@ -626,7 +637,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513442888890,
+        "Price": 225.7591960216670,
         "RegNum": "TEST7",
         "Pspot": 57,
         "ArriveTime": "2021-11-15T15:13:13.2951335+01:00"
@@ -636,7 +647,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756705152780,
+        "Price": 112.8795978484720,
         "RegNum": "TEST07",
         "Pspot": 57,
         "ArriveTime": "2021-11-15T15:13:13.295257+01:00"
@@ -646,7 +657,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756705277780,
+        "Price": 112.8795978641665,
         "RegNum": "TEST7",
         "Pspot": 57,
         "ArriveTime": "2021-11-15T15:13:13.2952622+01:00"
@@ -664,7 +675,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513448916670,
+        "Price": 225.7591961147220,
         "RegNum": "TEST8",
         "Pspot": 58,
         "ArriveTime": "2021-11-15T15:13:13.2951339+01:00"
@@ -674,7 +685,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756708138890,
+        "Price": 112.8795978952780,
         "RegNum": "TEST08",
         "Pspot": 58,
         "ArriveTime": "2021-11-15T15:13:13.2952574+01:00"
@@ -684,7 +695,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756708263890,
+        "Price": 112.8795978973610,
         "RegNum": "TEST8",
         "Pspot": 58,
         "ArriveTime": "2021-11-15T15:13:13.2952626+01:00"
@@ -702,7 +713,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513454833330,
+        "Price": 225.7591961808330,
         "RegNum": "TEST9",
         "Pspot": 59,
         "ArriveTime": "2021-11-15T15:13:13.2951345+01:00"
@@ -712,7 +723,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.50756711138890,
+        "Price": 112.87959792875,
         "RegNum": "TEST09",
         "Pspot": 59,
         "ArriveTime": "2021-11-15T15:13:13.2952579+01:00"
@@ -722,7 +733,7 @@
         "Hight": 1,
         "Size": 1,
         "StringType": "Bike",
-        "Price": 19.5075671125,
+        "Price": 112.8795979309720,
         "RegNum": "TEST9",
         "Pspot": 59,
         "ArriveTime": "2021-11-15T15:13:13.2952631+01:00"
@@ -740,7 +751,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027417555560,
+        "Price": 451.5183986405560,
         "RegNum": "TEST9",
         "Pspot": 60,
         "ArriveTime": "2021-11-15T15:13:13.2953987+01:00"
@@ -758,7 +769,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027732388880,
+        "Price": 451.518403700,
         "RegNum": "TEST9",
         "Pspot": 61,
         "ArriveTime": "2021-11-15T15:13:13.295351+01:00"
@@ -776,7 +787,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027716722220,
+        "Price": 451.5184035594440,
         "RegNum": "TEST9",
         "Pspot": 62,
         "ArriveTime": "2021-11-15T15:13:13.2953929+01:00"
@@ -794,7 +805,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027721277780,
+        "Price": 451.5184036138880,
         "RegNum": "TEST9",
         "Pspot": 63,
         "ArriveTime": "2021-11-15T15:13:13.2953948+01:00"
@@ -812,7 +823,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027726444440,
+        "Price": 451.5184036905560,
         "RegNum": "TEST9",
         "Pspot": 64,
         "ArriveTime": "2021-11-15T15:13:13.2953953+01:00"
@@ -830,7 +841,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027736111120,
+        "Price": 451.5184037500,
         "RegNum": "TEST9",
         "Pspot": 65,
         "ArriveTime": "2021-11-15T15:13:13.2953958+01:00"
@@ -848,7 +859,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027741500,
+        "Price": 451.5184038077780,
         "RegNum": "TEST9",
         "Pspot": 66,
         "ArriveTime": "2021-11-15T15:13:13.2953963+01:00"
@@ -866,7 +877,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027746777780,
+        "Price": 451.5184038683340,
         "RegNum": "TEST9",
         "Pspot": 67,
         "ArriveTime": "2021-11-15T15:13:13.2953967+01:00"
@@ -884,7 +895,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.030277520,
+        "Price": 451.51840392500,
         "RegNum": "TEST9",
         "Pspot": 68,
         "ArriveTime": "2021-11-15T15:13:13.2953972+01:00"
@@ -902,7 +913,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027757277780,
+        "Price": 451.5184039827780,
         "RegNum": "TEST9",
         "Pspot": 69,
         "ArriveTime": "2021-11-15T15:13:13.2953976+01:00"
@@ -920,7 +931,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 78.03027762388880,
+        "Price": 451.518404040,
         "RegNum": "TEST9",
         "Pspot": 70,
         "ArriveTime": "2021-11-15T15:13:13.2953981+01:00"
@@ -938,7 +949,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513921166670,
+        "Price": 225.7592024263890,
         "RegNum": "TEST1",
         "Pspot": 71,
         "ArriveTime": "2021-11-15T15:13:13.2952643+01:00"
@@ -948,7 +959,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513923166670,
+        "Price": 225.7592024486110,
         "RegNum": "TEST0",
         "Pspot": 71,
         "ArriveTime": "2021-11-15T15:13:13.2952637+01:00"
@@ -966,7 +977,7 @@
         "Hight": 2,
         "Size": 4,
         "StringType": "Car",
-        "Price": 73.76844884055560,
+        "Price": 447.2565752794440,
         "RegNum": "AAA1111",
         "Pspot": 72,
         "ArriveTime": "2021-11-15T15:26:00.4246056+01:00"
@@ -984,7 +995,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513928194440,
+        "Price": 225.7592025038890,
         "RegNum": "TEST3",
         "Pspot": 73,
         "ArriveTime": "2021-11-15T15:13:13.2952652+01:00"
@@ -994,7 +1005,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513930138890,
+        "Price": 225.7592025236110,
         "RegNum": "TEST2",
         "Pspot": 73,
         "ArriveTime": "2021-11-15T15:13:13.2952648+01:00"
@@ -1019,7 +1030,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513933444440,
+        "Price": 225.7592025594440,
         "RegNum": "TEST5",
         "Pspot": 75,
         "ArriveTime": "2021-11-15T15:13:13.2952664+01:00"
@@ -1029,7 +1040,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513935333330,
+        "Price": 225.7592025836110,
         "RegNum": "TEST4",
         "Pspot": 75,
         "ArriveTime": "2021-11-15T15:13:13.2952657+01:00"
@@ -1054,7 +1065,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.0151393850,
+        "Price": 225.7592026188890,
         "RegNum": "TEST7",
         "Pspot": 77,
         "ArriveTime": "2021-11-15T15:13:13.2952673+01:00"
@@ -1064,7 +1075,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513940333330,
+        "Price": 225.7592026388890,
         "RegNum": "TEST6",
         "Pspot": 77,
         "ArriveTime": "2021-11-15T15:13:13.2952668+01:00"
@@ -1089,7 +1100,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513943527780,
+        "Price": 225.7592026752780,
         "RegNum": "TEST9",
         "Pspot": 79,
         "ArriveTime": "2021-11-15T15:13:13.2952684+01:00"
@@ -1099,7 +1110,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513945416670,
+        "Price": 225.7592026958330,
         "RegNum": "TEST8",
         "Pspot": 79,
         "ArriveTime": "2021-11-15T15:13:13.2952677+01:00"
@@ -1124,7 +1135,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513948583330,
+        "Price": 225.7592027313890,
         "RegNum": "TEST1",
         "Pspot": 81,
         "ArriveTime": "2021-11-15T15:13:13.2952693+01:00"
@@ -1134,7 +1145,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513950361110,
+        "Price": 225.7592027508330,
         "RegNum": "TEST0",
         "Pspot": 81,
         "ArriveTime": "2021-11-15T15:13:13.2952689+01:00"
@@ -1159,7 +1170,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513953611110,
+        "Price": 225.7592027866670,
         "RegNum": "TEST3",
         "Pspot": 83,
         "ArriveTime": "2021-11-15T15:13:13.2952702+01:00"
@@ -1169,7 +1180,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513955388890,
+        "Price": 225.7592028061110,
         "RegNum": "TEST2",
         "Pspot": 83,
         "ArriveTime": "2021-11-15T15:13:13.2952698+01:00"
@@ -1194,7 +1205,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513958694440,
+        "Price": 225.7592028488890,
         "RegNum": "TEST5",
         "Pspot": 85,
         "ArriveTime": "2021-11-15T15:13:13.2952711+01:00"
@@ -1204,7 +1215,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513960833330,
+        "Price": 225.7592028688890,
         "RegNum": "TEST4",
         "Pspot": 85,
         "ArriveTime": "2021-11-15T15:13:13.2952707+01:00"
@@ -1229,7 +1240,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513964111110,
+        "Price": 225.7592029047220,
         "RegNum": "TEST7",
         "Pspot": 87,
         "ArriveTime": "2021-11-15T15:13:13.2952721+01:00"
@@ -1239,7 +1250,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513965944440,
+        "Price": 225.7592029372220,
         "RegNum": "TEST6",
         "Pspot": 87,
         "ArriveTime": "2021-11-15T15:13:13.2952715+01:00"
@@ -1264,7 +1275,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.01513969222220,
+        "Price": 225.7592029972220,
         "RegNum": "TEST9",
         "Pspot": 89,
         "ArriveTime": "2021-11-15T15:13:13.2952729+01:00"
@@ -1274,7 +1285,7 @@
         "Hight": 1,
         "Size": 2,
         "StringType": "Mc",
-        "Price": 39.015139710,
+        "Price": 225.75920301750,
         "RegNum": "TEST8",
         "Pspot": 89,
         "ArriveTime": "2021-11-15T15:13:13.2952725+01:00"
