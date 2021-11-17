@@ -22,9 +22,6 @@ namespace PragueParking2._0
             for (int i = 0; i < Size; i++)
                 ParkingSpotArray[i] = new ParkingSpot((byte)i, HighRoof);
         }
-        /// <summary>
-        /// Chores in menu chores. Runs everytime program loops back to main menu
-        /// </summary>
         internal void Chores()
         {
             if (ParkingSpotArray == null) JsonDatafilWrite(ParkingSpotArray);
@@ -32,11 +29,6 @@ namespace PragueParking2._0
             JsonDatafilRead();
             JsonDatafilWrite(ParkingSpotArray);
         }
-        /// <summary>
-        /// Looks for parking spot to park vehicle
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <returns></returns>
         internal bool ParkVehicle(Vehicle vehicle)
         {
             if (vehicle.IsTiny())
@@ -58,13 +50,13 @@ namespace PragueParking2._0
             }
             if (vehicle.IsTiny() || vehicle.IsSmall())
             {
-                // Parks vehicle at parkings with lower Height if possible.
-                IEnumerable<ParkingSpot> parkingsWithLowerHeight =
+                // Parks vehicle at parkings with lower hight if possible.
+                IEnumerable<ParkingSpot> parkingsWithLowerHight =
                         from parkingSpot in ParkingSpotArray
-                        where parkingSpot.Height < Settings.HeightParkingHigh
+                        where parkingSpot.Height < Settings.HightParkingHigh
                         select parkingSpot;
 
-                foreach (ParkingSpot parkingSpot in parkingsWithLowerHeight)
+                foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
                 {
                     if (parkingSpot.ParkingSpotAvailable(vehicle))
                     {
@@ -105,13 +97,6 @@ namespace PragueParking2._0
             }
             return false;
         }
-        /// <summary>
-        /// Checks if parking spot is available for big vehicle
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="newParkingSpotIndex"></param>
-        /// <param name="aCounterLimit"></param>
-        /// <returns></returns>
         private bool BigParkingAvailable(Vehicle vehicle, out byte newParkingSpotIndex, out byte aCounterLimit)
         {
             byte parkingsInARowCounter = 0;
@@ -125,7 +110,7 @@ namespace PragueParking2._0
                 {
                     parkingsInARowCounter += 1;
 
-                    byte counterLimit = CounterLimitCalculator(vehicle.Size, aParkingSpot.Size);
+                    CounterLimitCalculator(vehicle.Size, aParkingSpot.Size, out byte counterLimit);
 
                     if (parkingsInARowCounter == counterLimit)
                     {
@@ -143,16 +128,9 @@ namespace PragueParking2._0
             newParkingSpotIndex = 0;
             return false;
         }
-        /// <summary>
-        /// Checks if parking spot is available for big vehicle at specfic spot
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="newParkingSpot"></param>
-        /// <param name="aCounterLimit"></param>
-        /// <returns></returns>
         private bool BigParkingAvailableSpecfic(Vehicle vehicle, ParkingSpot newParkingSpot, out byte aCounterLimit)
         {
-            byte counterLimit = CounterLimitCalculator(vehicle.Size, newParkingSpot.Size);
+            CounterLimitCalculator(vehicle.Size, newParkingSpot.Size, out byte counterLimit);
 
             byte parkingsInARowCounter = 0;
 
@@ -172,24 +150,13 @@ namespace PragueParking2._0
             aCounterLimit = 0;
             return false;
         }
-        /// <summary>
-        /// Calculates how many times BigParkingAvailable should count. Depends on how big vehicle is. Calculates how many spots to reserve for big vehicle.
-        /// </summary>
-        /// <param name="aVehicleSize"></param>
-        /// <param name="aParkingSpotSize"></param>
-        /// <returns></returns>
-        private byte CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize)
+        private void CounterLimitCalculator(byte aVehicleSize, byte aParkingSpotSize, out byte counterLimit)
         {
             decimal aCounterLimit = aVehicleSize / aParkingSpotSize;
-            return (byte)Math.Ceiling(aCounterLimit);
+            aCounterLimit = Math.Ceiling(aCounterLimit);
+
+            counterLimit = (byte)aCounterLimit;
         }
-        /// <summary>
-        /// Moves vehicle
-        /// </summary>
-        /// <param name="vehicle"></param>
-        /// <param name="aNewParkingSpot"></param>
-        /// <param name="oldParkingSpot"></param>
-        /// <returns></returns>
         internal bool MoveVehicle(Vehicle vehicle, byte aNewParkingSpot, ParkingSpot oldParkingSpot) // Could still optimize big vehicle move. Remove first then add if can't move
         {
             ParkingSpot newParkingSpot = ParkingSpotArray[aNewParkingSpot];
@@ -224,13 +191,6 @@ namespace PragueParking2._0
             }
             return false;
         }
-        /// <summary>
-        /// Search for vehicle
-        /// </summary>
-        /// <param name="registrationNumber"></param>
-        /// <param name="aVehicle"></param>
-        /// <param name="aParkingSpot"></param>
-        /// <returns></returns>
         internal bool SearchVehicle(string registrationNumber, out Vehicle aVehicle, out ParkingSpot aParkingSpot)
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
@@ -246,19 +206,11 @@ namespace PragueParking2._0
             aVehicle = null;
             return false;
         }
-        /// <summary>
-        /// Remove all parkings spots. loops through them
-        /// </summary>
         internal void RemoveAllParkings()
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray) parkingSpot.Clear();
             JsonDatafilWrite(ParkingSpotArray);
         }
-        /// <summary>
-        /// Removes vehicle
-        /// </summary>
-        /// <param name="aRegNum"></param>
-        /// <returns></returns>
         internal bool RemoveVehicle(string aRegNum)
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
@@ -267,7 +219,7 @@ namespace PragueParking2._0
                 {
                     parkingSpot.RemoveVehicle(vehicle);
 
-                    byte counterLimit = CounterLimitCalculator(vehicle.Size, parkingSpot.Size);
+                    CounterLimitCalculator(vehicle.Size, parkingSpot.Size, out byte counterLimit);
                     ClearReservedSpots(parkingSpot, counterLimit);
 
                     JsonDatafilWrite(ParkingSpotArray);
@@ -276,30 +228,16 @@ namespace PragueParking2._0
             }
             return false;
         }
-        /// <summary>
-        /// Clear reserved spots efter removing big vehicle
-        /// </summary>
-        /// <param name="parkingSpot"></param>
-        /// <param name="aCounterLimit"></param>
         private void ClearReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++)
                 ParkingSpotArray[parkingSpot.Number + aCounterLimit - i].Clear();
         }
-        /// <summary>
-        /// Add reserved spots after adding big vehicle
-        /// </summary>
-        /// <param name="parkingSpot"></param>
-        /// <param name="aCounterLimit"></param>
         private void AddReservedSpots(ParkingSpot parkingSpot, byte aCounterLimit)
         {
             for (int i = 1; i < aCounterLimit; i++)
                 parkingSpot.Reserve(ParkingSpotArray[parkingSpot.Number + i]);
         }
-        /// <summary>
-        /// Gets parkings grid
-        /// </summary>
-        /// <returns></returns>
         internal List<Panel> GetParkingGrid()
         {
             var box = new List<Panel>();
@@ -313,9 +251,6 @@ namespace PragueParking2._0
             // Render all cards in columns
             return box;
         }
-        /// <summary>
-        /// Reads ParkingSpotArray from Json 
-        /// </summary>
         private void JsonDatafilRead()
         {
             string path = @"../../../Datafiles/Datafile.json";
@@ -331,7 +266,7 @@ namespace PragueParking2._0
                     //tempArray[i].AvailableSize = Settings.SizeParkingSpot;
                     ParkingSpotArray[i] = tempArray[i];
                 }
-
+                    
 
             if (tempArray.Length < ParkingSpotArray.Length)
                 for (int i = 0; i < tempArray.Length; i++)
@@ -340,14 +275,10 @@ namespace PragueParking2._0
                     //tempArray[i].AvailableSize = Settings.SizeParkingSpot;
                     ParkingSpotArray[i] = tempArray[i];
                 }
-
+                    
 
 
         }
-        /// <summary>
-        /// Write ParkingSpotArray to Json
-        /// </summary>
-        /// <param name="aParkingSpotArray"></param>
         private void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
         {
             string path = @"../../../Datafiles/Datafile.json";
@@ -356,29 +287,17 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, ParkingSpotArrayJson);
         }
-        /// <summary>
-        /// Update settings and write ParkingSpotArray to Json
-        /// </summary>
         internal void Update()
         {
-            Console.Clear();
             Settings.JsonSettingsRead();
             JsonDatafilWrite(ParkingSpotArray);
         }
-        /// <summary>
-        /// Optimizes all parkings
-        /// </summary>
         public void Optimize() //Kan möjligen dela upp dessa eftersom det kan bli stora flyttar på samma gång.
         {
             while (OptimizeSize3(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
             while (OptimizeSize2(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
             while (OptimizeCars(out string printVehicleMoved)) Console.WriteLine(printVehicleMoved);
         }
-        /// <summary>
-        /// Optimizes parkings with available space 3 to 1
-        /// </summary>
-        /// <param name="printVehicleMoved"></param>
-        /// <returns></returns>
         private bool OptimizeSize3(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
@@ -400,11 +319,6 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        /// <summary>
-        /// Optimizes parkings with available space 2 to 2
-        /// </summary>
-        /// <param name="printVehicleMoved"></param>
-        /// <returns></returns>
         private bool OptimizeSize2(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
@@ -440,11 +354,6 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        /// <summary>
-        /// Optimizes cars
-        /// </summary>
-        /// <param name="printVehicleMoved"></param>
-        /// <returns></returns>
         private bool OptimizeCars(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
@@ -466,23 +375,12 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        /// <summary>
-        /// Checks if ParkingSpotArray is possible to shrink without losing vehicles
-        /// </summary>
-        /// <param name="newSize"></param>
-        /// <returns></returns>
         internal bool PossibleToShrinkSize(byte newSize)
         {
             for (int i = newSize; i < ParkingSpotArray.Length; i++)
                 if (!ParkingSpotArray[i].IsFree()) return false;
             return true;
         }
-        /// <summary>
-        /// Checks if ParkingSpotArray is possible to lower without lowering under vehicle height
-        /// </summary>
-        /// <param name="newValue"></param>
-        /// <param name="highRoof"></param>
-        /// <returns></returns>
         internal bool PossibleToLowerHighRoof(byte newValue, byte highRoof)
         {
             for (int i = newValue; i < ParkingSpotArray.Length; i++)
@@ -490,10 +388,6 @@ namespace PragueParking2._0
                     if (ParkingSpotArray[i].HaveHighVehicle() || ParkingSpotArray[i].IsReserved()) return false;
             return true;
         }
-        /// <summary>
-        /// Gets ticket list
-        /// </summary>
-        /// <returns></returns>
         internal Table GetTicketList()
         {
             Table table = new Table()
@@ -512,10 +406,6 @@ namespace PragueParking2._0
 
             return table;
         }
-        /// <summary>
-        /// Gets total price
-        /// </summary>
-        /// <returns></returns>
         private string GetTotalPrice()
         {
             decimal totalPrice = 0;
@@ -530,10 +420,6 @@ namespace PragueParking2._0
 
             return $"{totalPrice:0.00}";
         }
-        /// <summary>
-        /// Gets parkings that are not free
-        /// </summary>
-        /// <param name="notFreeParkingSpots"></param>
         private void GetNotFreeParkings(out IEnumerable<ParkingSpot> notFreeParkingSpots)
         {
             notFreeParkingSpots =
@@ -541,9 +427,6 @@ namespace PragueParking2._0
              where !parkingSpot.IsFree() && !parkingSpot.IsReserved()
              select parkingSpot;
         }
-        /// <summary>
-        /// Add preset of vehicles for tests
-        /// </summary>
         internal void AddSomeVehicles()
         {
             Mc mc = new Mc("TEST0");
@@ -731,33 +614,11 @@ namespace PragueParking2._0
 
             JsonDatafilWrite(ParkingSpotArray);
         }
-        /// <summary>
-        /// Checks if possible to shrink parkingspot size while checking with vehicles
-        /// </summary>
-        /// <param name="newSize"></param>
-        /// <returns></returns>
         internal bool PossibleToShrinkParkingSpotSize(byte newSize)
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
                 if (!parkingSpot.PossibleToShrink(newSize)) return false;
             return true;
         }
-        /// <summary>
-        /// Changes availablesize after low or high parkingspot size
-        /// </summary>
-        /// <param name="difference"></param>
-        internal void ChangeAvailableSizeAll(byte difference)
-        {
-            if (difference > 0)
-                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
-                    parkingSpot.AvailableSize = (byte)(parkingSpot.AvailableSize - difference);
-
-            else
-                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
-                    parkingSpot.AvailableSize = (byte)(parkingSpot.AvailableSize + difference);
-
-            JsonDatafilWrite(ParkingSpotArray);
-        }
     }
-
 }

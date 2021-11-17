@@ -11,7 +11,7 @@ namespace PragueParking2._0.Vehicles
         {
             get { return VehicleType.Bike; }
         }
-        internal override byte Height { get; } = Settings.HeightBike;
+        internal override byte Hight { get; } = Settings.HightBike;
         internal override byte Size { get; } = Settings.SizeBike;
         internal override string StringType { get; } = "Bike";
         internal override decimal Price
