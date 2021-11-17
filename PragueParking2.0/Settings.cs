@@ -26,17 +26,17 @@ namespace PragueParking2._0
         [JsonProperty]
         public static byte SizeTableColumns { get; set; }
         [JsonProperty]
-        public static byte HightBike { get; set; }
+        public static byte HeightBike { get; set; }
         [JsonProperty]
-        public static byte HightMc { get; set; }
+        public static byte HeightMc { get; set; }
         [JsonProperty]
-        public static byte HightCar { get; set; }
+        public static byte HeightCar { get; set; }
         [JsonProperty]
-        public static byte HightBus { get; set; }
+        public static byte HeightBus { get; set; }
         [JsonProperty]
-        public static byte HightParkingLow { get; set; }
+        public static byte HeightParkingLow { get; set; }
         [JsonProperty]
-        public static byte HightParkingHigh { get; set; }
+        public static byte HeightParkingHigh { get; set; }
         [JsonProperty]
         public static byte PriceCar { get; set; }
         [JsonProperty]
@@ -50,6 +50,10 @@ namespace PragueParking2._0
         public Settings()
         {
         }
+        /// <summary>
+        /// Reads settings from settings.json
+        /// </summary>
+        /// <returns></returns>
         internal static Settings JsonSettingsRead()
         {
             string path = @"../../../Datafiles/Settings.json";
@@ -60,6 +64,10 @@ namespace PragueParking2._0
 
             return settings;
         }
+        /// <summary>
+        /// Writes settings to settings.json
+        /// </summary>
+        /// <param name="settings"></param>
         internal static void JsonSettingsWrite(Settings settings)
         {
             string path = @"../../../Datafiles/Settings.json";
@@ -68,14 +76,26 @@ namespace PragueParking2._0
 
             File.WriteAllText(path, settingsJson);
         }
+        /// <summary>
+        /// Changes ParkingSpotSize
+        /// </summary>
+        /// <param name="newSize"></param>
         internal static void ChangeParkingSpotSize(byte newSize)
         {
             SizeParkingSpot = newSize;
         }
+        /// <summary>
+        /// Changes ParkingHouseSize
+        /// </summary>
+        /// <param name="newSize"></param>
         internal static void ChangeParkingHouseSize(byte newSize)
         {
             SizeParkingHouse = newSize;
         }
+        /// <summary>
+        /// Changes ParkingHouseHighRoof division
+        /// </summary>
+        /// <param name="newValue"></param>
         internal static void ChangeParkingHouseHighRoof(byte newValue)
         {
             SizeParkingHouseHighRoof = newValue;

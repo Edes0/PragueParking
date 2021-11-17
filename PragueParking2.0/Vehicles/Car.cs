@@ -12,7 +12,7 @@ namespace PragueParking2._0.Vehicles
         {
             get { return VehicleType.Car; }
         }
-        internal override byte Hight { get; } = Settings.HightCar;
+        internal override byte Height { get; } = Settings.HeightCar;
         internal override byte Size { get; } = Settings.SizeCar;
         internal override string StringType { get; } = "Car";
         internal override decimal Price
@@ -27,7 +27,6 @@ namespace PragueParking2._0.Vehicles
                 return priceClass * (decimal)span;
             }
         }
-
         public Car()
         {
 

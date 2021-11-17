@@ -2,15 +2,16 @@
 using Spectre.Console;
 using System;
 using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace PragueParking2._0
 {
     class Menu
     {
         /*
+        TODO: Fixa så ParkingHouseSize uppdaterar settings så man slipper omstart
         TODO: Exception handling
         TODO: Kommentera
+
 
         EXTRA
         TODO: Optimera move bus
@@ -19,31 +20,34 @@ namespace PragueParking2._0
         */
         Settings settings = Settings.JsonSettingsRead();
         ParkingHouse parkingHouse = new ParkingHouse();
-
+        /// <summary>
+        /// Start is the Main Menu and will let you access all other menus
+        /// </summary>
+        /// <returns>True if continue program, false if not</returns>
         public bool Start()
         {
             Chores();
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .PageSize(11)
-              .AddChoices(new[] { "Park vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize all", "Show Tickets", "Update", "Settings", "Exit Program", "X" }));
+              .AddChoices(new[] { "Park Vehicle", "Remove Vehicle", "Move Vehicle", "Search Vehicle", "Clear Parking", "Optimize all", "Show Tickets", "Update", "Settings", "Exit Program", "X" }));
 
             switch (userInput)
             {
-                case "Park vehicle":
+                case "Park Vehicle":
                     ParkMenu();
                     return true;
 
                 case "Remove Vehicle":
-                    RemoveMenu();
+                    Console.WriteLine(RemoveMenu());
                     return true;
 
                 case "Move Vehicle":
-                    MoveMenu();
+                    Console.WriteLine(MoveMenu());
                     return true;
 
                 case "Search Vehicle":
-                    SearchVehicleMenu();
+                    Console.WriteLine(SearchVehicleMenu());
                     return true;
 
                 case "Clear Parking":
@@ -55,15 +59,10 @@ namespace PragueParking2._0
                     return true;
 
                 case "Show Tickets":
-                    Console.Clear();
                     ShowTicketList();
-                    Console.WriteLine("To continue, press any key...");
-                    Console.ReadKey();
-                    Console.Clear();
                     return true;
 
                 case "Update":
-                    Console.Clear();
                     parkingHouse.Update();
                     return true;
 
@@ -81,6 +80,9 @@ namespace PragueParking2._0
             }
             return false;
         }
+        /// <summary>
+        /// Standard tasks to run every time you come back to main menu
+        /// </summary>
         private void Chores()
         {
             Console.SetWindowSize(160, 42);
@@ -93,6 +95,9 @@ namespace PragueParking2._0
 
             ShowParkingGrid();
         }
+        /// <summary>
+        /// Menu to access all vehicles to park
+        /// </summary>
         private void ParkMenu()
         {
             if (ValidateRegistrationNumber(out string RegistrationNumber))
@@ -128,6 +133,12 @@ namespace PragueParking2._0
                 Console.WriteLine("Registration number not allowed, try again.");
             }
         }
+        /// <summary>
+        /// Creates vehicle type depending on input from ParkMenu
+        /// </summary>
+        /// <param name="aType"></param>
+        /// <param name="aRegistrationNumber"></param>
+        /// <param name="aVehicle"></param>
         private void CreateVehicle(string aType, string aRegistrationNumber, out Vehicle aVehicle)
         {
             if (aType == "Car")
@@ -157,69 +168,62 @@ namespace PragueParking2._0
             }
 
         }
-        private void RemoveMenu()
+        /// <summary>
+        /// Menu for to remove vehicles
+        /// </summary>
+        /// <returns>Returns message depending on success or not</returns>
+        private string RemoveMenu()
         {
             ValidateRegistrationNumber(out string RegistrationNumber);
 
             Console.Clear();
 
-            if (parkingHouse.RemoveVehicle(RegistrationNumber))
-            {
-                Console.WriteLine("Your vehicle (" + RegistrationNumber + ") has checked out.");
-            }
-            else
-            {
-                Console.WriteLine("Vehicle (" + RegistrationNumber + ") is not parked here.");
-            }
+            if (parkingHouse.RemoveVehicle(RegistrationNumber)) return $"Vehicle {RegistrationNumber} has checked out.";
+
+            return $"Vehicle ({RegistrationNumber}) is not parked here.";
         }
-        private void MoveMenu()
+        /// <summary>
+        /// Menu for to moves vehicles
+        /// </summary>
+        /// <returns>Returns message depending on success or not</returns>
+        private string MoveMenu()
         {
-            if (parkingHouse.SearchVehicle(AskRegistrationNumber(), out Vehicle vehicle, out ParkingSpot parkingSpot))
-            {
-                Console.Write("Enter new parkingspot number: ");
-                bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newParkingSpot);
-
-                Console.Clear();
-
-                if (parseSuccess && newParkingSpot < 0 && newParkingSpot > Settings.SizeParkingHouse)
-                {
-                    if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot))
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Your vehicle is moved to parking spot: " + newParkingSpot);
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Parking spot is unavailable.");
-                    }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Enter a valid digit.");
-                }
-            }
-            else
+            if (!parkingHouse.SearchVehicle(AskRegistrationNumber(), out Vehicle vehicle, out ParkingSpot parkingSpot))
             {
                 Console.Clear();
-                Console.WriteLine("Vehicle is not parked here.");
+                return "Vehicle is not parked here.";
             }
+            Console.Write("Enter new parkingspot number: ");
+
+            bool parseSuccess = Byte.TryParse(Console.ReadLine(), out byte newParkingSpot);
+
+            Console.Clear();
+
+            if (!parseSuccess && newParkingSpot <= 0 && newParkingSpot > Settings.SizeParkingHouse) return "Enter a valid digit.";
+            if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot)) return "Your vehicle is moved to parking spot: " + newParkingSpot;
+            else return "Parking spot is unavailable.";
         }
-        private void SearchVehicleMenu()
+        /// <summary>
+        /// Menu to search for vehicle in parking house
+        /// </summary>
+        /// <returns>Returns message depending on success or not</returns>
+        private string SearchVehicleMenu()
         {
 
             if (parkingHouse.SearchVehicle(AskRegistrationNumber(), out Vehicle vehicle, out ParkingSpot parkingSpot))
             {
                 Console.Clear();
-                Console.WriteLine(vehicle.StringType + " (" + vehicle.RegNum + ") is parked at parkingspot: " + (vehicle.Pspot + 1) + ".");
+                return $"{vehicle.StringType} ({vehicle.RegNum}) is parked at parkingspot: {vehicle.Pspot + 1}.";
             }
             else
             {
                 Console.Clear();
-                Console.WriteLine("Vehicle is not parked here.");
+                return "Vehicle is not parked here.";
             }
         }
+        /// <summary>
+        /// Menu to removes all parkings for parking house
+        /// </summary>
         private void RemoveAllMenu()
         {
             Console.WriteLine("Do you want to remove all vehicles in the parking?\n");
@@ -240,6 +244,9 @@ namespace PragueParking2._0
                     break;
             }
         }
+        /// <summary>
+        /// Menu to optimize parking house
+        /// </summary>
         private void OptimizeMenu()
         {
             Console.WriteLine("Do you want to move all parked vehicles to optimized spots?\n");
@@ -261,6 +268,10 @@ namespace PragueParking2._0
                     break;
             }
         }
+        /// <summary>
+        /// Asks for registration number and returns string ToUpper.
+        /// </summary>
+        /// <returns></returns>
         private string AskRegistrationNumber()
         {
             Console.Write("Enter registration number: ");
@@ -268,6 +279,11 @@ namespace PragueParking2._0
 
             return registrationNumber.ToUpper();
         }
+        /// <summary>
+        /// Validates regisration number with regex
+        /// </summary>
+        /// <param name="aRegistrationNumber"></param>
+        /// <returns></returns>
         private bool ValidateRegistrationNumber(out string aRegistrationNumber)
         {
             Console.Write("Enter your registration plate number: ");
@@ -294,6 +310,9 @@ namespace PragueParking2._0
             aRegistrationNumber = null;
             return false;
         }
+        /// <summary>
+        /// Menu of settings
+        /// </summary>
         private void SettingsMenu()
         {
             Console.WriteLine("Settings");
@@ -321,12 +340,15 @@ namespace PragueParking2._0
 
             }
         }
+        /// <summary>
+        /// Settings for parkingspots
+        /// </summary>
         private void ParkingSpotSettings()
         {
             Console.WriteLine("Parking Spot");
 
             string userInput = AnsiConsole.Prompt(new SelectionPrompt<string>()
-     .AddChoices(new[] { "Size", "Hight", "Available size", "Back" }));
+     .AddChoices(new[] { "Size", "Height", "Back" }));
 
             switch (userInput)
             {
@@ -334,12 +356,8 @@ namespace PragueParking2._0
                     Console.WriteLine(ParkingSpotSizeSettingsMenu());
                     break;
 
-                case "High roof":
+                case "Height":
                     Console.WriteLine(ParkingSpotHighRoofSettingsMenu());
-                    break;     
-                
-                case "Available size":
-                    Console.WriteLine(ParkingSpotAvailableSizeSettingsMenu());
                     break;
 
                 case "Back":
@@ -347,6 +365,10 @@ namespace PragueParking2._0
                     return;
             }
         }
+        /// <summary>
+        /// Settings for parkingspots size
+        /// </summary>
+        /// <returns>returns if possible or no</returns>
         private string ParkingSpotSizeSettingsMenu()
         {
             byte size = Settings.SizeParkingSpot;
@@ -362,19 +384,27 @@ namespace PragueParking2._0
             if (newSize < size)
                 if (!parkingHouse.PossibleToShrinkParkingSpotSize(newSize)) return "Vehicle in the way";
 
+            byte difference = (byte)(Settings.SizeParkingSpot - newSize);
+
             Settings.ChangeParkingSpotSize(newSize);
             Settings.JsonSettingsWrite(settings);
 
+            parkingHouse.ChangeAvailableSizeAll(difference);
+
             return "New size confirmed";
         }
+        /// <summary>
+        /// Settings for parkingspots Height
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         private string ParkingSpotHighRoofSettingsMenu()
         {
             throw new NotImplementedException();
         }
-        private string ParkingSpotAvailableSizeSettingsMenu()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Settings for parking house
+        /// </summary>
         private void ParkingHouseSettings()
         {
             Console.WriteLine("Parking House");
@@ -397,6 +427,10 @@ namespace PragueParking2._0
                     return;
             }
         }
+        /// <summary>
+        /// Settings for parking house size
+        /// </summary>
+        /// <returns></returns>
         private string ParkingHouseSizeSettingsMenu()
         {
             byte size = Settings.SizeParkingHouse;
@@ -417,6 +451,10 @@ namespace PragueParking2._0
 
             return "New size confirmed, restart program";
         }
+        /// <summary>
+        /// Settings for parking house high roof division
+        /// </summary>
+        /// <returns></returns>
         private string ParkingHouseHighRoofSettingsMenu()
         {
             byte highRoof = Settings.SizeParkingHouseHighRoof;
@@ -432,11 +470,14 @@ namespace PragueParking2._0
             if ((newValue < highRoof))
                 if (!parkingHouse.PossibleToLowerHighRoof(newValue, highRoof)) return "High vehicle in the way";
 
-                Settings.ChangeParkingHouseHighRoof(newValue);
-                Settings.JsonSettingsWrite(settings);
+            Settings.ChangeParkingHouseHighRoof(newValue);
+            Settings.JsonSettingsWrite(settings);
 
-                return "New value confirmed";
+            return "New value confirmed";
         }
+        /// <summary>
+        /// Settings for vehicles
+        /// </summary>
         private void VehicleSettings()
         {
             Console.WriteLine("Vehicles");
@@ -463,29 +504,56 @@ namespace PragueParking2._0
                     break;
 
                 case "Back":
+                    Console.Clear();
                     break;
             }
         }
+        /// <summary>
+        /// Settings for vehicle bus
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         private void BusSettings()
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Settings for vehicle bike
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         private void BikeSettings()
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Settings for vehicle mc
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         private void McSettings()
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Settings for vehicle car
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
         private void CarSettings()
         {
             throw new NotImplementedException();
         }
+        /// <summary>
+        /// Prints ticket list
+        /// </summary>
         private void ShowTicketList()
         {
+            Console.Clear();
             AnsiConsole.Write(parkingHouse.GetTicketList());
+            Console.WriteLine("To continue, press any key...");
+            Console.ReadKey();
+            Console.Clear();
         }
+        /// <summary>
+        /// Prints parking grid
+        /// </summary>
         private void ShowParkingGrid()
         {
             AnsiConsole.Write(new Columns(parkingHouse.GetParkingGrid()));
