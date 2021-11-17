@@ -17,7 +17,7 @@ namespace PragueParking2._0.Vehicles
         [JsonProperty]
         internal abstract byte Size { get; }
         [JsonProperty]
-        internal abstract byte Height { get; }
+        internal abstract byte Hight { get; }
         [JsonProperty]
         internal abstract string StringType { get; }
         [JsonProperty]
@@ -26,6 +26,7 @@ namespace PragueParking2._0.Vehicles
         internal abstract decimal Price { get; }
         [JsonProperty]
         public abstract VehicleType Type { get; }
+
         protected Vehicle()
         {
         }
@@ -34,27 +35,15 @@ namespace PragueParking2._0.Vehicles
             ArriveTime = DateTime.Now;
             RegNum = registrationNumber;
         }
-        /// <summary>
-        /// Parks vehicle
-        /// </summary>
-        /// <param name="parkingSpot"></param>
         internal void Park(ParkingSpot parkingSpot)
         {
             parkingSpot.VehicleList.Add(this);
             Pspot = parkingSpot.Number;
         }
-        /// <summary>
-        /// Removes vehicle
-        /// </summary>
-        /// <param name="parkingSpot"></param>
         internal void CheckOut(ParkingSpot parkingSpot)
         {
             parkingSpot.VehicleList.Remove(this);
         }
-        /// <summary>
-        /// Checks if vehicle is tiny
-        /// </summary>
-        /// <returns></returns>
         internal bool IsTiny()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
@@ -62,10 +51,6 @@ namespace PragueParking2._0.Vehicles
             if (Size < parkingSpotSize) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle is small
-        /// </summary>
-        /// <returns></returns>
         internal bool IsSmall()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
@@ -73,10 +58,6 @@ namespace PragueParking2._0.Vehicles
             if (Size == parkingSpotSize) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle is big
-        /// </summary>
-        /// <returns></returns>
         internal bool IsBig()
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
@@ -84,56 +65,30 @@ namespace PragueParking2._0.Vehicles
             if (Size > parkingSpotSize) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle is high
-        /// </summary>
-        /// <returns></returns>
         internal bool IsHigh()
         {
-            if (Height > Settings.HeightParkingLow) return true;
+            if (Hight > Settings.HightParkingLow) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle is low
-        /// </summary>
-        /// <returns></returns>
         internal bool IsLow()
         {
-            if (Height < Settings.HeightParkingLow) return true;
+            if (Hight < Settings.HightParkingLow) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle fits size in parkingspot
-        /// </summary>
-        /// <param name="parkingSpot"></param>
-        /// <returns></returns>
         internal bool FitSize(ParkingSpot parkingSpot)
         {
             if (parkingSpot.AvailableSize >= Size) return true;
             return false;
         }
-        /// <summary>
-        /// Checks if vehicle fits height in parkingspot
-        /// </summary>
-        /// <param name="parkingSpot"></param>
-        /// <returns></returns>
-        internal bool FitHeight(ParkingSpot parkingSpot)
+        internal bool FitHight(ParkingSpot parkingSpot)
         {
-            if (parkingSpot.Height > Height) return true;
+            if (parkingSpot.Height > Hight) return true;
             return false;
         }
-        /// <summary>
-        /// Gets vehicle info
-        /// </summary>
-        /// <returns></returns>
         internal string GetVehicleInfo()
         {
             return $"{Pspot+1}, {StringType}, {RegNum}, {ArriveTime:dd/MMM/yyyy HH:mm}, {Price:0.00} CZK";
         }
-        /// <summary>
-        /// Gets vehicle price
-        /// </summary>
-        /// <returns></returns>
         internal decimal GetPrice()
         {
             return Price;
