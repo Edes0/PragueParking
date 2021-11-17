@@ -53,7 +53,7 @@ namespace PragueParking2._0
                 // Parks vehicle at parkings with lower hight if possible.
                 IEnumerable<ParkingSpot> parkingsWithLowerHight =
                         from parkingSpot in ParkingSpotArray
-                        where parkingSpot.Hight < Settings.HightParkingHigh
+                        where parkingSpot.Height < Settings.HightParkingHigh
                         select parkingSpot;
 
                 foreach (ParkingSpot parkingSpot in parkingsWithLowerHight)
@@ -249,7 +249,6 @@ namespace PragueParking2._0
                         .RoundedBorder());
             }
             // Render all cards in columns
-
             return box;
         }
         private void JsonDatafilRead()
@@ -263,14 +262,22 @@ namespace PragueParking2._0
             if (tempArray.Length >= ParkingSpotArray.Length)
                 for (int i = 0; i < ParkingSpotArray.Length; i++)
                 {
-                    if (ParkingSpotArray[i].Hight < tempArray[i].Hight) tempArray[i].Hight = Settings.HightParkingLow;
-                    if (ParkingSpotArray[i].Hight > tempArray[i].Hight) tempArray[i].Hight = Settings.HightParkingHigh;
+                    //tempArray[i].Size = Settings.SizeParkingSpot;
+                    //tempArray[i].AvailableSize = Settings.SizeParkingSpot;
                     ParkingSpotArray[i] = tempArray[i];
                 }
+                    
 
             if (tempArray.Length < ParkingSpotArray.Length)
                 for (int i = 0; i < tempArray.Length; i++)
+                {
+                    //tempArray[i].Size = Settings.SizeParkingSpot;
+                    //tempArray[i].AvailableSize = Settings.SizeParkingSpot;
                     ParkingSpotArray[i] = tempArray[i];
+                }
+                    
+
+
         }
         private void JsonDatafilWrite(ParkingSpot[] aParkingSpotArray)
         {
@@ -347,24 +354,11 @@ namespace PragueParking2._0
             printVehicleMoved = null;
             return false;
         }
-        internal bool PossibleToShrinkSize(byte newSize)
-        {
-            for (int i = newSize; i < ParkingSpotArray.Length; i++)
-                if (!ParkingSpotArray[i].IsFree()) return false;
-            return true;
-        }
-        internal bool PossibleToLowerHighRoof(byte newValue, byte highRoof)
-        {
-            for (int i = newValue; i < ParkingSpotArray.Length; i++)
-                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
-                    if (ParkingSpotArray[i].HaveHighVehicle() || ParkingSpotArray[i].IsReserved()) return false;
-            return true;
-        }
         private bool OptimizeCars(out string printVehicleMoved)
         {
             foreach (ParkingSpot parkingSpotOut in ParkingSpotArray)
             {
-                if (parkingSpotOut.IsFull() && parkingSpotOut.IsHigh() && parkingSpotOut.VehicleList[0].IsSmall())
+                if (parkingSpotOut.IsFull() && parkingSpotOut.IsHigh() && !parkingSpotOut.IsReserved() && parkingSpotOut.VehicleList[0].IsSmall())
 
                     foreach (ParkingSpot parkingSpotIn in ParkingSpotArray)
 
@@ -380,6 +374,19 @@ namespace PragueParking2._0
             }
             printVehicleMoved = null;
             return false;
+        }
+        internal bool PossibleToShrinkSize(byte newSize)
+        {
+            for (int i = newSize; i < ParkingSpotArray.Length; i++)
+                if (!ParkingSpotArray[i].IsFree()) return false;
+            return true;
+        }
+        internal bool PossibleToLowerHighRoof(byte newValue, byte highRoof)
+        {
+            for (int i = newValue; i < ParkingSpotArray.Length; i++)
+                foreach (ParkingSpot parkingSpot in ParkingSpotArray)
+                    if (ParkingSpotArray[i].HaveHighVehicle() || ParkingSpotArray[i].IsReserved()) return false;
+            return true;
         }
         internal Table GetTicketList()
         {
@@ -611,7 +618,7 @@ namespace PragueParking2._0
         {
             foreach (ParkingSpot parkingSpot in ParkingSpotArray)
                 if (!parkingSpot.PossibleToShrink(newSize)) return false;
-                return true;
+            return true;
         }
     }
 }

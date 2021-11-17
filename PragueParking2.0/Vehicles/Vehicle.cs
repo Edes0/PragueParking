@@ -55,7 +55,7 @@ namespace PragueParking2._0.Vehicles
         {
             byte parkingSpotSize = Settings.SizeParkingSpot;
 
-            if (Size <= parkingSpotSize) return true;
+            if (Size == parkingSpotSize) return true;
             return false;
         }
         internal bool IsBig()
@@ -82,7 +82,7 @@ namespace PragueParking2._0.Vehicles
         }
         internal bool FitHight(ParkingSpot parkingSpot)
         {
-            if (parkingSpot.Hight > Hight) return true;
+            if (parkingSpot.Height > Hight) return true;
             return false;
         }
         internal string GetVehicleInfo()

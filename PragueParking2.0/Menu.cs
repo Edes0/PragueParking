@@ -86,6 +86,7 @@ namespace PragueParking2._0
             Console.SetWindowSize(160, 42);
 
             settings = Settings.JsonSettingsRead();
+
             Settings.JsonSettingsRead();
 
             parkingHouse.Chores();

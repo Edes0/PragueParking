@@ -15,21 +15,23 @@ namespace PragueParking2._0
         [JsonProperty]
         internal byte Size { get; set; } = Settings.SizeParkingSpot;
         [JsonProperty]
-        internal byte Hight { get; set; }
+        internal byte Height { get; set; }
         [JsonProperty]
         internal byte AvailableSize { get; set; } = Settings.SizeParkingSpot;
         [JsonProperty]
         internal List<Vehicle> VehicleList { get; set; } = new List<Vehicle>();
         public ParkingSpot()
         {
-
+            if (Number <= Settings.SizeParkingHouseHighRoof)
+                Height = Settings.HightParkingHigh;
+            else Height = Settings.HightParkingLow;
         }
         internal ParkingSpot(byte aNumber, byte highRoof)
         {
             Number = aNumber;
 
-            if (Number <= highRoof) Hight = Settings.HightParkingHigh;
-            else Hight = Settings.HightParkingLow;
+            if (Number <= highRoof) Height = Settings.HightParkingHigh;
+            else Height = Settings.HightParkingLow;
         }
         public override string ToString()
         {
@@ -73,7 +75,7 @@ namespace PragueParking2._0
         }
         internal bool ParkingSpotAvailable(Vehicle vehicle)
         {
-            if (vehicle.IsSmall() && vehicle.FitSize(this) && vehicle.FitHight(this)) return true;
+            if (!vehicle.IsBig() && vehicle.FitSize(this) && vehicle.FitHight(this)) return true;
             if (vehicle.IsBig() && IsFree() && vehicle.FitHight(this)) return true;
             return false;
         }
@@ -98,8 +100,8 @@ namespace PragueParking2._0
         }
         internal bool IsReserved()
         {
-                if (AvailableSize == 0 && VehicleList.Count() == 0) return true;
-                return false;
+            if (AvailableSize == 0 && VehicleList.Count() == 0) return true;
+            return false;
         }
         internal bool IsFull()
         {
@@ -108,12 +110,12 @@ namespace PragueParking2._0
         }
         internal bool IsHigh()
         {
-            if (Hight >= Settings.HightParkingHigh) return true;
+            if (Height >= Settings.HightParkingHigh) return true;
             return false;
         }
         internal bool IsLow()
         {
-            if (Hight <= Settings.HightParkingLow) return true;
+            if (Height <= Settings.HightParkingLow) return true;
             return false;
         }
         internal string GetTicketInfo()
