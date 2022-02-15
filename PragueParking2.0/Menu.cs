@@ -198,7 +198,7 @@ namespace PragueParking2._0
             Console.Clear();
 
             if (!parseSuccess && newParkingSpot <= 0 && newParkingSpot > Settings.SizeParkingHouse) return "Enter a valid digit.";
-            if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot)) return "Your vehicle is moved to parking spot: " + newParkingSpot;
+            else if (parkingHouse.MoveVehicle(vehicle, (byte)(newParkingSpot - 1), parkingSpot)) return "Your vehicle is moved to parking spot: " + newParkingSpot;
             else return "Parking spot is unavailable.";
         }
         /// <summary>
